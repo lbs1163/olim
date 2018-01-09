@@ -1,0 +1,18 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+	<h1>{{ name }}님 환영합니다 :)</h1>
+	<div class="row">
+		<div class="col s6 offset-s3">
+			<div class="character">
+				<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+				<img class="responsive-img absolute" src="{{ eye.img.url }}">
+				<img class="responsive-img absolute" src="{{ hair.img.url }}">
+				<img class="responsive-img absolute" src="{{ clothes.img.url }}">
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

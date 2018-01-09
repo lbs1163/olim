@@ -1,0 +1,25 @@
+img {
+	image-rendering: pixelated;
+}
+
+img.non-pixel {
+	image-rendering: auto;
+}
+
+div.character {
+	position: relative;
+}
+
+img.responsive-img {
+	width: 100%;
+}
+
+div.character img.responsive-img {
+	display: block;
+}
+
+div.character img.absolute {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}

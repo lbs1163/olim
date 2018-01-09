@@ -1,0 +1,14 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	{% include 'rpg/head.html' %}
+	<body>
+		{% include 'rpg/header.html' %}
+		<main>
+			{% block content %}
+			{% endblock %}
+		</main>
+		{% include 'rpg/footer.html' %}
+	</body>
+</html>
