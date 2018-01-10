@@ -1,0 +1,32 @@
+<nav>
+	<div class="container">
+		<div class="nav-wrapper">
+			<a href="{% url 'index' %}" class="brand-logo">포스텍 RPG</a>
+			<a href="#" data-activates="rpgnavbar" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				{% if not user.is_authenticated %}
+				<li><a href="{% url 'signup' %}">회원가입</a></li>
+				<li><a href="{% url 'login' %}">로그인</a></li>
+				{% else %}
+				<li><a href="{% url 'battle' %}">공부하기</a></li>
+				<li><a href="{% url 'logout' %}">로그아웃</a></li>
+				{% endif %}
+			</ul>
+			<ul class="side-nav" id="rpgnavbar">
+				{% if not user.is_authenticated %}
+				<li><a href="{% url 'signup' %}">회원가입</a></li>
+				<li><a href="{% url 'login' %}">로그인</a></li>
+				{% else %}
+				<li><a href="{% url 'battle' %}">공부하기</a></li>
+				<li><a href="{% url 'logout' %}">로그아웃</a></li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<script>
+$(document).ready(function(){
+	$(".button-collapse").sideNav();
+});
+</script>

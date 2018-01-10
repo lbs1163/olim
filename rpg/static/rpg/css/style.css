@@ -1,3 +1,9 @@
+/* SETTINGS */
+
+img.responsive-img {
+	width: 100%
+}
+
 img {
 	image-rendering: pixelated;
 }
@@ -5,17 +11,36 @@ img {
 img.non-pixel {
 	image-rendering: auto;
 }
+/* FOOTER */
+
+.page-footer {
+	padding-top: 0;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+/* CHARACTER */
 
 div.character {
 	position: relative;
 }
 
-img.responsive-img {
-	width: 100%;
-}
-
 div.character img.responsive-img {
 	display: block;
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;	
 }
 
 div.character img.absolute {
