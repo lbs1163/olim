@@ -81,3 +81,15 @@ def battle(request):
 			battle_win = False
 
 		return JsonResponse({'battle_win': battle_win, 'skill': skill.name, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+
+@login_required
+def monsterbook(request):
+	if request.method == 'GET':
+		character = Character.objects.get(user=request.user.id)
+		group = character.group
+		monsterlist = Monster.objects.all()
+		monsterbooklist = Monsterbook.objects.filter(group=group)
+		monsterbooknamelist = [monsterbook.monster.name for monsterbook in monsterbooklist]
+		found = 0
+
+		return render(request, 'rpg/monsterbook.html', {'group': group, 'monsterlist': monsterlist, 'monsterbooklist': monsterbooklist, 'monsterbooknamelist': monsterbooknamelist, 'found': found})

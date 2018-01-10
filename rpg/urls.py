@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(template_name='rpg/login.html', redirect_authenticated_user=True), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='rpg/logout.html'), name='logout'),
 	url(r'^battle/$', battle, name='battle'),
+	url(r'^monsterbook/$', monsterbook, name='monsterbook'),
 ]

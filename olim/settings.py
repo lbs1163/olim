@@ -28,7 +28,7 @@ SECRET_KEY = ')=e(k5n)%#!cb-kk%wn2!g1@-30$#o#i#dvt+zg&8n-)#3iz89'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ubuntu.poapper.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

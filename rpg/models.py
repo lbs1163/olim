@@ -109,3 +109,14 @@ class Battle(models.Model):
 
 	def __str__(self):
 		return unicode(self.character)
+
+@python_2_unicode_compatible
+class Monsterbook(models.Model):
+	group = models.ForeignKey(Group)
+	grade = models.CharField(max_length=20, null=True)
+	monster = models.ForeignKey(Monster)
+	finder = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='finder')
+	champion = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='champion')
+
+	def __str__(self):
+		return self.monster.name

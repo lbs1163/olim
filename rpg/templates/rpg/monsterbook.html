@@ -1,0 +1,119 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+	<h1 class="center-align">{{ group }} 도감</h1>
+	<div class="row">
+		<div class="col s1">
+		</div>
+		<div class="col s2">
+			<h5 class="center-align">수학</h5>
+			{% for monster in monsterlist %}
+				{% if monster.math_exp %}
+					{% if monster.name in monsterbooknamelist %}
+						{% for monsterbook in monsterbooklist %}
+							{% if monsterbook.monster.name == monster.name %}
+								<img class="responsive-img" src="{{ monster.img.url }}">
+								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
+								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
+								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
+								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
+						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col s2">
+			<h5 class="center-align">물리</h5>
+			{% for monster in monsterlist %}
+				{% if monster.phys_exp %}
+					{% if monster.name in monsterbooknamelist %}
+						{% for monsterbook in monsterbooklist %}
+							{% if monsterbook.monster.name == monster.name %}
+								<img class="responsive-img" src="{{ monster.img.url }}">
+								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
+								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
+								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
+								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
+						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col s2">
+			<h5 class="center-align">화학</h5>
+			{% for monster in monsterlist %}
+				{% if monster.chem_exp %}
+					{% if monster.name in monsterbooknamelist %}
+						{% for monsterbook in monsterbooklist %}
+							{% if monsterbook.monster.name == monster.name %}
+								<img class="responsive-img" src="{{ monster.img.url }}">
+								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
+								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
+								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
+								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
+						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col s2">
+			<h5 class="center-align">생명</h5>
+			{% for monster in monsterlist %}
+				{% if monster.life_exp %}
+					{% if monster.name in monsterbooknamelist %}
+						{% for monsterbook in monsterbooklist %}
+							{% if monsterbook.monster.name == monster.name %}
+								<img class="responsive-img" src="{{ monster.img.url }}">
+								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
+								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
+								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
+								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
+						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col s2">
+			<h5 class="center-align">프밍</h5>
+			{% for monster in monsterlist %}
+				{% if monster.prog_exp %}
+					{% if monster.name in monsterbooknamelist %}
+						{% for monsterbook in monsterbooklist %}
+							{% if monsterbook.monster.name == monster.name %}
+								<img class="responsive-img" src="{{ monster.img.url }}">
+								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
+								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
+								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
+								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
+						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col s1">
+		</div>
+	</div>
+</div>
+{% endblock %}
