@@ -18,7 +18,11 @@ def index(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
 		name = request.user.last_name + request.user.first_name
-		return render(request, 'rpg/index.html', { 'name': name, 'eye': character.eye, 'hair': character.hair, 'clothes': character.clothes })
+		stats = [character.math, character.phys, character.chem, character.life, character.prog]
+		maximum = max(stats)
+		if maximum < 10:
+			maximum = 10
+		return render(request, 'rpg/index.html', { 'name': name, 'character': character, 'maximum': maximum })
 
 def signup(request):
 	if request.method == 'GET':
@@ -63,13 +67,45 @@ def battle(request):
 			skill = Skill.objects.get(id=skillid)
 		except ObjectDoesNotExist:
 			return JsonResponse({'monster': battle.monster.name, 'dialog': u"뭔가 잘못되었다", 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
-
+		
+		# calculate damage
 		damage = skill.damage
+		if skill.math:
+			damage += character.math
+		elif skill.phys:
+			damage += character.phys
+		elif skill.chem:
+			damage += character.chem
+		elif skill.life:
+			damage += character.life
+		elif skill.prog:
+			damage += character.prog
+
+		if battle.monster.math_exp != 0 and skill.math:
+			damage *= 2
+		elif battle.monster.phys_exp != 0 and skill.phys:
+			damage *= 2
+		elif battle.monster.chem_exp != 0 and skill.chem:
+			damage *= 2
+		elif battle.monster.life_exp != 0 and skill.life:
+			damage *= 2
+		elif battle.monster.prog_exp != 0 and skill.prog:
+			damage *= 2
+
 		health_used = skill.health
 		battle.ally_health -= health_used
 		battle.enemy_health += damage
-		if battle.enemy_health > 100:
+
+		# battle win
+		if battle.enemy_health >= 100:
 			battle.enemy_health = 100
+			character.math += battle.monster.math_exp
+			character.phys += battle.monster.phys_exp
+			character.chem += battle.monster.chem_exp
+			character.life += battle.monster.life_exp
+			character.prog += battle.monster.prog_exp
+			character.save()
+
 		dialogs = [battle.monster.dialog1, battle.monster.dialog2, battle.monster.dialog3]
 		dialog = random.choice(dialogs)
 		battle.save()
@@ -87,9 +123,11 @@ def monsterbook(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
 		group = character.group
-		monsterlist = Monster.objects.all()
+		mathmonsterlist = Monster.objects.filter(math_exp__gt=0)
+		physmonsterlist = Monster.objects.filter(phys_exp__gt=0)
+		chemmonsterlist = Monster.objects.filter(chem_exp__gt=0)
+		lifemonsterlist = Monster.objects.filter(life_exp__gt=0)
+		progmonsterlist = Monster.objects.filter(prog_exp__gt=0)
 		monsterbooklist = Monsterbook.objects.filter(group=group)
-		monsterbooknamelist = [monsterbook.monster.name for monsterbook in monsterbooklist]
-		found = 0
 
-		return render(request, 'rpg/monsterbook.html', {'group': group, 'monsterlist': monsterlist, 'monsterbooklist': monsterbooklist, 'monsterbooknamelist': monsterbooknamelist, 'found': found})
+		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist})

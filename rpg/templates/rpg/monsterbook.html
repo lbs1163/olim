@@ -3,117 +3,239 @@
 
 {% block content %}
 <div class="container">
-	<h1 class="center-align">{{ group }} 도감</h1>
-	<div class="row">
-		<div class="col s1">
-		</div>
-		<div class="col s2">
-			<h5 class="center-align">수학</h5>
-			{% for monster in monsterlist %}
-				{% if monster.math_exp %}
-					{% if monster.name in monsterbooknamelist %}
-						{% for monsterbook in monsterbooklist %}
-							{% if monsterbook.monster.name == monster.name %}
-								<img class="responsive-img" src="{{ monster.img.url }}">
-								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
-								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
-								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
-								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
-						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col s2">
-			<h5 class="center-align">물리</h5>
-			{% for monster in monsterlist %}
-				{% if monster.phys_exp %}
-					{% if monster.name in monsterbooknamelist %}
-						{% for monsterbook in monsterbooklist %}
-							{% if monsterbook.monster.name == monster.name %}
-								<img class="responsive-img" src="{{ monster.img.url }}">
-								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
-								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
-								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
-								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
-						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col s2">
-			<h5 class="center-align">화학</h5>
-			{% for monster in monsterlist %}
-				{% if monster.chem_exp %}
-					{% if monster.name in monsterbooknamelist %}
-						{% for monsterbook in monsterbooklist %}
-							{% if monsterbook.monster.name == monster.name %}
-								<img class="responsive-img" src="{{ monster.img.url }}">
-								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
-								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
-								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
-								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
-						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col s2">
-			<h5 class="center-align">생명</h5>
-			{% for monster in monsterlist %}
-				{% if monster.life_exp %}
-					{% if monster.name in monsterbooknamelist %}
-						{% for monsterbook in monsterbooklist %}
-							{% if monsterbook.monster.name == monster.name %}
-								<img class="responsive-img" src="{{ monster.img.url }}">
-								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
-								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
-								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
-								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
-						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col s2">
-			<h5 class="center-align">프밍</h5>
-			{% for monster in monsterlist %}
-				{% if monster.prog_exp %}
-					{% if monster.name in monsterbooknamelist %}
-						{% for monsterbook in monsterbooklist %}
-							{% if monsterbook.monster.name == monster.name %}
-								<img class="responsive-img" src="{{ monster.img.url }}">
-								<p class="center-align">이름 : {{ monsterbook.monster.name }}</p>
-								<p class="center-align">최고 학점 : {{ monsterbook.grade }}</p>
-								<p class="center-align">최초 발견자 : {{ monsterbook.finder }}</p>
-								<p class="center-align">최고 학점자 : {{ monsterbook.champion }}</p>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<img class="responsive-img" src="{% static 'rpg/image/stack.png' %}">
-						<p class="center-align">아직 잡지 못한 몬스터입니다 </p>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="col s1">
-		</div>
-	</div>
+    <h1 class="center-align">{{ group }} 도감</h1>
+    <div class="row">
+        <h4 class="center-align">수학</h4>
+        <div class="col s1 hide-on-med-and-down">
+        </div>
+        {% for monster in mathmonsterlist %}
+
+        {% if forloop.counter == 11 %}
+        <div class="col s1 hide-on-med-and-down">
+            <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+        </div>
+        <div class="col s1 hide-on-med-and-down">
+            <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+        </div>
+        {% endif %}
+        {% for monsterbook in monsterbooklist %}
+        {% if monsterbook.monster.name == monster.name %}
+        <div class="col s3 m3 l1">
+            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+
+            <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4 class="center-align">{{monsterbook.monster.name}}</h4>
+                    <div class="row">
+                        <div class="col s4">
+                            <img class="responsive-img" src="{{ monster.img.url }}">
+                        </div>
+                        <div class="col s8">
+                            <p>최고 학점 : {{ monsterbook.grade }}</p>
+                            <p>최초 발견자 : {{ monsterbook.finder }}</p>
+                            <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col s3 m3 l1">
+            <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <h4 class="center-align">물리</h4>
+        <div class="col s1 hide-on-med-and-down">
+        </div>
+        {% for monster in physmonsterlist %}
+        {% if forloop.counter == 11 %}
+        <div class="col s1 hide-on-med-and-down">
+           <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+       </div>
+       <div class="col s1 hide-on-med-and-down">
+           <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+       </div>
+       {% endif %}
+       {% for monsterbook in monsterbooklist %}
+       {% if monsterbook.monster.name == monster.name %}
+       <div class="col s3 m3 l1">
+        <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+
+        <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4 class="center-align">{{monsterbook.monster.name}}</h4>
+                <div class="row">
+                    <div class="col s4">
+                        <img class="responsive-img" src="{{ monster.img.url }}">
+                    </div>
+                    <div class="col s8">
+                        <p>최고 학점 : {{ monsterbook.grade }}</p>
+                        <p>최초 발견자 : {{ monsterbook.finder }}</p>
+                        <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col s3 m3 l1">
+        <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
 </div>
+<div class="row">
+    <h4 class="center-align">화학</h4>
+    <div class="col s1 hide-on-med-and-down">
+    </div>
+    {% for monster in chemmonsterlist %}
+    {% if forloop.counter == 11 %}
+    <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   {% endif %}
+   {% for monsterbook in monsterbooklist %}
+   {% if monsterbook.monster.name == monster.name %}
+   <div class="col s3 m3 l1">
+    <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+
+    <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4 class="center-align">{{monsterbook.monster.name}}</h4>
+            <div class="row">
+                <div class="col s4">
+                    <img class="responsive-img" src="{{ monster.img.url }}">
+                </div>
+                <div class="col s8">
+                    <p>최고 학점 : {{ monsterbook.grade }}</p>
+                    <p>최초 발견자 : {{ monsterbook.finder }}</p>
+                    <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col s3 m3 l1">
+    <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</div>
+
+<div class="row">
+    <h4 class="center-align">생명</h4>
+    <div class="col s1 hide-on-med-and-down">
+    </div>
+    {% for monster in lifemonsterlist %}
+    {% if forloop.counter == 11 %}
+    <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   {% endif %}
+   {% for monsterbook in monsterbooklist %}
+   {% if monsterbook.monster.name == monster.name %}
+   <div class="col s3 m3 l1">
+    <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+
+    <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4 class="center-align">{{monsterbook.monster.name}}</h4>
+            <div class="row">
+                <div class="col s4">
+                    <img class="responsive-img" src="{{ monster.img.url }}">
+                </div>
+                <div class="col s8">
+                    <p>최고 학점 : {{ monsterbook.grade }}</p>
+                    <p>최초 발견자 : {{ monsterbook.finder }}</p>
+                    <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col s3 m3 l1">
+    <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</div>
+
+<div class="row">
+    <h4 class="center-align">프밍</h4>
+    <div class="col s1 hide-on-med-and-down">
+    </div>
+    {% for monster in progmonsterlist %}
+    {% if forloop.counter == 11 %}
+    <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   <div class="col s1 hide-on-med-and-down">
+       <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+   </div>
+   {% endif %}
+   {% for monsterbook in monsterbooklist %}
+   {% if monsterbook.monster.name == monster.name %}
+   <div class="col s3 m3 l1">
+    <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+
+    <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4 class="center-align">{{monsterbook.monster.name}}</h4>
+            <div class="row">
+                <div class="col s4">
+                    <img class="responsive-img" src="{{ monster.img.url }}">
+                </div>
+                <div class="col s8">
+                    <p>최고 학점 : {{ monsterbook.grade }}</p>
+                    <p>최초 발견자 : {{ monsterbook.finder }}</p>
+                    <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col s3 m3 l1">
+    <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
+</div>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</div>
+
+</div>
+<script>
+    $('.modal').modal();
+</script>
 {% endblock %}
