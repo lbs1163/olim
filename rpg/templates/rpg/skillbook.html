@@ -1,0 +1,102 @@
+{% extends 'rpg/base.html' %}
+
+{% block content %}
+<div class="container center-align">
+	<h3>일반 스킬</h3>
+	<div class="row" id="normal">
+		{% for dict in allSkillsWithBoolean %}
+		{% if not dict.skill.math and not dict.skill.phys and not dict.skill.chem and not dict.skill.life and not dict.skill.prog %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h3>수학 스킬</h3>
+	<div class="row" id="math">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.math %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h3>물리 스킬</h3>
+	<div class="row" id="phys">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.chem %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h3>화학 스킬</h3>
+	<div class="row" id="chem">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.chem %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h3>생물 스킬</h3>
+	<div class="row" id="life">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.life %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h3>프밍 스킬</h3>
+	<div class="row" id="prog">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.prog %}
+			{% if dict.is_owned %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">{{ dict.skill.name }}</button>
+			</div>
+			{% else %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill waves-effect waves-light btn">?????</button>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

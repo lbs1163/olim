@@ -63,9 +63,22 @@ class Skill(models.Model):
 	prog = models.BooleanField(default=False)
 	health = models.IntegerField(default=10)
 	damage = models.IntegerField(default=0)
+	limit = models.IntegerField(default=0)
 
 	def __str__(self):
-		return self.name + u"(" + unicode(self.damage) + u")"
+		if self.math:
+			category = u"[수학] "
+		elif self.phys:
+			category = u"[물리] "
+		elif self.chem:
+			category = u"[화학] "
+		elif self.life:
+			category = u"[생물] "
+		elif self.prog:
+			category = u"[프밍] "
+		else:
+			category = u"[일반] "
+		return category + self.name + u"(" + unicode(self.health) + u", " + unicode(self.damage) + u", " + unicode(self.limit) + u")"
 
 @python_2_unicode_compatible
 class Character(models.Model):
@@ -86,6 +99,14 @@ class Character(models.Model):
 
 	def __str__(self):
 		return self.user.last_name + self.user.first_name
+
+@python_2_unicode_compatible
+class Contain(models.Model):
+	character = models.ForeignKey(Character)
+	skill = models.ForeignKey(Skill)
+
+	def __str__(self):
+		return unicode(self.character) + u" has " + unicode(self.skill)
 
 @python_2_unicode_compatible
 class Monster(models.Model):
@@ -116,6 +137,15 @@ class Battle(models.Model):
 		return unicode(self.character)
 
 @python_2_unicode_compatible
+class Skillbook(models.Model):
+	group = models.ForeignKey(Group)
+	skill = models.ForeignKey(Skill)
+	finder = models.ForeignKey(Character, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return u"[" + unicode(self.group) + "] " + unicode(self.skill)
+
+@python_2_unicode_compatible
 class Monsterbook(models.Model):
 	group = models.ForeignKey(Group)
 	grade = models.CharField(max_length=20, null=True)
@@ -124,4 +154,4 @@ class Monsterbook(models.Model):
 	champion = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='champion')
 
 	def __str__(self):
-		return self.monster.name
+		return u"[" + unicode(self.group) + "] " + unicode(self.monster)

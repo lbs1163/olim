@@ -41,7 +41,16 @@ def signup(request):
 			user.last_name = code.last_name
 			user.save()
 
-			character = Character(user=user, group=code.group)
+			hair = Hair.objects.all()[0]
+			eye = Eye.objects.all()[0]
+			clothes = Clothes.objects.all()[0]
+
+			character = Character(user=user, group=code.group, hair=hair, eye=eye, clothes=clothes)
+			skills = Skill.objects.all()
+			character.skill1 = skills[0]
+			character.skill2 = skills[1]
+			character.skill3 = skills[2]
+			character.skill4 = skills[3]
 			character.save()
 
 			login(request, user)
@@ -129,3 +138,14 @@ def monsterbook(request):
 		found = 0
 
 		return render(request, 'rpg/monsterbook.html', {'group': group, 'monsterlist': monsterlist, 'monsterbooklist': monsterbooklist, 'monsterbooknamelist': monsterbooknamelist, 'found': found})
+
+@login_required
+def skillbook(request):
+	if request.method == 'GET':
+		character = Character.objects.get(user=request.user.id)
+		skillbooks = Skillbook.objects.filter(group = character.group)
+		skills = [skillbook.skill for skillbook in skillbooks]
+		allSkills = Skill.objects.all()
+		allSkillsWithBoolean = [{'skill': skill, 'is_owned': skill in skills} for skill in allSkills]
+		
+		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean})

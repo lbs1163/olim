@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='rpg/logout.html'), name='logout'),
 	url(r'^battle/$', battle, name='battle'),
 	url(r'^monsterbook/$', monsterbook, name='monsterbook'),
+	url(r'^skillbook/$', skillbook, name='skillbook'),
 ]
