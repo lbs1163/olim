@@ -132,12 +132,15 @@ def monsterbook(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
 		group = character.group
-		monsterlist = Monster.objects.all()
+		mathmonsterlist = Monster.objects.filter(math_exp__gt=0)
+		physmonsterlist = Monster.objects.filter(phys_exp__gt=0)
+		chemmonsterlist = Monster.objects.filter(chem_exp__gt=0)
+		lifemonsterlist = Monster.objects.filter(life_exp__gt=0)
+		progmonsterlist = Monster.objects.filter(prog_exp__gt=0)
 		monsterbooklist = Monsterbook.objects.filter(group=group)
-		monsterbooknamelist = [monsterbook.monster.name for monsterbook in monsterbooklist]
-		found = 0
 
-		return render(request, 'rpg/monsterbook.html', {'group': group, 'monsterlist': monsterlist, 'monsterbooklist': monsterbooklist, 'monsterbooknamelist': monsterbooknamelist, 'found': found})
+		
+		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist})
 
 @login_required
 def skillbook(request):
