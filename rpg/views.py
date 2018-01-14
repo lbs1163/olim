@@ -138,9 +138,9 @@ def monsterbook(request):
 		lifemonsterlist = Monster.objects.filter(life_exp__gt=0)
 		progmonsterlist = Monster.objects.filter(prog_exp__gt=0)
 		monsterbooklist = Monsterbook.objects.filter(group=group)
-
+		monsterbookmonsters = [monsterbook.monster for monsterbook in monsterbooklist]
 		
-		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist})
+		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist, 'monsterbookmonsters': monsterbookmonsters})
 
 @login_required
 def skillbook(request):

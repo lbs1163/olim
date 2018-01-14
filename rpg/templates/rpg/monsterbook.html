@@ -18,8 +18,9 @@
             <img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
         </div>
         {% endif %}
-        {% for monsterbook in monsterbooklist %}
-        {% if monsterbook.monster.name == monster.name %}
+        {% if monster in monsterbookmonsters %}
+		{% for monsterbook in monsterbooklist %}
+		{% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
             <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
@@ -42,12 +43,13 @@
                 </div>
             </div>
         </div>
+		{% endif %}
+		{% endfor %}
         {% else %}
         <div class="col s3 m3 l1">
             <img class="responsive-img" src="{% static 'rpg/image/notyet.png' %}">
         </div>
         {% endif %}
-        {% endfor %}
         {% endfor %}
     </div>
 

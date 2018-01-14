@@ -82,6 +82,15 @@ class Skill(models.Model):
 		return category + self.name + u"(" + unicode(self.health) + u", " + unicode(self.damage) + u", " + unicode(self.limit) + u")"
 
 @python_2_unicode_compatible
+class Combination(models.Model):
+	skill01 = models.ForeignKey(Skill, related_name='skill01')
+	skill02 = models.ForeignKey(Skill, related_name='skill02')
+	new_skill = models.ForeignKey(Skill, related_name='new_skill')
+	
+	def __str__(self):
+		return self.new_skill.name + u" = " + self.skill01.name + u" + " + self.skill02.name
+
+@python_2_unicode_compatible
 class Character(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	hair = models.ForeignKey(Hair, blank=True, null=True)
