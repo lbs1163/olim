@@ -151,8 +151,9 @@ def skillbook(request):
 		skills = [skillbook.skill for skillbook in skillbooks]
 		allSkills = Skill.objects.all()
 		allSkillsWithBoolean = [{'skill': skill, 'is_owned': skill in skills} for skill in allSkills]
-		
-		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean})
+
+
+		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean, 'skillbooks': skillbooks})
 
 @login_required
 def combination(request):
