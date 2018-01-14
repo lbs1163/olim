@@ -25,6 +25,11 @@
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
 					{% endif %}
 					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
+					{% endif %}
+					{% endfor %}
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
@@ -60,6 +65,11 @@
 					{% for skillbook in skillbooks %}
 					{% if skillbook.skill.name == dict.skill.name %}
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
+					{% endif %}
+					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
 					{% endif %}
 					{% endfor %}
 				</div>
@@ -99,6 +109,11 @@
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
 					{% endif %}
 					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
+					{% endif %}
+					{% endfor %}
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
@@ -134,6 +149,11 @@
 					{% for skillbook in skillbooks %}
 					{% if skillbook.skill.name == dict.skill.name %}
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
+					{% endif %}
+					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
 					{% endif %}
 					{% endfor %}
 				</div>
@@ -173,6 +193,11 @@
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
 					{% endif %}
 					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
+					{% endif %}
+					{% endfor %}
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
@@ -208,6 +233,11 @@
 					{% for skillbook in skillbooks %}
 					{% if skillbook.skill.name == dict.skill.name %}
 					<p class="center-align">최초 발견자 : {{ skillbook.finder }}</p>
+					{% endif %}
+					{% endfor %}
+					{% for combination in allCombinations %}
+					{% if combination.new_skill.name == dict.skill.name %}
+					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
 					{% endif %}
 					{% endfor %}
 				</div>
