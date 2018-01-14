@@ -228,3 +228,12 @@ def combination(request):
 			new_contain.save()
 
 		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})
+
+@login_required
+def selectskill(request):
+	character = Character.objects.get(user=request.user.id)
+	contains = Contain.objects.filter(character=character).order_by('skill')
+	skills = [contain.skill for contain in contains]
+
+	if request.method == 'GET':
+		return render(request, 'rpg/selectskill.html', {'skills': skills})
