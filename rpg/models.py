@@ -5,6 +5,7 @@ import random, string
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -109,6 +110,14 @@ class Contain(models.Model):
 		return unicode(self.character) + u" has " + unicode(self.skill)
 
 @python_2_unicode_compatible
+class Map(models.Model):
+	name = models.CharField(max_length=40)
+	is_open = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.name
+
+@python_2_unicode_compatible
 class Monster(models.Model):
 	name = models.CharField(max_length=40)
 	img = models.ImageField(upload_to='images/monster/', default='images/monster/default.png')
@@ -117,14 +126,38 @@ class Monster(models.Model):
 	chem_exp = models.IntegerField(default=0)
 	life_exp = models.IntegerField(default=0)
 	prog_exp = models.IntegerField(default=0)
-	dialog1 = models.CharField(max_length=50, null=True)
-	dialog2 = models.CharField(max_length=50, null=True)
-	dialog3 = models.CharField(max_length=50, null=True)
-	death_dialog = models.CharField(max_length=50, null=True)
+	health = models.IntegerField(default=0)
+	map = models.ForeignKey(Map, null=True)
 	skill = models.ForeignKey(Skill)
+	drop_rate = models.IntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+	dialog1 = models.CharField(max_length=50, default=u"dialog1")
+	dialog2 = models.CharField(max_length=50, default=u"dialog2")
+	dialog3 = models.CharField(max_length=50, default=u"dialog3")
+	dialog4 = models.CharField(max_length=50, default=u"dialog4")
+	dialog5 = models.CharField(max_length=50, default=u"dialog5")
+	death_dialog = models.CharField(max_length=50, default=u"death dialog")
 
 	def __str__(self):
-		return self.name
+		if self.math_exp > 0:
+			category = u"[수학] "
+			exp = self.math_exp
+		elif self.phys_exp > 0:
+			category = u"[물리] "
+			exp = self.phys_exp
+		elif self.chem_exp > 0:
+			category = u"[화학] "
+			exp = self.chem_exp
+		elif self.life_exp > 0:
+			category = u"[생물] "
+			exp = self.life_exp
+		elif self.prog_exp > 0:
+			category = u"[프밍] "
+			exp = self.prog_exp
+		else:
+			category = u"[????] "
+			exp = 0
+		
+		return u"[" + self.map.name + u"]" + category + self.name + " (" + unicode(exp) + u", " + unicode(self.health) + u", " + unicode(self.skill.name) + u", " + unicode(self.drop_rate) + u"%)"
 
 @python_2_unicode_compatible
 class Battle(models.Model):
