@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from collections import Counter
 import random
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -152,3 +153,51 @@ def skillbook(request):
 		allSkillsWithBoolean = [{'skill': skill, 'is_owned': skill in skills} for skill in allSkills]
 		
 		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean})
+
+@login_required
+def combination(request):
+	character = Character.objects.get(user=request.user.id)
+	contains = Contain.objects.filter(character=character).order_by('skill')
+	skills = [contain.skill for contain in contains]
+
+	if request.method == 'GET':
+		return render(request, 'rpg/combination.html', {'skills': skills})
+
+	elif request.method == 'POST':
+		try:
+			left_skill = Skill.objects.get(id=request.POST.get('left', False))
+			right_skill = Skill.objects.get(id=request.POST.get('right', False))
+		except:
+			return JsonResponse({'type': 'skillDoesNotExist'})
+		
+		try:
+			left_skill_contain = Contain.objects.get(character=character, skill=left_skill)
+			right_skill_contain = Contain.objects.get(character=character, skill=right_skill)
+		except:
+			return JsonResponse({'type': 'characterDoesNotHaveSkill'})
+
+		try:
+			combination = Combination.objects.get(skill01=left_skill, skill02=right_skill)
+		except:
+			try:
+				combination = Combination.objects.get(skill01=right_skill, skill02=left_skill)
+			except:
+				return JsonResponse({'type': 'combinationDoesNotExist'})
+
+		new_skill = combination.new_skill
+
+		left_skill_contain.delete()
+		right_skill_contain.delete()
+		new_contain = Contain(character=character, skill=new_skill)
+		new_contain.save()
+
+		try:
+			Skillbook.objects.get(group=character.group, skill=new_skill)
+		except:
+			newSkillbook = Skillbook(group=character.group, skill=new_skill, finder=character)
+			newSkillbook.save()
+			firstDiscovery = True;
+		else:
+			firstDiscovery = False;
+
+		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'url': new_skill.img.url, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})
