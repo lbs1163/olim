@@ -172,33 +172,59 @@ def combination(request):
 			return JsonResponse({'type': 'skillDoesNotExist'})
 		
 		try:
-			left_skill_contain = Contain.objects.get(character=character, skill=left_skill)
-			right_skill_contain = Contain.objects.get(character=character, skill=right_skill)
+			left_skill_contain = Contain.objects.filter(character=character, skill=left_skill)
+			right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)
 		except:
 			return JsonResponse({'type': 'characterDoesNotHaveSkill'})
+
+		alreadyfailed = True
+
+		try:
+			failedCombination = FailedCombination.objects.get(group=character.group, skill001=left_skill, skill002=right_skill)
+		except:
+			try:
+				failedCombination = FailedCombination.objects.get(group=character.group, skill001=right_skill, skill002=left_skill)
+			except:
+				alreadyfailed = False
+
+		if alreadyfailed:
+			return JsonResponse({'type': 'combinationAlreadyFailed'})
 
 		try:
 			combination = Combination.objects.get(skill01=left_skill, skill02=right_skill)
 		except:
 			try:
 				combination = Combination.objects.get(skill01=right_skill, skill02=left_skill)
-			except:
-				return JsonResponse({'type': 'combinationDoesNotExist'})
+			except:	
+				if request.POST.get('real', None) == "false":
+					return JsonResponse({'type': 'combinationNotDiscoveredYet'})
+				elif request.POST.get('real', None) == "true":
+					left_skill_contain.delete()
+					right_skill_contain.delete()
+					failedCombination = FailedCombination(group=character.group, skill001=left_skill, skill002=right_skill)
+					failedCombination.save()
+					return JsonResponse({'type': 'combinationDoesNotExist'})
 
 		new_skill = combination.new_skill
-
-		left_skill_contain.delete()
-		right_skill_contain.delete()
-		new_contain = Contain(character=character, skill=new_skill)
-		new_contain.save()
 
 		try:
 			Skillbook.objects.get(group=character.group, skill=new_skill)
 		except:
+			if request.POST.get('real', None) == "false":
+				return JsonResponse({'type': 'combinationNotDiscoveredYet'})
+
 			newSkillbook = Skillbook(group=character.group, skill=new_skill, finder=character)
 			newSkillbook.save()
 			firstDiscovery = True;
 		else:
+			if request.POST.get('real', None) == "false":
+				return JsonResponse({'type': 'combinationPreview', 'newSkill': {'id': new_skill.id, 'name': new_skill.name}})
 			firstDiscovery = False;
 
-		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'url': new_skill.img.url, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})
+		if request.POST.get('real', None) == "true":
+			left_skill_contain.delete()
+			right_skill_contain.delete()
+			new_contain = Contain(character=character, skill=new_skill)
+			new_contain.save()
+
+		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})

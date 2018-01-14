@@ -45,6 +45,19 @@ var itemEventHandler = function(e) {
 		$("#skill-right").append(temp);
 		right = true;
 	}
+
+	if (left && right) {
+		var left_skill = $("#skill-left").children().first().attr("skillid");
+		var right_skill = $("#skill-right").children().first().attr("skillid");
+
+		$.ajax({
+			method: "POST",
+			url: "/combination/",
+			data: { real: false, left: left_skill, right: right_skill },
+		}).done(function(data) {
+			console.log(data);
+		});
+	}
 }
 
 $("#skill-left").bind("click", function(e) {
@@ -65,7 +78,23 @@ $("#skill-right").bind("click", function(e) {
 		$(this).append('<button class="skill btn" id="skill-right">스킬을 넣어주세요</button>');
 		temp.children().first().bind("click", itemEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
-		left = false;
+		right = false;
+	}
+});
+
+$("button#submit").bind("click", function(e) {
+	var combined = $("#skill-combined").children().first().attr("combined");
+	var left_skill = $("#skill-left").children().first().attr("skillid");
+	var right_skill = $("#skill-right").children().first().attr("skillid");
+
+	if (combined) {
+		$.ajax({
+			method: "POST",
+			url: "/combination/",
+			data: { real: true, left: left_skill, right: right_skill },
+		}).done(function(data) {
+			console.log(data)
+		});
 	}
 });
 

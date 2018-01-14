@@ -82,6 +82,14 @@ class Skill(models.Model):
 		return category + self.name + u"(" + unicode(self.health) + u", " + unicode(self.damage) + u", " + unicode(self.limit) + u")"
 
 @python_2_unicode_compatible
+class FailedCombination(models.Model):
+	group = models.ForeignKey(Group)
+	skill001 = models.ForeignKey(Skill, related_name='skill001')
+	skill002 = models.ForeignKey(Skill, related_name='skill002')
+
+	def __str__(self):
+		return u"[" + self.group.name + u"] " + self.skill001.name + u" + " + self.skill002.name
+@python_2_unicode_compatible
 class Combination(models.Model):
 	skill01 = models.ForeignKey(Skill, related_name='skill01')
 	skill02 = models.ForeignKey(Skill, related_name='skill02')
