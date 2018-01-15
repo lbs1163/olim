@@ -64,10 +64,10 @@ def signup(request):
 
 			character = Character(user=user, group=code.group, hair=hair, eye=eye, clothes=clothes)
 			skills = Skill.objects.all()
-			character.skill1 = skills[0]
-			character.skill2 = skills[1]
-			character.skill3 = skills[2]
-			character.skill4 = skills[3]
+			character.skill1 = None
+			character.skill2 = None
+			character.skill3 = None
+			character.skill4 = None
 			character.save()
 
 			login(request, user)
@@ -102,40 +102,48 @@ def battle(request):
 		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character })
 	elif request.method == 'POST':
 		skillid = request.POST['skillid']
-		try:
-			skill = Skill.objects.get(id=skillid)
-		except ObjectDoesNotExist:
-			return JsonResponse({'monster': battle.monster.name, 'dialog': u"뭔가 잘못되었다", 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+
+		if skillid == "0":
+			damage = random.randrange(1, 10)
+			skillname = u"발버둥치기"
+			health_used = 5
+		else:
+			try:
+				skill = Skill.objects.get(id=skillid)
+				skillname = skill.name
+			except ObjectDoesNotExist:
+				return JsonResponse({'monster': battle.monster.name, 'dialog': u"뭔가 잘못되었다", 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 		
-		# calculate damage
-		damage = skill.damage
-		if skill.math:
-			damage += character.math
-		elif skill.phys:
-			damage += character.phys
-		elif skill.chem:
-			damage += character.chem
-		elif skill.life:
-			damage += character.life
-		elif skill.prog:
-			damage += character.prog
+			# calculate damage
+			damage = skill.damage
+			if skill.math:
+				damage += character.math
+			elif skill.phys:
+				damage += character.phys
+			elif skill.chem:
+				damage += character.chem
+			elif skill.life:
+				damage += character.life
+			elif skill.prog:
+				damage += character.prog
 
-		if battle.monster.math_exp != 0 and skill.math:
-			damage *= 2
-		elif battle.monster.phys_exp != 0 and skill.phys:
-			damage *= 2
-		elif battle.monster.chem_exp != 0 and skill.chem:
-			damage *= 2
-		elif battle.monster.life_exp != 0 and skill.life:
-			damage *= 2
-		elif battle.monster.prog_exp != 0 and skill.prog:
-			damage *= 2
+			if battle.monster.math_exp != 0 and skill.math:
+				damage *= 2
+			elif battle.monster.phys_exp != 0 and skill.phys:
+				damage *= 2
+			elif battle.monster.chem_exp != 0 and skill.chem:
+				damage *= 2
+			elif battle.monster.life_exp != 0 and skill.life:
+				damage *= 2
+			elif battle.monster.prog_exp != 0 and skill.prog:
+				damage *= 2
 
-		health_used = skill.health
+			health_used = skill.health
+
 		battle.ally_health -= health_used
 		battle.enemy_health -= damage
 
-		skillname = "None"
+		givenskill = None
 
 		# battle win
 		if battle.enemy_health <= 0:
@@ -159,7 +167,7 @@ def battle(request):
 			contain = Contain(character=character, skill=skill)
 			contain.save()
 
-			skillname = skill.name
+			givenskill = skill.name
 
 			try:
 				skillbook = Skillbook.objects.get(group=character.group, skill=skill)
@@ -184,7 +192,7 @@ def battle(request):
 		else:
 			battle_win = False
 
-		return JsonResponse({'battle_win': battle_win, 'skillname': skillname, 'skill': skill.name, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+		return JsonResponse({'battle_win': battle_win, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
 @server_check
 @login_required

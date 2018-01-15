@@ -17,6 +17,8 @@ class SignupForm(UserCreationForm):
 		data = self.cleaned_data['registration_code']
 		try:
 			code = RegistrationCode.objects.filter(code=data)[0]
+			if code.is_used:
+				raise forms.ValidationError(u'가입 코드가 이미 사용되었습니다.')
 		except IndexError as e:
 			raise forms.ValidationError(u'가입 코드가 올바르지 않습니다.')
 		return data

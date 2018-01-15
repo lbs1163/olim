@@ -25,16 +25,32 @@
 			</div>
 			<div class="row">
 				<div class="col s6 center-align">
+					{% if character.skill1 %}
 					<button skillid={{ character.skill1.id }} class="skill waves-effect waves-light btn">{{ character.skill1.name }}</button>
+					{% else %}
+					<button skillid=0 class="skill waves-effect waves-light btn">발버둥치기</button>
+					{% endif %}
 				</div>
 				<div class="col s6 center-align">
-					<button skillid={{ character.skill2.id }} class="skill waves-effect waves-light btn">{{ character.skill2.name  }}</button>
+					{% if character.skill2 %}
+					<button skillid={{ character.skill2.id }} class="skill waves-effect waves-light btn">{{ character.skill2.name }}</button>
+					{% else %}
+					<button skillid=0 class="skill waves-effect waves-light btn">발버둥치기</button>
+					{% endif %}
 				</div>
 				<div class="col s6 center-align">
+					{% if character.skill3 %}
 					<button skillid={{ character.skill3.id }} class="skill waves-effect waves-light btn">{{ character.skill3.name }}</button>
+					{% else %}
+					<button skillid=0 class="skill waves-effect waves-light btn">발버둥치기</button>
+					{% endif %}
 				</div>
 				<div class="col s6 center-align">
+					{% if character.skill4 %}
 					<button skillid={{ character.skill4.id }} class="skill waves-effect waves-light btn">{{ character.skill4.name }}</button>
+					{% else %}
+					<button skillid=0 class="skill waves-effect waves-light btn">발버둥치기</button>
+					{% endif %}
 				</div>
 			</div>
 
