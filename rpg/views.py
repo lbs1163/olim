@@ -281,6 +281,18 @@ def combination(request):
 				elif request.POST.get('real', None) == "true":
 					left_skill_contain.delete()
 					right_skill_contain.delete()
+					contains = Contain.objects.filter(character=character)
+					skills = [contain.skill for contain in contains]
+					if character.skill1 not in skills:
+						character.skill1 = None
+					if character.skill2 not in skills:
+						character.skill2 = None
+					if character.skill3 not in skills:
+						character.skill3 = None
+					if character.skill4 not in skills:
+						character.skill4 = None
+					character.save()
+
 					failedCombination = FailedCombination(group=character.group, skill001=left_skill, skill002=right_skill)
 					failedCombination.save()
 					return JsonResponse({'type': 'combinationDoesNotExist'})
@@ -304,6 +316,17 @@ def combination(request):
 		if request.POST.get('real', None) == "true":
 			left_skill_contain.delete()
 			right_skill_contain.delete()
+			contains = Contain.objects.filter(character=character)
+			skills = [contain.skill for contain in contains]
+			if character.skill1 not in skills:
+				character.skill1 = None
+			if character.skill2 not in skills:
+				character.skill2 = None
+			if character.skill3 not in skills:
+				character.skill3 = None
+			if character.skill4 not in skills:
+				character.skill4 = None
+			character.save()
 			new_contain = Contain(character=character, skill=new_skill)
 			new_contain.save()
 

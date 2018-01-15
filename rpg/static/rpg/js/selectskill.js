@@ -118,7 +118,6 @@ $("button#submit").bind("click", function(e) {
 		url: "/selectskill/",
 		data: { skill1: skill1, skill2: skill2, skill3: skill3, skill4: skill4 },
 	}).done(function(data) {
-		console.log(data);
-		//location.reload();
+		location.reload();
 	});
 });
