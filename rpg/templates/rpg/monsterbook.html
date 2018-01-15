@@ -4,6 +4,7 @@
 {% block content %}
 <div class="container">
     <h1 class="center-align">{{ group }} 도감</h1>
+    <p class="center-align">발견된 몬스터를 눌러 정보를 확인하세요!</p>
     <div class="row">
         <h4 class="center-align">수학</h4>
         <div class="col s1 hide-on-med-and-down">
@@ -22,19 +23,38 @@
         {% for monsterbook in monsterbooklist %}
         {% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
-            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+            <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
             <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4 class="center-align">{{monsterbook.monster.name}}</h4>
                     <div class="row">
-                        <div class="col s4">
+                        <div class="col s12 l4">
                             <img class="responsive-img" src="{{ monster.img.url }}">
                         </div>
-                        <div class="col s8">
+                        <div class="col s12 l8">
                             <p>최고 학점 : {{ monsterbook.grade }}</p>
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                            <h5 class="center-align">몬스터 정보</h5>
+                            {% if monsterbook.grade <= 'D' %}
+                            <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'C' %}
+                            <p>획득 스탯 : 수학 {{monsterbook.monster.phys_exp}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'B' %}
+                            <p>획득 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
+                            {% endif %}
+                            {% if monsterbook.grade == 'A' %}
+                            <p>대사</p>
+                            1. {{monsterbook.monster.dialog1}}<br>
+                            2. {{monsterbook.monster.dialog2}}<br>
+                            3. {{monsterbook.monster.dialog3}}<br>
+                            4. {{monsterbook.monster.dialog4}}<br>
+                            5. {{monsterbook.monster.dialog5}}<br>
+                            (사망시) {{monsterbook.monster.death_dialog}}<br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -71,19 +91,38 @@
         {% for monsterbook in monsterbooklist %}
         {% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
-            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+            <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
             <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4 class="center-align">{{monsterbook.monster.name}}</h4>
                     <div class="row">
-                        <div class="col s4">
+                        <div class="col s12 l4">
                             <img class="responsive-img" src="{{ monster.img.url }}">
                         </div>
-                        <div class="col s8">
+                        <div class="col s12 l8">
                             <p>최고 학점 : {{ monsterbook.grade }}</p>
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                            <h5 class="center-align">몬스터 정보</h5>
+                            {% if monsterbook.grade <= 'D' %}
+                            <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'C' %}
+                            <p>획득 스탯 : 물리 {{monsterbook.monster.phys_exp}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'B' %}
+                            <p>획득 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
+                            {% endif %}
+                            {% if monsterbook.grade == 'A' %}
+                            <p>대사</p>
+                            1. {{monsterbook.monster.dialog1}}<br>
+                            2. {{monsterbook.monster.dialog2}}<br>
+                            3. {{monsterbook.monster.dialog3}}<br>
+                            4. {{monsterbook.monster.dialog4}}<br>
+                            5. {{monsterbook.monster.dialog5}}<br>
+                            (사망시) {{monsterbook.monster.death_dialog}}<br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -120,19 +159,38 @@
         {% for monsterbook in monsterbooklist %}
         {% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
-            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+            <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
             <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4 class="center-align">{{monsterbook.monster.name}}</h4>
                     <div class="row">
-                        <div class="col s4">
+                        <div class="col s12 l4">
                             <img class="responsive-img" src="{{ monster.img.url }}">
                         </div>
-                        <div class="col s8">
+                        <div class="col s12 l8">
                             <p>최고 학점 : {{ monsterbook.grade }}</p>
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                            <h5 class="center-align">몬스터 정보</h5>
+                            {% if monsterbook.grade <= 'D' %}
+                            <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'C' %}
+                            <p>획득 스탯 : 화학 {{monsterbook.monster.phys_exp}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'B' %}
+                            <p>획득 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
+                            {% endif %}
+                            {% if monsterbook.grade == 'A' %}
+                            <p>대사</p>
+                            1. {{monsterbook.monster.dialog1}}<br>
+                            2. {{monsterbook.monster.dialog2}}<br>
+                            3. {{monsterbook.monster.dialog3}}<br>
+                            4. {{monsterbook.monster.dialog4}}<br>
+                            5. {{monsterbook.monster.dialog5}}<br>
+                            (사망시) {{monsterbook.monster.death_dialog}}<br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -169,19 +227,38 @@
         {% for monsterbook in monsterbooklist %}
         {% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
-            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+            <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
             <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4 class="center-align">{{monsterbook.monster.name}}</h4>
                     <div class="row">
-                        <div class="col s4">
+                        <div class="col s12 l4">
                             <img class="responsive-img" src="{{ monster.img.url }}">
                         </div>
-                        <div class="col s8">
+                        <div class="col s12 l8">
                             <p>최고 학점 : {{ monsterbook.grade }}</p>
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                            <h5 class="center-align">몬스터 정보</h5>
+                            {% if monsterbook.grade <= 'D' %}
+                            <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'C' %}
+                            <p>획득 스탯 : 생명 {{monsterbook.monster.phys_exp}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'B' %}
+                            <p>획득 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
+                            {% endif %}
+                            {% if monsterbook.grade == 'A' %}
+                            <p>대사</p>
+                            1. {{monsterbook.monster.dialog1}}<br>
+                            2. {{monsterbook.monster.dialog2}}<br>
+                            3. {{monsterbook.monster.dialog3}}<br>
+                            4. {{monsterbook.monster.dialog4}}<br>
+                            5. {{monsterbook.monster.dialog5}}<br>
+                            (사망시) {{monsterbook.monster.death_dialog}}<br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -218,19 +295,38 @@
         {% for monsterbook in monsterbooklist %}
         {% if monsterbook.monster.name == monster.name %}
         <div class="col s3 m3 l1">
-            <img class="responsive-img waves-effect waves-light modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+            <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
 
             <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
                 <div class="modal-content">
                     <h4 class="center-align">{{monsterbook.monster.name}}</h4>
                     <div class="row">
-                        <div class="col s4">
+                        <div class="col s12 l4">
                             <img class="responsive-img" src="{{ monster.img.url }}">
                         </div>
-                        <div class="col s8">
+                        <div class="col s12 l8">
                             <p>최고 학점 : {{ monsterbook.grade }}</p>
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
+                            <h5 class="center-align">몬스터 정보</h5>
+                            {% if monsterbook.grade <= 'D' %}
+                            <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'C' %}
+                            <p>획득 스탯 : 프밍 {{monsterbook.monster.phys_exp}}</p>
+                            {% endif %}
+                            {% if monsterbook.grade <= 'B' %}
+                            <p>획득 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
+                            {% endif %}
+                            {% if monsterbook.grade == 'A' %}
+                            <p>대사</p>
+                            1. {{monsterbook.monster.dialog1}}<br>
+                            2. {{monsterbook.monster.dialog2}}<br>
+                            3. {{monsterbook.monster.dialog3}}<br>
+                            4. {{monsterbook.monster.dialog4}}<br>
+                            5. {{monsterbook.monster.dialog5}}<br>
+                            (사망시) {{monsterbook.monster.death_dialog}}<br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
