@@ -233,8 +233,11 @@ def combination(request):
 			return JsonResponse({'type': 'skillDoesNotExist'})
 		
 		try:
-			left_skill_contain = Contain.objects.filter(character=character, skill=left_skill)
-			right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)
+			left_skill_contain = Contain.objects.filter(character=character, skill=left_skill)[0]
+			if left_skill == right_skill:
+				right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)[1]
+			else:
+				right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)[0]
 		except:
 			return JsonResponse({'type': 'characterDoesNotHaveSkill'})
 
@@ -295,7 +298,34 @@ def combination(request):
 def selectskill(request):
 	character = Character.objects.get(user=request.user.id)
 	contains = Contain.objects.filter(character=character).order_by('skill')
-	skills = [contain.skill for contain in contains]
+	skills = list(set([contain.skill for contain in contains]))
 
 	if request.method == 'GET':
-		return render(request, 'rpg/selectskill.html', {'skills': skills})
+		return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
+
+	elif request.method == 'POST':
+		try:
+			skill1 = Skill.objects.get(id=request.POST.get("skill1", None))
+		except:
+			skill1 = None
+		try:
+			skill2 = Skill.objects.get(id=request.POST.get("skill2", None))
+		except:
+			skill2 = None
+		try:
+			skill3 = Skill.objects.get(id=request.POST.get("skill3", None))
+		except:
+			skill3 = None
+		try:
+			skill4 = Skill.objects.get(id=request.POST.get("skill4", None))
+		except:
+			skill4 = None
+
+		character.skill1 = skill1
+		character.skill2 = skill2
+		character.skill3 = skill3
+		character.skill4 = skill4
+
+		character.save()
+
+		return JsonResponse({'type': 'selectSuccess'})

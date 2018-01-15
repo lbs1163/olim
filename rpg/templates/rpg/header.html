@@ -8,6 +8,7 @@
 				<li><a href="{% url 'signup' %}">회원가입</a></li>
 				<li><a href="{% url 'login' %}">로그인</a></li>
 				{% else %}
+				<li><a href="{% url 'selectskill' %}">스킬 장착하기</a></li>
 				<li><a href="{% url 'combination' %}">스킬 조합하기</a></li>
 				<li><a href="{% url 'monsterbook' %}">몬스터 도감</a></li>
 				<li><a href="{% url 'skillbook' %}">스킬 도감</a></li>
@@ -20,6 +21,7 @@
 				<li><a href="{% url 'signup' %}">회원가입</a></li>
 				<li><a href="{% url 'login' %}">로그인</a></li>
 				{% else %}
+				<li><a href="{% url 'selectskill' %}">스킬 장착하기</a></li>
 				<li><a href="{% url 'combination' %}">스킬 조합하기</a></li>
 				<li><a href="{% url 'monsterbook' %}">몬스터 도감</a></li>
 				<li><a href="{% url 'skillbook' %}">스킬 도감</a></li>
