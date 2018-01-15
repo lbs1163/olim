@@ -229,7 +229,7 @@ def skillbook(request):
 		allSkillsWithBoolean = [{'skill': skill, 'is_owned': skill in skills} for skill in allSkills]
 		allCombinations = Combination.objects.all()
 		
-		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean, 'skillbooks': skillbooks, 'allCombinations': allCombinations})
+		return render(request, 'rpg/skillbook.html', {'group': character.group, 'allSkillsWithBoolean': allSkillsWithBoolean, 'skillbooks': skillbooks, 'allCombinations': allCombinations})
 
 @server_check
 @login_required
