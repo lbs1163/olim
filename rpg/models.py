@@ -7,7 +7,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
+@python_2_unicode_compatible
+class Server(models.Model):
+	is_open = models.BooleanField(default=True)
+
+	def __str__(self):
+		return unicode(self.is_open)
 
 def random_string():
 	return unicode(''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10)))

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from functools import wraps
 from collections import Counter
 import random
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from .forms import SignupForm
@@ -14,6 +15,21 @@ from .models import *
 
 # Create your views here.
 
+def server_check(original_function):
+	@wraps(original_function)
+	def wrapper(*args, **kwargs):
+		try:
+			server = Server.objects.all()[0]
+		except:
+			return HttpResponse("Please check the server instance of DB")
+
+		if not server.is_open:
+			return render(args[0], 'rpg/close.html')
+		else:
+			return original_function(*args, **kwargs)
+	return wrapper
+
+@server_check
 @login_required
 def index(request):
 	if request.method == 'GET':
@@ -59,11 +75,13 @@ def signup(request):
 		else:
 			return render(request, 'rpg/signup.html', { 'form': form })
 
+@server_check
 @login_required
 def map(request):
 	maps = Map.objects.all()
 	return render(request, 'rpg/map.html', { 'maps': maps })
 
+@server_check
 @login_required
 def battle(request):
 	character = Character.objects.get(user=request.user.id)
@@ -168,6 +186,7 @@ def battle(request):
 
 		return JsonResponse({'battle_win': battle_win, 'skillname': skillname, 'skill': skill.name, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
+@server_check
 @login_required
 def monsterbook(request):
 	if request.method == 'GET':
@@ -183,6 +202,7 @@ def monsterbook(request):
 		
 		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist, 'monsterbookmonsters': monsterbookmonsters})
 
+@server_check
 @login_required
 def skillbook(request):
 	if request.method == 'GET':
@@ -195,6 +215,7 @@ def skillbook(request):
 		
 		return render(request, 'rpg/skillbook.html', {'allSkillsWithBoolean': allSkillsWithBoolean, 'skillbooks': skillbooks, 'allCombinations': allCombinations})
 
+@server_check
 @login_required
 def combination(request):
 	character = Character.objects.get(user=request.user.id)
@@ -269,6 +290,7 @@ def combination(request):
 
 		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})
 
+@server_check
 @login_required
 def selectskill(request):
 	character = Character.objects.get(user=request.user.id)
