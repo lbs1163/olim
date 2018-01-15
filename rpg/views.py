@@ -72,6 +72,10 @@ def battle(request):
 	except ObjectDoesNotExist:
 		map_id = request.GET.get('id', 1)
 		map = Map.objects.get(id=map_id)
+		
+		if not map.is_open:
+			map = Map.objects.filter(is_open=True)[0]
+
 		monster = random.choice(Monster.objects.filter(map=map))
 		battle = Battle(character=character, monster=monster, enemy_health = monster.health)
 		battle.save()

@@ -6,7 +6,11 @@
 	<div class="row">
 		{% for map in maps %}
 		<div class="col s12 m6 l3">
+			{% if map.is_open %}
 			<a href="/battle/?id={{map.id}}" style="margin-bottom: 10px;" class="btn waves-effect waves-light">{{ map.name }}</a>
+			{% else %}
+			<a href="#" style="margin-bottom: 10px;" class="btn disabled">{{ map.name }}</a>
+			{% endif %}
 		</div>
 		{% endfor %}
 	</div>
