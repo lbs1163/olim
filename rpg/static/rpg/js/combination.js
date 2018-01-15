@@ -127,4 +127,4 @@ $("button#submit").bind("click", function(e) {
 	}
 });
 
-$("button.skill").bind("click", itemEventHandler);
+$("div#select button.skill").bind("click", itemEventHandler);

@@ -24,70 +24,72 @@
 	</div>
 	<button id="submit" class="btn waves-effect waves-light">조합하기</button>
 
-	<h3>일반 스킬</h3>
-	<div class="row" id="normal">
-		{% for skill in skills %}
-		{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}</button>
+	<div id="select">
+		<h3>일반 스킬</h3>
+		<div class="row" id="normal">
+			{% for skill in skills %}
+			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
-	</div>
 
-	<h3>수학 스킬</h3>
-	<div class="row" id="math">
-		{% for skill in skills %}
-		{% if skill.math %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}}</button>
+		<h3>수학 스킬</h3>
+		<div class="row" id="math">
+			{% for skill in skills %}
+			{% if skill.math %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
-	</div>
 
-	<h3>물리 스킬</h3>
-	<div class="row" id="phys">
-		{% for skill in skills %}
-		{% if skill.phys %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}}</button>
+		<h3>물리 스킬</h3>
+		<div class="row" id="phys">
+			{% for skill in skills %}
+			{% if skill.phys %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
-	</div>
 
-	<h3>화학 스킬</h3>
-	<div class="row" id="chem">
-		{% for skill in skills %}
-		{% if skill.chem %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}}</button>
+		<h3>화학 스킬</h3>
+		<div class="row" id="chem">
+			{% for skill in skills %}
+			{% if skill.chem %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
-	</div>
 
-	<h3>생물 스킬</h3>
-	<div class="row" id="life">
-		{% for skill in skills %}
-		{% if skill.life %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}}</button>
+		<h3>생물 스킬</h3>
+		<div class="row" id="life">
+			{% for skill in skills %}
+			{% if skill.life %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
-	</div>
 
-	<h3>프밍 스킬</h3>
-	<div class="row" id="prog">
-		{% for skill in skills %}
-		{% if skill.prog %}
-		<div class="col s12 m6 l4 xl3">
-			<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}}</button>
+		<h3>프밍 스킬</h3>
+		<div class="row" id="prog">
+			{% for skill in skills %}
+			{% if skill.prog %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}}</button>
+			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
-		{% endif %}
-		{% endfor %}
 	</div>
 </div>
 <script src="{% static 'rpg/js/combination.js' %}"></script>
