@@ -88,7 +88,7 @@ class FailedCombination(models.Model):
 	skill002 = models.ForeignKey(Skill, related_name='skill002')
 
 	def __str__(self):
-		return u"[" + self.group.name + u"] " + self.skill001.name + u" + " + self.skill002.name
+		return u"[" + self.group.group_name + u"] " + self.skill001.name + u" + " + self.skill002.name
 @python_2_unicode_compatible
 class Combination(models.Model):
 	skill01 = models.ForeignKey(Skill, related_name='skill01')

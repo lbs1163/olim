@@ -60,13 +60,20 @@ def signup(request):
 			return render(request, 'rpg/signup.html', { 'form': form })
 
 @login_required
+def map(request):
+	maps = Map.objects.all()
+	return render(request, 'rpg/map.html', { 'maps': maps })
+
+@login_required
 def battle(request):
 	character = Character.objects.get(user=request.user.id)
 	try:
 		battle = Battle.objects.get(character=character)
 	except ObjectDoesNotExist:
-		monster = Monster.objects.all()[0]
-		battle = Battle(character=character, monster=monster)
+		map_id = request.GET.get('id', 1)
+		map = Map.objects.get(id=map_id)
+		monster = random.choice(Monster.objects.filter(map=map))
+		battle = Battle(character=character, monster=monster, enemy_health = monster.health)
 		battle.save()
 
 	if request.method == 'GET':
@@ -104,29 +111,58 @@ def battle(request):
 
 		health_used = skill.health
 		battle.ally_health -= health_used
-		battle.enemy_health += damage
+		battle.enemy_health -= damage
+
+		skillname = "None"
 
 		# battle win
-		if battle.enemy_health >= 100:
-			battle.enemy_health = 100
+		if battle.enemy_health <= 0:
+			battle.enemy_health = 0
 			character.math += battle.monster.math_exp
 			character.phys += battle.monster.phys_exp
 			character.chem += battle.monster.chem_exp
 			character.life += battle.monster.life_exp
 			character.prog += battle.monster.prog_exp
 			character.save()
+			dialog = battle.monster.death_dialog
 
-		dialogs = [battle.monster.dialog1, battle.monster.dialog2, battle.monster.dialog3]
-		dialog = random.choice(dialogs)
+			num = random.randrange(1, 100)
+
+			if num <= battle.monster.drop_rate:
+				skill = battle.monster.skill
+			else:
+				normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False)
+				skill = random.choice(normalskills)
+
+			contain = Contain(character=character, skill=skill)
+			contain.save()
+
+			skillname = skill.name
+
+			try:
+				skillbook = Skillbook.objects.get(group=character.group, skill=skill)
+			except:
+				skillbook = Skillbook(group=character.group, skill=skill, finder=character)
+				skillbook.save()
+
+			try:
+				monsterbook = Monsterbook.objects.get(group=character.group, monster=battle.monster)
+			except:
+				monsterbook = Monsterbook(group=character.group, monster=battle.monster, grade="A+", finder=character, champion=character)
+				monsterbook.save()
+		else:
+			dialogs = [battle.monster.dialog1, battle.monster.dialog2, battle.monster.dialog3, battle.monster.dialog4, battle.monster.dialog5]
+			dialog = random.choice(dialogs)
+		
 		battle.save()
 
-		if battle.enemy_health == 100:
+		if battle.enemy_health == 0:
 			battle_win = True
 			battle.delete()
 		else:
 			battle_win = False
 
-		return JsonResponse({'battle_win': battle_win, 'skill': skill.name, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+		return JsonResponse({'battle_win': battle_win, 'skillname': skillname, 'skill': skill.name, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
 @login_required
 def monsterbook(request):

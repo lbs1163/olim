@@ -1,0 +1,14 @@
+{% extends 'rpg/base.html' %}
+
+{% block content %}
+<div class="container center-align">
+	<h1>공부하기</h1>
+	<div class="row">
+		{% for map in maps %}
+		<div class="col s12 m6 l3">
+			<a href="/battle/?id={{map.id}}" style="margin-bottom: 10px;" class="btn waves-effect waves-light">{{ map.name }}</a>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

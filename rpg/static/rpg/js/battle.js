@@ -36,39 +36,47 @@ var buttonOn = function() {
 }
 
 var buttonOff = function() {
-	$("button").off();
+	$("button").unbind("click");
 }
 
 var dialogStart = function(data) {
 	var str1 = "체력 " + data.health_used + "(을)를 사용하여 " + data.skill + " 공격!"
 	$("#dialog").html(str1);
 	$("#ally_health").html("체력: " + data.ally_health);
-	$("#dialog").on("click", function() {
-		var str2 = data.monster + "(은)는 " + data.damage + "만큼 이해당했다.";
+	$("html").on("click", function() {
+		var str2 = data.monster + "(은)는 " + data.damage + "의 피해를 입었다.";
 		$("#dialog").html(str2);
-		$("#enemy_health").html("이해도: " + data.enemy_health);
-		$("#dialog").off();
-		$("#dialog").on("click", function() {
-			if(data.battle_win) {
-				$("#dialog").html(data.monster + "(을)를 이해했다!");
-				$("#dialog").off();
-				$("#dialog").on("click", function(){ window.location.replace("/"); });
-			} else {
-				$("#dialog").html(data.dialog);
-				$("#dialog").off();
-				buttonOn();
-			}
+		$("#enemy_health").html("체력: " + data.enemy_health);
+		$("html").off();
+		$("html").on("click", function() {
+			$("#dialog").html(data.dialog);
+			$("html").off();
+			$("html").on("click", function() {
+				if(data.battle_win) {
+					$("#dialog").html(data.monster + "(을)를 이해했다!");
+					$("html").off();
+					$("html").on("click", function(){
+						$("#dialog").html(data.skillname + " 스킬을 획득했다!");
+						$("html").off();
+						$("html").on("click", function(){ window.location.replace("/"); });
+					});
+				} else {
+					$("#dialog").html("다음엔 무엇을 할까?");
+					$("html").off();
+					buttonOn();
+				}
+			});
 		})
 	})
 }
 
 var useSkill = function(skillid) {
+	buttonOff();
 	$.ajax({
 		method: "POST",
 		url: "/battle/",
 		data: { skillid: skillid },
 	}).done(function(data) {
-		buttonOff();
 		dialogStart(data);
 	});
 }
