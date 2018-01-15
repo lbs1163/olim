@@ -12,4 +12,5 @@ urlpatterns = [
 	url(r'^battle/$', battle, name='battle'),
 	url(r'^monsterbook/$', monsterbook, name='monsterbook'),
 	url(r'^skillbook/$', skillbook, name='skillbook'),
+	url(r'^selectskill/$', selectskill, name='selectskill'),
 ]

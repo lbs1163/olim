@@ -1,0 +1,93 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container center-align">
+	<h1>스킬 선택</h1>
+
+	<div class="row">
+		<h3>선택한 스킬</h3>
+		<div id="skill01" class="col s12 m6 offset-m3 l4 xl3">
+			<button class="skill btn" id="skill01">스킬을 골라주세요</button>
+		</div>
+		<div id="skill02" class="col s12 m6 offset-m3 l4 xl3">
+			<button class="skill btn" id="skill02">스킬을 골라주세요</button>
+		</div>
+		<div id="skill03" class="col s12 m6 offset-m3 l4 xl3">
+			<button class="skill btn" id="skill03">스킬을 골라주세요</button>
+		</div>
+		<div id="skill04" class="col s12 m6 offset-m3 l4 xl3">
+			<button class="skill btn" id="skill04">스킬을 골라주세요</button>
+		</div>
+	</div>
+
+	<h3>보유 스킬</h3>
+	<h5>일반 스킬</h5>
+	<div class="row" id="normal">
+		{% for skill in skills %}
+		{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h5>수학 스킬</h5>
+	<div class="row" id="math">
+		{% for skill in skills %}
+		{% if skill.math %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h5>물리 스킬</h5>
+	<div class="row" id="phys">
+		{% for skill in skills %}
+		{% if skill.phys %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h5>화학 스킬</h5>
+	<div class="row" id="chem">
+		{% for skill in skills %}
+		{% if skill.chem %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h5>생물 스킬</h5>
+	<div class="row" id="life">
+		{% for skill in skills %}
+		{% if skill.life %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h5>프밍 스킬</h5>
+	<div class="row" id="prog">
+		{% for skill in skills %}
+		{% if skill.prog %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}}</button>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>
+<script src="{% static 'rpg/js/selectskill.js' %}"></script>
+{% endblock %}
