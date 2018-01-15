@@ -118,7 +118,7 @@ def battle(request):
 				skillname = skill.name
 			except ObjectDoesNotExist:
 				return JsonResponse({'monster': battle.monster.name, 'dialog': u"뭔가 잘못되었다", 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
-		
+			
 			# calculate damage
 			damage = skill.damage
 			if skill.math:
@@ -144,6 +144,9 @@ def battle(request):
 				damage *= 2
 
 			health_used = skill.health
+
+		if battle.ally_health < health_used:
+			return JsonResponse({'type': 'healthNotEnough'})
 
 		battle.ally_health -= health_used
 		battle.enemy_health -= damage

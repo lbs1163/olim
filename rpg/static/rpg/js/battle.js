@@ -98,7 +98,16 @@ var useSkill = function(skillid) {
 		url: "/battle/",
 		data: { skillid: skillid },
 	}).done(function(data) {
-		dialogStart(data);
+		if (data.type && data.type == "healthNotEnough") {
+			$("#dialog").html("그 기술을 쓰기엔 체력이 부족하다!");
+			$("html").on("click", function(e) {
+				$("#dialog").html("다음엔 무엇을 할까?");
+				$("html").off();
+				buttonOn();
+			});
+		} else {
+			dialogStart(data);
+		}
 	});
 }
 
