@@ -150,6 +150,7 @@ def battle(request):
 
 		battle.ally_health -= health_used
 		battle.enemy_health -= damage
+		battle.turn += 1
 
 		givenskill = None
 
@@ -163,6 +164,13 @@ def battle(request):
 			character.prog += battle.monster.prog_exp
 			character.save()
 			dialog = battle.monster.death_dialog
+
+			grades = Grade.objects.all().order_by('turn')
+
+			for grade in grades:
+				if battle.turn <= grade.turn:
+					bookgrade = grade
+					break
 
 			num = random.randrange(1, 100)
 
@@ -185,8 +193,12 @@ def battle(request):
 
 			try:
 				monsterbook = Monsterbook.objects.get(group=character.group, monster=battle.monster)
+				if monsterbook.grade.turn > bookgrade.turn:
+					monsterbook.grade = bookgrade
+					monsterbook.champion = character
+					monsterbook.save()
 			except:
-				monsterbook = Monsterbook(group=character.group, monster=battle.monster, grade="A+", finder=character, champion=character)
+				monsterbook = Monsterbook(group=character.group, monster=battle.monster, grade=bookgrade, finder=character, champion=character)
 				monsterbook.save()
 		else:
 			dialogs = [battle.monster.dialog1, battle.monster.dialog2, battle.monster.dialog3, battle.monster.dialog4, battle.monster.dialog5]

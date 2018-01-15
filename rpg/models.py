@@ -60,6 +60,14 @@ class Clothes(models.Model):
 		return self.name
 
 @python_2_unicode_compatible
+class Grade(models.Model):
+	name = models.CharField(max_length=5)
+	turn = models.IntegerField(default=1)
+
+	def __str__(self):
+		return self.name + u": " + unicode(self.turn)
+
+@python_2_unicode_compatible
 class Skill(models.Model):
 	name = models.CharField(max_length=20)
 	math = models.BooleanField(default=False)
@@ -187,6 +195,7 @@ class Battle(models.Model):
 	monster = models.ForeignKey(Monster)
 	ally_health = models.IntegerField(default=100)
 	enemy_health = models.IntegerField(default=0)
+	turn = models.IntegerField(default=0)
 
 	def __str__(self):
 		return unicode(self.character)
@@ -203,7 +212,7 @@ class Skillbook(models.Model):
 @python_2_unicode_compatible
 class Monsterbook(models.Model):
 	group = models.ForeignKey(Group)
-	grade = models.CharField(max_length=20, null=True)
+	grade = models.ForeignKey(Grade, default=1)
 	monster = models.ForeignKey(Monster)
 	finder = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='finder')
 	champion = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='champion')
