@@ -101,6 +101,11 @@ def battle(request):
 	if request.method == 'GET':
 		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character })
 	elif request.method == 'POST':
+
+		if request.POST.get('type', False) == 'runaway':
+			battle.delete()
+			return JsonResponse({'type': 'runawaySuccess'})
+		
 		skillid = request.POST['skillid']
 
 		if skillid == "0":

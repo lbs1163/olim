@@ -29,14 +29,35 @@ $.ajaxSetup({
 });
 
 var buttonOn = function() {
-	$("button").on("click", function() {
+	$("button.skill").on("click", function() {
 		var skillid = $(this).attr("skillid");
 		useSkill(skillid);
 	});
+
+	$("button#runaway").on("click", function() {
+		$.ajax({
+			method: "POST",
+			url: "/battle/",
+			data: {"type": "runaway"}
+		}).done(function(data){
+			if (data.type == "runawaySuccess") {
+				buttonOff();
+				$("#dialog").html("무사히 도망쳤다!");
+				$("html").on("click", function() {
+					window.location.replace("/");
+				});
+			} else {
+				location.reload();
+			}
+		});
+	});
+
+	$("button").removeClass("disabled");
 }
 
 var buttonOff = function() {
 	$("button").unbind("click");
+	$("button").addClass("disabled");
 }
 
 var dialogStart = function(data) {
