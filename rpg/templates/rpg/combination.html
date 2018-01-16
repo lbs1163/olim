@@ -27,10 +27,10 @@
 	<div id="select">
 		<h3>일반 스킬</h3>
 		<div class="row" id="normal">
-			{% for skill in skills %}
-			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
+			{% for dict in skillswithcount %}
+			{% if not dict.skill.math and not dict.skill.phys and not dict.skill.chem and not dict.skill.life and not dict.skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="normal" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -38,10 +38,10 @@
 
 		<h3>수학 스킬</h3>
 		<div class="row" id="math">
-			{% for skill in skills %}
-			{% if skill.math %}
+			{% for dict in skillswithcount %}
+			{% if dict.skill.math %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="math" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -49,10 +49,10 @@
 
 		<h3>물리 스킬</h3>
 		<div class="row" id="phys">
-			{% for skill in skills %}
-			{% if skill.phys %}
+			{% for dict in skillswithcount %}
+			{% if dict.skill.phys %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="phys" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -60,10 +60,10 @@
 
 		<h3>화학 스킬</h3>
 		<div class="row" id="chem">
-			{% for skill in skills %}
-			{% if skill.chem %}
+			{% for dict in skillswithcount %}
+			{% if dict.skill.chem %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="chem" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -71,10 +71,10 @@
 
 		<h3>생물 스킬</h3>
 		<div class="row" id="life">
-			{% for skill in skills %}
-			{% if skill.life %}
+			{% for dict in skillswithcount %}
+			{% if dict.skill.life %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="life" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -82,10 +82,10 @@
 
 		<h3>프밍 스킬</h3>
 		<div class="row" id="prog">
-			{% for skill in skills %}
-			{% if skill.prog %}
+			{% for dict in skillswithcount %}
+			{% if dict.skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="prog" skillid="{{dict.id}}">{{dict.skill.name}} {{dict.skill.count}}개</button>
 			</div>
 			{% endif %}
 			{% endfor %}

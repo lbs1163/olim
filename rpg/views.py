@@ -249,9 +249,10 @@ def combination(request):
 	character = Character.objects.get(user=request.user.id)
 	contains = Contain.objects.filter(character=character).order_by('skill')
 	skills = [contain.skill for contain in contains]
+	skillswithcount = [{'skill':skill, 'count': skills.count(skill)} for skill in skills]
 
 	if request.method == 'GET':
-		return render(request, 'rpg/combination.html', {'skills': skills})
+		return render(request, 'rpg/combination.html', {'skillswithcount': skillswithcount})
 
 	elif request.method == 'POST':
 		try:
