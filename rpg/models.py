@@ -79,6 +79,20 @@ class Skill(models.Model):
 	damage = models.IntegerField(default=0)
 	limit = models.IntegerField(default=0)
 
+	def type(self):
+		if self.math:
+			return "math"
+		elif self.phys:
+			return "phys"
+		elif self.chem:
+			return "chem"
+		elif self.life:
+			return "life"
+		elif self.prog:
+			return "prog"
+		else:
+			return "normal"
+
 	def __str__(self):
 		if self.math:
 			category = u"[수학] "

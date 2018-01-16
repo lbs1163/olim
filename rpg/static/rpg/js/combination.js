@@ -31,6 +31,7 @@ $.ajaxSetup({
 var left = false, right = false;
 
 var itemEventHandler = function(e) {
+	e.preventDefault();
 	if (left == false) {
 		var temp = $(this);
 		$(this).parent().remove();
@@ -66,31 +67,34 @@ var itemEventHandler = function(e) {
 	}
 }
 
-$("#skill-left").bind("click", function(e) {
+$("#skill-left").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (left == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
 		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", itemEventHandler)
+		temp.children().first().bind("click touchstart", itemEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		left = false;
 		$("#skill-combined").children().first().html("?????");
 	}
 });
 
-$("#skill-right").bind("click", function(e) {
+$("#skill-right").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (right == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
 		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", itemEventHandler)
+		temp.children().first().bind("click touchstart", itemEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		right = false;
 		$("#skill-combined").children().first().html("?????");
 	}
 });
 
-$("button#submit").bind("click", function(e) {
+$("button#submit").bind("click touchstart", function(e) {
+	e.preventDefault();
 	var combined = $("#skill-combined").children().first().attr("combined");
 	var left_skill = $("#skill-left").children().first().attr("skillid");
 	var right_skill = $("#skill-right").children().first().attr("skillid");
@@ -127,4 +131,4 @@ $("button#submit").bind("click", function(e) {
 	}
 });
 
-$("div#select button.skill").bind("click", itemEventHandler);
+$("div#select button.skill").bind("click touchstart", itemEventHandler);

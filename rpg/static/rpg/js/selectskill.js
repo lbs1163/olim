@@ -28,12 +28,9 @@ $.ajaxSetup({
 	}
 });
 
-var skill1 = false;
-var skill2 = false;
-var skill3 = false;
-var skill4 = false;
-
 var skillEventHandler = function(e) {
+	e.preventDefault();
+
 	if (skill1 == false) {
 		var temp = $(this);
 		$(this).parent().remove();
@@ -61,53 +58,59 @@ var skillEventHandler = function(e) {
 	}
 }
 
-$("div#select button.skill").bind("click", skillEventHandler);
+$("div#select button.skill").bind("click touchstart", skillEventHandler);
+$("div#select button.skill.disabled").unbind("click touchstart");
 
-$("#skill1").bind("click", function(e) {
+$("#skill1").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (skill1 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
-		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", skillEventHandler)
+		$(this).append('<button class="skill btn"></button>');
+		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill1 = false;
 	}
 });
 
-$("#skill2").bind("click", function(e) {
+$("#skill2").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (skill2 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
-		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", skillEventHandler)
+		$(this).append('<button class="skill btn"></button>');
+		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill2 = false;
 	}
 });
 
-$("#skill3").bind("click", function(e) {
+$("#skill3").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (skill3 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
-		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", skillEventHandler)
+		$(this).append('<button class="skill btn"></button>');
+		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill3 = false;
 	}
 });
 
-$("#skill4").bind("click", function(e) {
+$("#skill4").bind("click touchstart", function(e) {
+	e.preventDefault();
 	if (skill4 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
 		$(this).children().first().remove();
-		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click", skillEventHandler)
+		$(this).append('<button class="skill btn"></button>');
+		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill4 = false;
 	}
 });
 
-$("button#submit").bind("click", function(e) {
+$("button#submit").bind("click touchstart", function(e) {
+	e.preventDefault();
 	var skill1 = $("#skill1").children().first().attr("skillid");
 	var skill2 = $("#skill2").children().first().attr("skillid");
 	var skill3 = $("#skill3").children().first().attr("skillid");

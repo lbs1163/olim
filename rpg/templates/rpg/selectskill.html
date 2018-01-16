@@ -3,38 +3,38 @@
 
 {% block content %}
 
+<style>
+button.skill {
+	width: 250px;
+	padding-left: 0;
+	padding-right: 0;
+}
+</style>
+
 <div class="container center-align">
 	<h1>스킬 선택</h1>
-
-	<div class="row">
-		<h3>현재 장착중인 스킬</h3>
-		<div class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">{{ character.skill1.name }}</button>
-		</div>
-		<div class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">{{ character.skill2.name }}</button>
-		</div>
-		<div class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">{{ character.skill3.name }}</button>
-		</div>
-		<div class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">{{ character.skill4.name }}</button>
-		</div>
-	</div>
+	<p>스킬을 4개보다 부족하게 선택할 경우 빈 칸은 '발버둥치기' 스킬로 대체됩니다.</p>
+	<p>스킬은 '스킬이름(소모체력, 데미지)'로 표시됩니다.</p>
 	<div class="row">
 		<h3>선택할 스킬</h3>
-		<div id="skill1" class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">스킬을 골라주세요</button>
+		<div id="skill1" class="col s12 m6 offset-m3 l6 xl3">
+			<button class="skill btn" type="{{ character.skill1.type }}" skillid="{{character.skill1.id}}">{% if character.skill1 %}{{ character.skill1.name }}({{character.skill1.health}},{{character.skill1.damage}}){% endif %}</button>
 		</div>
-		<div id="skill2" class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">스킬을 골라주세요</button>
+		<div id="skill2" class="col s12 m6 offset-m3 l6 xl3">
+			<button class="skill btn" type="{{ character.skill2.type }}" skillid="{{character.skill2.id}}">{% if character.skill2 %}{{ character.skill2.name }}({{character.skill2.health}},{{character.skill2.damage}}){% endif %}</button>
 		</div>
-		<div id="skill3" class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">스킬을 골라주세요</button>
+		<div id="skill3" class="col s12 m6 offset-m3 l6 xl3">
+			<button class="skill btn" type="{{ character.skill3.type }}" skillid="{{character.skill3.id}}">{% if character.skill3 %}{{ character.skill3.name }}({{character.skill3.health}},{{character.skill3.damage}}){% endif %}</button>
 		</div>
-		<div id="skill4" class="col s12 m6 offset-m3 l4 xl3">
-			<button class="skill btn">스킬을 골라주세요</button>
+		<div id="skill4" class="col s12 m6 offset-m3 l6 xl3">
+			<button class="skill btn" type="{{ character.skill4.type }}" skillid="{{character.skill4.id}}">{% if character.skill4 %}{{ character.skill4.name }}({{character.skill4.health}},{{character.skill4.damage}}){% endif %}</button>
 		</div>
+		<script>
+			var skill1 = {% if character.skill1 %} true {% else %} false {% endif %}
+			var skill2 = {% if character.skill2 %} true {% else %} false {% endif %}
+			var skill3 = {% if character.skill3 %} true {% else %} false {% endif %}
+			var skill4 = {% if character.skill4 %} true {% else %} false {% endif %}
+		</script>
 	</div>
 	<button id="submit" class="btn waves-effect waves-light">장착하기</button>
 
@@ -45,7 +45,7 @@
 			{% for skill in skills %}
 			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -56,7 +56,7 @@
 			{% for skill in skills %}
 			{% if skill.math %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn {% if skill.limit > character.math %} disabled {% endif %}" type="math" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -67,7 +67,7 @@
 			{% for skill in skills %}
 			{% if skill.phys %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn {% if skill.limit > character.phys %} disabled {% endif %}" type="phys" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -78,7 +78,7 @@
 			{% for skill in skills %}
 			{% if skill.chem %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn {% if skill.limit > character.chem %} disabled {% endif %}" type="chem" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -89,7 +89,7 @@
 			{% for skill in skills %}
 			{% if skill.life %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn {% if skill.limit > character.life %} disabled {% endif %}" type="life" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -100,7 +100,7 @@
 			{% for skill in skills %}
 			{% if skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}}</button>
+				<button class="skill btn {% if skill.limit > character.prog %} disabled {% endif %}" type="prog" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}

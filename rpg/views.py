@@ -109,7 +109,7 @@ def battle(request):
 		skillid = request.POST['skillid']
 
 		if skillid == "0":
-			damage = random.randrange(1, 10)
+			damage = 1
 			skillname = u"발버둥치기"
 			health_used = 5
 		else:
@@ -293,17 +293,6 @@ def combination(request):
 				elif request.POST.get('real', None) == "true":
 					left_skill_contain.delete()
 					right_skill_contain.delete()
-					contains = Contain.objects.filter(character=character)
-					skills = [contain.skill for contain in contains]
-					if character.skill1 not in skills:
-						character.skill1 = None
-					if character.skill2 not in skills:
-						character.skill2 = None
-					if character.skill3 not in skills:
-						character.skill3 = None
-					if character.skill4 not in skills:
-						character.skill4 = None
-					character.save()
 
 					failedCombination = FailedCombination(group=character.group, skill001=left_skill, skill002=right_skill)
 					failedCombination.save()
@@ -328,17 +317,6 @@ def combination(request):
 		if request.POST.get('real', None) == "true":
 			left_skill_contain.delete()
 			right_skill_contain.delete()
-			contains = Contain.objects.filter(character=character)
-			skills = [contain.skill for contain in contains]
-			if character.skill1 not in skills:
-				character.skill1 = None
-			if character.skill2 not in skills:
-				character.skill2 = None
-			if character.skill3 not in skills:
-				character.skill3 = None
-			if character.skill4 not in skills:
-				character.skill4 = None
-			character.save()
 			new_contain = Contain(character=character, skill=new_skill)
 			new_contain.save()
 
@@ -355,27 +333,40 @@ def selectskill(request):
 		return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
 
 	elif request.method == 'POST':
-		try:
-			skill1 = Skill.objects.get(id=request.POST.get("skill1", None))
-		except:
-			skill1 = None
-		try:
-			skill2 = Skill.objects.get(id=request.POST.get("skill2", None))
-		except:
-			skill2 = None
-		try:
-			skill3 = Skill.objects.get(id=request.POST.get("skill3", None))
-		except:
-			skill3 = None
-		try:
-			skill4 = Skill.objects.get(id=request.POST.get("skill4", None))
-		except:
-			skill4 = None
 
-		character.skill1 = skill1
-		character.skill2 = skill2
-		character.skill3 = skill3
-		character.skill4 = skill4
+		if character.skill1 is not None:
+			Contain.objects.create(character=character, skill=character.skill1)
+		if character.skill2 is not None:
+			Contain.objects.create(character=character, skill=character.skill2)
+		if character.skill3 is not None:
+			Contain.objects.create(character=character, skill=character.skill3)
+		if character.skill4 is not None:
+			Contain.objects.create(character=character, skill=character.skill4)
+
+		def getSkillOrNone(skillstring, existingSkill):
+			try:
+				skill = Skill.objects.get(id=request.POST.get(skillstring, None))
+				contain = Contain.objects.filter(character=character, skill=skill)[0]
+				if skill.math and character.math < skill.limit:
+					return None
+				elif skill.phys and character.phys < skill.limit:
+					return None
+				elif skill.chem and character.chem < skill.limit:
+					return None
+				elif skill.life and character.life < skill.limit:
+					return None
+				elif skill.prog and character.prog < skill.limit:
+					return None
+				else:
+					contain.delete()
+					return skill
+			except:
+				return None
+
+		character.skill1 = getSkillOrNone("skill1", character.skill1)
+		character.skill2 = getSkillOrNone("skill2", character.skill2)
+		character.skill3 = getSkillOrNone("skill3", character.skill3)
+		character.skill4 = getSkillOrNone("skill4", character.skill4)
 
 		character.save()
 
