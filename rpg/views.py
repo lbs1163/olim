@@ -109,7 +109,7 @@ def battle(request):
 		skillid = request.POST['skillid']
 
 		if skillid == "0":
-			damage = 1
+			damage = random.randrange(1,5)
 			skillname = u"발버둥치기"
 			health_used = 5
 		else:
