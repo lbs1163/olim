@@ -28,6 +28,32 @@ $.ajaxSetup({
     }
 });
 
+var battle = new Audio('/static/rpg/sound/battle.mp3');
+var select = new Audio('/static/rpg/sound/select.mp3');
+var hit = new Audio('/static/rpg/sound/hit.mp3');
+var destroy = new Audio('/static/rpg/sound/destroy.mp3');
+var win = new Audio('/static/rpg/sound/win.mp3');
+var lose = new Audio('/static/rpg/sound/lose.mp3');
+var talk = new Audio('/static/rpg/sound/talk.mp3');
+
+battle.addEventListener('ended', function() {
+	this.currentTime = 0;
+	this.play();
+}, false);
+
+battle.play();
+
+var dialog = function(string, i, callback) {
+	if (string.length == i - 1) {
+		callback();
+	} else {
+		$("#dialog").html(string.substring(0, i));
+		talk.load();
+		talk.play();
+		setTimeout(function() { dialog(string, i+1, callback) }, 70);
+	}
+}
+
 var buttonOn = function() {
 	$("button.skill").on("click touchstart", function(e) {
 		var skillid = $(this).attr("skillid");
@@ -45,9 +71,11 @@ var buttonOn = function() {
 		}).done(function(data){
 			if (data.type == "runawaySuccess") {
 				buttonOff();
-				$("#dialog").html("무사히 도망쳤다!");
-				$("html").on("click touchstart", function(e) {
-					window.location.replace("/");
+				battle.pause();
+				lose.play();
+				dialog("무사히 도망쳤다!", 1, function() {});
+				$(lose).on("ended", function() {
+					window.location.replace("/map/");
 				});
 			} else {
 				location.reload();
@@ -68,35 +96,51 @@ var buttonOff = function() {
 
 var dialogStart = function(data) {
 	var str1 = "체력 " + data.health_used + "(을)를 사용하여 " + data.skill + " 공격!"
-	$("#dialog").html(str1);
 	$("#ally_health").html("체력: " + data.ally_health);
-	$("html").on("click touchstart", function(e) {
-		var str2 = data.monster + "(은)는 " + data.damage + "의 피해를 입었다.";
-		$("#dialog").html(str2);
-		$("#enemy_health").html("체력: " + data.enemy_health);
-		$("html").off("click touchstart");
+	$(".character").effect("shake", {times:1, distance: 10, direction: "left"}, 1000);
+	dialog(str1, 1, function() {
 		$("html").on("click touchstart", function(e) {
-			$("#dialog").html(data.dialog);
 			$("html").off("click touchstart");
-			$("html").on("click touchstart", function(e) {
-				if(data.battle_win) {
-					$("#dialog").html(data.monster + "(을)를 이해했다!");
+			var str2 = data.monster + "(은)는 " + data.damage + "의 피해를 입었다.";
+			if (data.double) {
+				str2 = "효과가 굉장했다! " + str2;
+			}
+			hit.play();
+			$("#enemy_health").html("체력: " + data.enemy_health);
+			$("#monster").effect("shake", {times:4, distance: 10}, 500);
+			dialog(str2, 1, function() {
+				$("html").on("click touchstart", function(e) {
 					$("html").off("click touchstart");
-					$("html").on("click touchstart", function(e){
-						$("#dialog").html(data.skillname + " 스킬을 획득했다!");
-						$("html").off("click touchstart");
-						$("html").on("click touchstart", function(e){
-							window.location.replace("/");
+					dialog(data.dialog, 1, function() {
+						$("html").on("click touchstart", function(e) {
+							$("html").off("click touchstart");
+							if(data.type == "battleWin") {
+								$("p#enemy_health").remove();
+								$("#monster").effect("puff");
+								battle.pause();
+								win.play();
+								dialog(data.monster + "(을)를 이해했다!", 1, function() {
+									$("html").on("click touchstart", function(e){
+										$("html").off("click touchstart");
+										dialog(data.skillname + " 스킬을 획득했다!", 1, function() {
+											$("html").on("click touchstart", function(e){
+												$("html").off("click touchstart");
+												window.location.replace("/map/");
+											});
+										});
+									});
+								});
+							} else {
+								dialog("다음엔 무엇을 할까?", 1, function() {
+									buttonOn();
+								});
+							}
 						});
 					});
-				} else {
-					$("#dialog").html("다음엔 무엇을 할까?");
-					$("html").off("click touchstart");
-					buttonOn();
-				}
+				});
 			});
-		})
-	})
+		});
+	});
 }
 
 $("html").on("touchend", function(e) {
@@ -105,17 +149,20 @@ $("html").on("touchend", function(e) {
 
 var useSkill = function(skillid) {
 	buttonOff();
+	select.play();
 	$.ajax({
 		method: "POST",
 		url: "/battle/",
 		data: { skillid: skillid },
 	}).done(function(data) {
 		if (data.type && data.type == "healthNotEnough") {
-			$("#dialog").html("그 기술을 쓰기엔 체력이 부족하다!");
-			$("html").on("click touchstart", function(e) {
-				$("#dialog").html("다음엔 무엇을 할까?");
-				$("html").off();
-				buttonOn();
+			dialog("그 기술을 쓰기엔 체력이 부족하다!", 1, function() {
+				$("html").on("click touchstart", function(e) {
+					$("html").off("click touchstart");
+					dialog("다음엔 무엇을 할까?", 1, function() {
+						buttonOn();
+					});
+				});
 			});
 		} else {
 			dialogStart(data);

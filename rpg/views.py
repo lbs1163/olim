@@ -115,9 +115,14 @@ def battle(request):
 		else:
 			try:
 				skill = Skill.objects.get(id=skillid)
+
+				if character.skill1 != skill and character.skill2 != skill and character.skill3 != skill and character.skill4 != skill:
+					return JsonResponse({'type': 'characterDoesNotHaveSkill'})
+
 				skillname = skill.name
+
 			except ObjectDoesNotExist:
-				return JsonResponse({'monster': battle.monster.name, 'dialog': u"뭔가 잘못되었다", 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+				return JsonResponse({'type': 'skillDoesNotExist'})
 			
 			# calculate damage
 			damage = skill.damage
@@ -134,14 +139,21 @@ def battle(request):
 
 			if battle.monster.math_exp != 0 and skill.math:
 				damage *= 2
+				double = True
 			elif battle.monster.phys_exp != 0 and skill.phys:
 				damage *= 2
+				double = True
 			elif battle.monster.chem_exp != 0 and skill.chem:
 				damage *= 2
+				double = True
 			elif battle.monster.life_exp != 0 and skill.life:
 				damage *= 2
+				double = True
 			elif battle.monster.prog_exp != 0 and skill.prog:
 				damage *= 2
+				double = True
+			else:
+				double = False
 
 			health_used = skill.health
 
@@ -180,8 +192,9 @@ def battle(request):
 				normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False)
 				skill = random.choice(normalskills)
 
-			contain = Contain(character=character, skill=skill)
-			contain.save()
+			have, created = Have.objects.get_or_create(character=character, skill=skill)
+			have.number += 1
+			have.save()
 
 			givenskill = skill.name
 
@@ -207,12 +220,10 @@ def battle(request):
 		battle.save()
 
 		if battle.enemy_health == 0:
-			battle_win = True
 			battle.delete()
+			return JsonResponse({'type': 'battleWin', 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 		else:
-			battle_win = False
-
-		return JsonResponse({'battle_win': battle_win, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
 @server_check
 @login_required
@@ -247,12 +258,10 @@ def skillbook(request):
 @login_required
 def combination(request):
 	character = Character.objects.get(user=request.user.id)
-	contains = Contain.objects.filter(character=character).order_by('skill')
-	skills = [contain.skill for contain in contains]
-	skillswithcount = [{'skill':skill, 'count': skills.count(skill)} for skill in skills]
+	haves = Have.objects.filter(character=character, number__gt=0).order_by('skill')
 
 	if request.method == 'GET':
-		return render(request, 'rpg/combination.html', {'skillswithcount': skillswithcount})
+		return render(request, 'rpg/combination.html', {'haves': haves})
 
 	elif request.method == 'POST':
 		try:
@@ -262,11 +271,14 @@ def combination(request):
 			return JsonResponse({'type': 'skillDoesNotExist'})
 		
 		try:
-			left_skill_contain = Contain.objects.filter(character=character, skill=left_skill)[0]
+			left_skill_have = Have.objects.get(character=character, skill=left_skill)
 			if left_skill == right_skill:
-				right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)[1]
+				right_skill_have = left_skill_have
 			else:
-				right_skill_contain = Contain.objects.filter(character=character, skill=right_skill)[0]
+				right_skill_have = Have.objects.get(character=character, skill=right_skill)
+
+			if left_skill_have.number == 0 or right_skill_have.number == 0:
+				return JsonResponse({'type': 'characterDoesNotHaveSkill'})
 		except:
 			return JsonResponse({'type': 'characterDoesNotHaveSkill'})
 
@@ -292,8 +304,10 @@ def combination(request):
 				if request.POST.get('real', None) == "false":
 					return JsonResponse({'type': 'combinationNotDiscoveredYet'})
 				elif request.POST.get('real', None) == "true":
-					left_skill_contain.delete()
-					right_skill_contain.delete()
+					left_skill_have.number -= 1
+					right_skill_have.number -= 1
+					left_skill_have.save()
+					right_skill_have.save()
 
 					failedCombination = FailedCombination(group=character.group, skill001=left_skill, skill002=right_skill)
 					failedCombination.save()
@@ -316,10 +330,13 @@ def combination(request):
 			firstDiscovery = False;
 
 		if request.POST.get('real', None) == "true":
-			left_skill_contain.delete()
-			right_skill_contain.delete()
-			new_contain = Contain(character=character, skill=new_skill)
-			new_contain.save()
+			left_skill_have.number -= 1
+			right_skill_have.number -= 1
+			left_skill_have.save()
+			right_skill_have.save()
+			new_have, created = Have.objects.get_or_create(character=character, skill=new_skill)
+			new_have.number += 1
+			new_have.save()
 
 		return JsonResponse({'type': 'combinationSuccess', 'newSkill': {'id': new_skill.id, 'name': new_skill.name}, 'firstDiscovery': firstDiscovery})
 
@@ -328,27 +345,46 @@ def combination(request):
 def selectskill(request):
 	character = Character.objects.get(user=request.user.id)
 	contains = Contain.objects.filter(character=character).order_by('skill')
-	skills = list(set([contain.skill for contain in contains]))
+	skills = list(set([contain.skill for contain in contains]) - set([character.skill1, character.skill2, character.skill3, character.skill4]))
 
 	if request.method == 'GET':
-		return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
+		try:
+			battle = Battle.objects.get(character=character)
+			return render(request, 'rpg/cannotselectskill.html')
+		except:
+			return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
 
 	elif request.method == 'POST':
+		try:
+			battle = Battle.objects.get(character=character)
+			return JsonResponse({'type': 'selectFailed'})
+		except:
+			pass
 
 		if character.skill1 is not None:
-			Contain.objects.create(character=character, skill=character.skill1)
+			have, created = Have.objects.get_or_create(character=character, skill=character.skill1)
+			have.number += 1
+			have.save()
 		if character.skill2 is not None:
-			Contain.objects.create(character=character, skill=character.skill2)
+			have, created = Have.objects.get_or_create(character=character, skill=character.skill2)
+			have.number += 1
+			have.save()
 		if character.skill3 is not None:
-			Contain.objects.create(character=character, skill=character.skill3)
+			have, created = Have.objects.get_or_create(character=character, skill=character.skill3)
+			have.number += 1
+			have.save()
 		if character.skill4 is not None:
-			Contain.objects.create(character=character, skill=character.skill4)
+			have, created = Have.objects.get_or_create(character=character, skill=character.skill4)
+			have.number += 1
+			have.save()
 
 		def getSkillOrNone(skillstring, existingSkill):
 			try:
 				skill = Skill.objects.get(id=request.POST.get(skillstring, None))
-				contain = Contain.objects.filter(character=character, skill=skill)[0]
-				if skill.math and character.math < skill.limit:
+				have = Have.objects.get(character=character, skill=skill)
+				if have.number == 0:
+					return None
+				elif skill.math and character.math < skill.limit:
 					return None
 				elif skill.phys and character.phys < skill.limit:
 					return None
@@ -359,7 +395,8 @@ def selectskill(request):
 				elif skill.prog and character.prog < skill.limit:
 					return None
 				else:
-					contain.delete()
+					have.number -= 1
+					have.save()
 					return skill
 			except:
 				return None

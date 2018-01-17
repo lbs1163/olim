@@ -33,16 +33,34 @@ var left = false, right = false;
 var itemEventHandler = function(e) {
 	e.preventDefault();
 	if (left == false) {
-		var temp = $(this);
-		$(this).parent().remove();
-		$("#skill-left").children().remove();
+		var temp = $(this).clone();
+		var number = parseInt($(this).children().first().html());
+
+		if (number == 0)
+			return;
+
+		$(this).children().first().html(number-1);
+
+		temp.children().first().remove();
+		skillname = temp.html().substring(0, temp.html().length-2);
+		temp.html(skillname);
+		$("#skill-left").children().first().remove();
 		$("#skill-left").append(temp);
 		left = true;
 	}
 	else if (right == false) {
-		var temp = $(this);
-		$(this).parent().remove();
-		$("#skill-right").children().remove();
+		var temp = $(this).clone();
+		var number = parseInt($(this).children().first().html());
+
+		if (number == 0)
+			return;
+		
+		$(this).children().first().html(number-1);
+
+		temp.children().first().remove();
+		skillname = temp.html().substring(0, temp.html().length-2);
+		temp.html(skillname);
+		$("#skill-right").children().first().remove();
 		$("#skill-right").append(temp);
 		right = true;
 	}
@@ -50,6 +68,14 @@ var itemEventHandler = function(e) {
 	if (left && right) {
 		var left_skill = $("#skill-left").children().first().attr("skillid");
 		var right_skill = $("#skill-right").children().first().attr("skillid");
+		var left_skill_type = $("#skill-left").children().first().attr("type");
+		var right_skill_type = $("#skill-right").children().first().attr("type");
+
+		if (left_skill_type != right_skill_type && left_skill_type != "normal" && right_skill_type != "normal") {
+			$("#skill-combined").children().first().html("조합 불가능");
+			alert("다른 과목의 기술은 합칠 수 없습니다!");
+			return;
+		}
 
 		$.ajax({
 			method: "POST",
@@ -57,7 +83,7 @@ var itemEventHandler = function(e) {
 			data: { real: false, left: left_skill, right: right_skill },
 		}).done(function(data) {
 			if (data.type == "combinationAlreadyFailed") {
-				$("#skill-combined").children().first().html("조합 결과 없음");
+				$("#skill-combined").children().first().html("조합 불가능");
 			} else if (data.type == "combinationNotDiscoveredYet") {
 				$("#skill-combined").children().first().html("조합 해보지 않음");
 			} else if (data.type == "combinationPreview") {
@@ -70,11 +96,12 @@ var itemEventHandler = function(e) {
 $("#skill-left").bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (left == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
+		var skillid = $(this).children().first().attr("skillid");
 		$(this).children().first().remove();
 		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click touchstart", itemEventHandler)
-		$("#" + temp.children().first().attr("type")).prepend(temp);
+		var target = $("div#select button.skill[skillid=" + skillid + "]");
+		var number = parseInt(target.children().first().html());
+		target.children().first().html(number+1);
 		left = false;
 		$("#skill-combined").children().first().html("?????");
 	}
@@ -83,11 +110,12 @@ $("#skill-left").bind("click touchstart", function(e) {
 $("#skill-right").bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (right == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
+		var skillid = $(this).children().first().attr("skillid");
 		$(this).children().first().remove();
 		$(this).append('<button class="skill btn">스킬을 넣어주세요</button>');
-		temp.children().first().bind("click touchstart", itemEventHandler)
-		$("#" + temp.children().first().attr("type")).prepend(temp);
+		var target = $("div#select button.skill[skillid=" + skillid + "]");
+		var number = parseInt(target.children().first().html());
+		target.children().first().html(number+1);
 		right = false;
 		$("#skill-combined").children().first().html("?????");
 	}

@@ -154,6 +154,15 @@ class Contain(models.Model):
 		return unicode(self.character) + u" has " + unicode(self.skill)
 
 @python_2_unicode_compatible
+class Have(models.Model):
+	character = models.ForeignKey(Character)
+	skill = models.ForeignKey(Skill)
+	number = models.IntegerField(default=0)
+
+	def __str__(self):
+		return unicode(self.character) + u" has " + unicode(self.number) + u" " + unicode(self.skill)
+
+@python_2_unicode_compatible
 class Map(models.Model):
 	name = models.CharField(max_length=40)
 	is_open = models.BooleanField(default=False)
