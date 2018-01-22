@@ -112,6 +112,7 @@ def battle(request):
 			damage = random.randrange(1,5)
 			skillname = u"발버둥치기"
 			health_used = 5
+			double = False
 		else:
 			try:
 				skill = Skill.objects.get(id=skillid)
@@ -174,6 +175,23 @@ def battle(request):
 			character.chem += battle.monster.chem_exp
 			character.life += battle.monster.life_exp
 			character.prog += battle.monster.prog_exp
+
+			if battle.monster.math_exp:
+				exp_type = u"수학"
+				exp = battle.monster.math_exp
+			elif battle.monster.phys_exp:
+				exp_type = u"물리"
+				exp = battle.monster.phys_exp
+			elif battle.monster.chem_exp:
+				exp_type = u"화학"
+				exp = battle.monster.chem_exp
+			elif battle.monster.life_exp:
+				exp_type = u"생물"
+				exp = battle.monster.life_exp
+			elif battle.monster.prog_exp:
+				exp_type = u"프밍"
+				exp = battle.monster.prog_exp
+
 			character.save()
 			dialog = battle.monster.death_dialog
 
@@ -221,7 +239,7 @@ def battle(request):
 
 		if battle.enemy_health == 0:
 			battle.delete()
-			return JsonResponse({'type': 'battleWin', 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleWin', 'exp_type': exp_type, 'exp': exp, 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 		else:
 			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
@@ -344,8 +362,8 @@ def combination(request):
 @login_required
 def selectskill(request):
 	character = Character.objects.get(user=request.user.id)
-	contains = Contain.objects.filter(character=character).order_by('skill')
-	skills = list(set([contain.skill for contain in contains]) - set([character.skill1, character.skill2, character.skill3, character.skill4]))
+	haves = Have.objects.filter(character=character).order_by('skill')
+	skills = list(set([have.skill for have in haves]) - set([character.skill1, character.skill2, character.skill3, character.skill4]))
 
 	if request.method == 'GET':
 		try:

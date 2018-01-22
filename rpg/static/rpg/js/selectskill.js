@@ -59,7 +59,14 @@ var skillEventHandler = function(e) {
 }
 
 $("div#select button.skill").bind("click touchstart", skillEventHandler);
-$("div#select button.skill.disabled").unbind("click touchstart");
+$("div#select button.skill.cannot").unbind("click touchstart");
+$("div#select button.skill.cannot").bind("click touchstart", function(e) {
+	e.preventDefault();
+	skilllimit = $(this).attr("skilllimit");
+	stat = $(this).attr("stat");
+	type = $(this).attr("koreantype");
+	alert(type + " 스탯이 부족합니다! 필요 스탯: " + skilllimit + " , 현재 스탯: " + stat);
+});
 
 $("#skill1").bind("click touchstart", function(e) {
 	e.preventDefault();

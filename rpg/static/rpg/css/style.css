@@ -57,5 +57,15 @@ div.character img.absolute {
 
 button.skill {
 	margin-bottom: 10px;
-	width: 210px;
+	width: 250px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/* SELECTSKILL */
+
+button.skill.cannot {
+	background-color: #DFDFDF;
+	color: #9F9F9F;
+	box-shadow: none;
 }

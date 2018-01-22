@@ -146,14 +146,6 @@ class Character(models.Model):
 		return self.user.last_name + self.user.first_name
 
 @python_2_unicode_compatible
-class Contain(models.Model):
-	character = models.ForeignKey(Character)
-	skill = models.ForeignKey(Skill)
-
-	def __str__(self):
-		return unicode(self.character) + u" has " + unicode(self.skill)
-
-@python_2_unicode_compatible
 class Have(models.Model):
 	character = models.ForeignKey(Character)
 	skill = models.ForeignKey(Skill)

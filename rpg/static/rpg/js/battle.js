@@ -73,9 +73,10 @@ var buttonOn = function() {
 				buttonOff();
 				battle.pause();
 				lose.play();
-				dialog("무사히 도망쳤다!", 1, function() {});
-				$(lose).on("ended", function() {
-					window.location.replace("/map/");
+				dialog("무사히 도망쳤다!", 1, function() {
+					$("html").on("click touchstart", function(e) {
+						window.location.replace("/map/");
+					});
 				});
 			} else {
 				location.reload();
@@ -122,10 +123,15 @@ var dialogStart = function(data) {
 								dialog(data.monster + "(을)를 이해했다!", 1, function() {
 									$("html").on("click touchstart", function(e){
 										$("html").off("click touchstart");
-										dialog(data.skillname + " 스킬을 획득했다!", 1, function() {
-											$("html").on("click touchstart", function(e){
+										dialog(data.exp_type + " 지식을 " + data.exp + " 만큼 획득했다!", 1, function() {
+											$("html").on("click touchstart", function(e) {
 												$("html").off("click touchstart");
-												window.location.replace("/map/");
+												dialog(data.skillname + " 스킬을 획득했다!", 1, function() {
+													$("html").on("click touchstart", function(e){
+														$("html").off("click touchstart");
+														window.location.replace("/map/");
+													});
+												});
 											});
 										});
 									});

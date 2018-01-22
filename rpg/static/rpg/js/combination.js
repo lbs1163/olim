@@ -67,15 +67,7 @@ var itemEventHandler = function(e) {
 
 	if (left && right) {
 		var left_skill = $("#skill-left").children().first().attr("skillid");
-		var right_skill = $("#skill-right").children().first().attr("skillid");
-		var left_skill_type = $("#skill-left").children().first().attr("type");
-		var right_skill_type = $("#skill-right").children().first().attr("type");
-
-		if (left_skill_type != right_skill_type && left_skill_type != "normal" && right_skill_type != "normal") {
-			$("#skill-combined").children().first().html("조합 불가능");
-			alert("다른 과목의 기술은 합칠 수 없습니다!");
-			return;
-		}
+		var right_skill = $("#skill-right").children().first().attr("skillid");	
 
 		$.ajax({
 			method: "POST",
@@ -126,6 +118,15 @@ $("button#submit").bind("click touchstart", function(e) {
 	var combined = $("#skill-combined").children().first().attr("combined");
 	var left_skill = $("#skill-left").children().first().attr("skillid");
 	var right_skill = $("#skill-right").children().first().attr("skillid");
+
+	var left_skill_type = $("#skill-left").children().first().attr("type");
+	var right_skill_type = $("#skill-right").children().first().attr("type");
+
+	if (left_skill_type != right_skill_type && left_skill_type != "normal" && right_skill_type != "normal") {
+		$("#skill-combined").children().first().html("조합 불가능");
+		alert("다른 과목의 기술은 합칠 수 없습니다!");
+		return;
+	}
 
 	if (combined) {
 		$.ajax({
