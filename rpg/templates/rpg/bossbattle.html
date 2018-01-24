@@ -1,0 +1,76 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+<div class="container center-align">
+	<div class="row">
+		<div class="col s6">
+			<div class="row">
+				{% for character in characters %}
+				<div class="col s2">
+					<div class="progress">
+						<div class="determinate" style="width: {{ character.bossbattle.ally_health }}%"></div>
+					</div>
+					<div class="character">
+						<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+						<img class="responsive-img absolute" src="{{ character.eye.img.url }}">
+						<img class="responsive-img absolute" src="{{ character.hair.img.url }}">
+						<img class="responsive-img absolute" src="{{ character.clothes.img.url }}">
+					</div>
+					<p>{{ character.user.last_name }}{{character.user.first_name }}</p>
+				</div>
+				{% endfor %}
+			</div>
+			<p id="ally_health" class="center-align">내 체력: {{ character.bossbattle.ally_health }}</p>
+		</div>
+		<div class="col s6">
+			<img id="monster" class="responsive-img" src="{{ bossbattlemanager.bossmonster.img.url }}">
+			<p id="enemy_health" class="center-align">체력: {{ bossbattlemanager.enemy_health }}</p>
+			<script>var enemy_health = {{bossbattlemanager.enemy_health}};</script>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 m10 offset-m1 l8 offset-l2">
+			<div class="card-panel teal">
+				<span id="dialog" class="white-text">{{ bossbattlemanager.bossmonster.name }}(이)가 나타났다!</span>
+			</div>
+			<div class="row">
+				<p>남은 시간: <span id="count"></span>초</p>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill1 %}
+					<button skill="skill1" class="skill waves-effect waves-light btn">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn">발버둥치기 (5,?)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill2 %}
+					<button skill="skill2" class="skill waves-effect waves-light btn">{{ character.skill2.name }} ({{ character.skill2.health }},{{ character.skill2.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn">발버둥치기 (5,?)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill3 %}
+					<button skill="skill3" class="skill waves-effect waves-light btn">{{ character.skill3.name }} ({{ character.skill3.health }},{{ character.skill3.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn">발버둥치기 (5,?)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill4 %}
+					<button skill="skill4" class="skill waves-effect waves-light btn">{{ character.skill4.name }} ({{ character.skill4.health }},{{ character.skill4.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn">발버둥치기 (5,?)</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{% static 'rpg/js/bossbattle.js' %}"></script>
+{% endblock %}

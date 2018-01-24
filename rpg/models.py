@@ -234,3 +234,38 @@ class Monsterbook(models.Model):
 
 	def __str__(self):
 		return u"[" + unicode(self.group) + "] " + unicode(self.monster)
+
+@python_2_unicode_compatible
+class Bossmonster(models.Model):
+	name = models.CharField(max_length=40)
+	img = models.ImageField(upload_to='images/monster/', default='images/monster/default.png')
+	health = models.IntegerField(default=100000)
+	damage = models.IntegerField(default=10)
+	map = models.ForeignKey(Map)
+
+	def __str__(self):
+		return u"[" + self.map.name + u"] " + self.name + u"(" + unicode(self.health) + u")"
+
+@python_2_unicode_compatible
+class Bossbattlemanager(models.Model):
+	bossmonster = models.ForeignKey(Bossmonster, on_delete=models.CASCADE)
+	enemy_health = models.IntegerField(default=100000)
+	boss_type = models.CharField(max_length=10, null=True, blank=True)
+	banned_type = models.CharField(max_length=10, null=True, blank=True)
+	redo = models.BooleanField(default=False)
+	turn = models.IntegerField(default=0)
+	state = models.CharField(max_length=20, default="waiting")
+	group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.group.group_name + u": " + self.bossmonster.name
+
+@python_2_unicode_compatible
+class Bossbattle(models.Model):
+	character = models.OneToOneField(Character, on_delete=models.CASCADE)
+	ally_health = models.IntegerField(default=100)
+	damage = models.IntegerField(default=0)
+	ready = models.BooleanField(default=False)
+
+	def __str__(self):
+		return unicode(self.character)

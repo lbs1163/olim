@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^combination/$', combination, name='combination'),
 	url(r'^map/$', map, name='map'),
 	url(r'^battle/$', battle, name='battle'),
+	url(r'^bossbattle/$', bossbattle, name='bossbattle'),
 	url(r'^monsterbook/$', monsterbook, name='monsterbook'),
 	url(r'^skillbook/$', skillbook, name='skillbook'),
 	url(r'^selectskill/$', selectskill, name='selectskill'),
