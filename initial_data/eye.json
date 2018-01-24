@@ -1,0 +1,18 @@
+[
+{
+    "model": "rpg.eye",
+    "pk": 1,
+    "fields": {
+        "name": "\uae30\ubcf8 \ub208",
+        "img": "images/eye/eye.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 2,
+    "fields": {
+        "name": "\ud654\ub09c \ub208",
+        "img": "images/eye/angryeye.png"
+    }
+}
+]

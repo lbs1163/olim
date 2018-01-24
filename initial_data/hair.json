@@ -1,0 +1,18 @@
+[
+{
+    "model": "rpg.hair",
+    "pk": 1,
+    "fields": {
+        "name": "\ub354\ubc85\uba38\ub9ac",
+        "img": "images/hair/hair.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 2,
+    "fields": {
+        "name": "\ube61\ube61\uc774",
+        "img": "images/hair/bald.png"
+    }
+}
+]

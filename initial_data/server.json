@@ -1,0 +1,9 @@
+[
+{
+    "model": "rpg.server",
+    "pk": 1,
+    "fields": {
+        "is_open": true
+    }
+}
+]

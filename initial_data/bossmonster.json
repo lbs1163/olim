@@ -1,0 +1,46 @@
+[
+{
+    "model": "rpg.bossmonster",
+    "pk": 1,
+    "fields": {
+        "name": "Maxe Mret Dim I",
+        "img": "images/monster/default.png",
+        "health": 1000,
+        "damage": 10,
+        "map": 1
+    }
+},
+{
+    "model": "rpg.bossmonster",
+    "pk": 2,
+    "fields": {
+        "name": "Maxe Lanif I",
+        "img": "images/monster/default.png",
+        "health": 10000,
+        "damage": 10,
+        "map": 2
+    }
+},
+{
+    "model": "rpg.bossmonster",
+    "pk": 3,
+    "fields": {
+        "name": "Maxe Mret Dim II",
+        "img": "images/monster/default.png",
+        "health": 100000,
+        "damage": 10,
+        "map": 3
+    }
+},
+{
+    "model": "rpg.bossmonster",
+    "pk": 4,
+    "fields": {
+        "name": "Maxe Lanif II",
+        "img": "images/monster/default.png",
+        "health": 1000000,
+        "damage": 10,
+        "map": 4
+    }
+}
+]

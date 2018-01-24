@@ -1,0 +1,18 @@
+[
+{
+    "model": "rpg.clothes",
+    "pk": 1,
+    "fields": {
+        "name": "1\ubd84\ubc18 \ubd84\ubc18\uc7a0",
+        "img": "images/clothes/clothes.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 2,
+    "fields": {
+        "name": "2\ubd84\ubc18 \ubd84\ubc18\uc7a0",
+        "img": "images/clothes/clothes2.png"
+    }
+}
+]

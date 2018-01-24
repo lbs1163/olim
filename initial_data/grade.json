@@ -1,0 +1,42 @@
+[
+{
+    "model": "rpg.grade",
+    "pk": 1,
+    "fields": {
+        "name": "A",
+        "turn": 1
+    }
+},
+{
+    "model": "rpg.grade",
+    "pk": 2,
+    "fields": {
+        "name": "B",
+        "turn": 2
+    }
+},
+{
+    "model": "rpg.grade",
+    "pk": 3,
+    "fields": {
+        "name": "C",
+        "turn": 3
+    }
+},
+{
+    "model": "rpg.grade",
+    "pk": 4,
+    "fields": {
+        "name": "D",
+        "turn": 4
+    }
+},
+{
+    "model": "rpg.grade",
+    "pk": 5,
+    "fields": {
+        "name": "F",
+        "turn": 99999
+    }
+}
+]
