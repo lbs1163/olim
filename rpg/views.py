@@ -103,7 +103,6 @@ def battle(request):
 		battle.save()
 
 	if request.method == 'GET':
-		print("asdfasdfasdfasdf")
 		percentage = battle.enemy_health * 100.0 / battle.monster.health
 		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character, 'percentage': percentage })
 	elif request.method == 'POST':
@@ -133,15 +132,15 @@ def battle(request):
 			
 			# calculate damage
 			damage = skill.damage
-			if skill.math:
+			if skill.math or (skill.improvise and battle.monster.math_exp != 0):
 				damage += round((character.math - skill.limit) * 0.7)
-			elif skill.phys:
+			elif skill.phys or (skill.improvise and battle.monster.phys_exp != 0):
 				damage += round((character.phys - skill.limit) * 0.7)
-			elif skill.chem:
+			elif skill.chem or (skill.improvise and battle.monster.chem_exp != 0):
 				damage += round((character.chem - skill.limit) * 0.7)
-			elif skill.life:
+			elif skill.life or (skill.improvise and battle.monster.life_exp != 0):
 				damage += round((character.life - skill.limit) * 0.7)
-			elif skill.prog:
+			elif skill.prog or (skill.improvise and battle.monster.prog_exp != 0):
 				damage += round((character.prog - skill.limit) * 0.7)
 
 			if battle.monster.math_exp != 0 and skill.math:
@@ -157,6 +156,9 @@ def battle(request):
 				damage *= 2
 				double = True
 			elif battle.monster.prog_exp != 0 and skill.prog:
+				damage *= 2
+				double = True
+			elif skill.improvise:
 				damage *= 2
 				double = True
 			else:
@@ -223,7 +225,7 @@ def battle(request):
 				if num2 < battle.monster.drop_rate:
 					skill = battle.monster.skill
 				else:
-					normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False)
+					normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False, boss=False)
 					combinations = Combination.objects.all()
 					skillsWithComb = set([combination.new_skill for combination in combinations])
 					normSkillsWithoutComb = list(set(normalskills) - skillsWithComb)
@@ -370,18 +372,18 @@ def bossbattle(request):
 						if skill != None:
 							damage = skill.damage
 	
-							if skill.math:
+							if skill.math or (skill.improvise and bossbattlemanager.boss_type == "math"):
 								damage += round((bossbattle.character.math - skill.limit) * 0.7)
-							elif skill.phys:
+							elif skill.phys or (skill.improvise and bossbattlemanager.boss_type == "phys"):
 								damage += round((bossbattle.character.phys - skill.limit) * 0.7)
-							elif skill.chem:
+							elif skill.chem or (skill.improvise and bossbattlemanager.boss_type == "chem"):
 								damage += round((bossbattle.character.chem - skill.limit) * 0.7)
-							elif skill.life:
+							elif skill.life or (skill.improvise and bossbattlemanager.boss_type == "life"):
 								damage += round((bossbattle.character.life - skill.limit) * 0.7)
-							elif skill.prog:
+							elif skill.prog or (skill.improvise and bossbattlemanager.boss_type == "prog"):
 								damage += round((bossbattle.character.prog - skill.limit) * 0.7)
 	
-							if skill.type == bossbattlemanager.boss_type:
+							if skill.type == bossbattlemanager.boss_type or skill.improvise:
 								damage *= 2
 							
 							if damage == 0:

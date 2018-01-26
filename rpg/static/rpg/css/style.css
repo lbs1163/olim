@@ -66,6 +66,7 @@ button.skill {
 	image-rendering: pixelated;
 	background-size: 250px 250px;
 	background-position: center;
+	transition: background 1s linear;
 }
 
 .battleground.math {

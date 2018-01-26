@@ -70,7 +70,6 @@ $("html").on("touchend", function(e) {
 	e.preventDefault();
 });
 
-var turn = 0;
 var turnseconds = 10;
 
 var useSkill = function(skill) {
@@ -113,6 +112,7 @@ var everyonesecond = function() {
 		data: { type: "everyonesecond", turn: turn },
 	}).done(function(data) {
 		if (turn != data.turn) {
+			buttonOff();
 
 			if (data.type == "win" || data.type == "lose") {
 				window.clearInterval(id);
