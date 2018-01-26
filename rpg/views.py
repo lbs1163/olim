@@ -494,7 +494,7 @@ def skillbook(request):
 @login_required
 def combination(request):
 	character = Character.objects.get(user=request.user.id)
-	haves = Have.objects.filter(character=character, number__gt=0).order_by('skill')
+	haves = Have.objects.filter(character=character, number__gt=0, boss=0).order_by('skill')
 
 	if request.method == 'GET':
 		return render(request, 'rpg/combination.html', {'haves': haves})

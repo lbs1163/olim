@@ -37,7 +37,7 @@
 		<h5>일반 스킬</h5>
 		<div class="row" id="normal">
 			{% for skill in skills %}
-			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog %}
+			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog and not skill.boss %}
 			<div class="col s12 m6 l4 xl3">
 				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
@@ -115,6 +115,17 @@
 				{% else %}
 				<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+
+		<h5>보스 스킬</h5>
+		<div class="row" id="boss">
+			{% for skill in skills %}
+			{% if skill.boss %}
+			<div class="col s12 m6 l4 xl3">
+				<button class="skill btn" type="boss" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}

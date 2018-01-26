@@ -7,7 +7,7 @@
 	<h3>일반 스킬</h3>
 	<div class="row" id="normal">
 		{% for dict in allSkillsWithBoolean %}
-		{% if not dict.skill.math and not dict.skill.phys and not dict.skill.chem and not dict.skill.life and not dict.skill.prog %}
+		{% if not dict.skill.math and not dict.skill.phys and not dict.skill.chem and not dict.skill.life and not dict.skill.prog and not dict.skill.boss %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
 			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
@@ -242,6 +242,35 @@
 					<p class="center-align">조합법 : {{ combination.skill01.name }} + {{combination.skill02.name }}</p>
 					{% endif %}
 					{% endfor %}
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill waves-effect waves-light btn">?????</button>
+		</div>
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<h3>보스 스킬</h3>
+	<div class="row" id="prog">
+		{% for dict in allSkillsWithBoolean %}
+		{% if dict.skill.boss %}
+		{% if dict.is_owned %}
+		<div class="col s12 m6 l4 xl3">
+			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+
+			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<h4 class="center-align">{{dict.skill.name}}</h4>
+					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
+					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스탯 제한 : 없음</p>
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">닫기</a>
