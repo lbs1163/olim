@@ -126,12 +126,19 @@ var dialogStart = function(data) {
 										dialog(data.exp_type + " 지식을 " + data.exp + " 만큼 획득했다!", 1, function() {
 											$("html").on("click touchstart", function(e) {
 												$("html").off("click touchstart");
-												dialog(data.skillname + " 스킬을 획득했다!", 1, function() {
+												if (data.skillname != false) {
+													dialog(data.skillname + " 스킬을 획득했다!", 1, function() {
+														$("html").on("click touchstart", function(e){
+															$("html").off("click touchstart");
+															window.location.replace("/map/");
+														});
+													});
+												} else {
 													$("html").on("click touchstart", function(e){
 														$("html").off("click touchstart");
 														window.location.replace("/map/");
 													});
-												});
+												}
 											});
 										});
 									});

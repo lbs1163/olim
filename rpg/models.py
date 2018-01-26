@@ -252,10 +252,10 @@ class Bossbattlemanager(models.Model):
 	enemy_health = models.IntegerField(default=100000)
 	boss_type = models.CharField(max_length=10, null=True, blank=True)
 	banned_type = models.CharField(max_length=10, null=True, blank=True)
-	redo = models.BooleanField(default=False)
 	turn = models.IntegerField(default=0)
 	state = models.CharField(max_length=20, default="waiting")
 	group = models.ForeignKey(Group, on_delete=models.CASCADE)
+	start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
 	def __str__(self):
 		return self.group.group_name + u": " + self.bossmonster.name
@@ -264,8 +264,9 @@ class Bossbattlemanager(models.Model):
 class Bossbattle(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE)
 	ally_health = models.IntegerField(default=100)
-	damage = models.IntegerField(default=0)
+	skill = models.ForeignKey(Skill, null=True, blank=True)
 	ready = models.BooleanField(default=False)
+	turn = models.IntegerField(default=0)
 
 	def __str__(self):
 		return unicode(self.character)
