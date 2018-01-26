@@ -367,9 +367,7 @@ def bossbattle(request):
 	
 							realdamage = random.randrange(round(damage*0.8), damage)
 	
-							bossbattlemanager.enemy_health -= realdamage
-					
-					bossbattlemanager.save()
+							bossbattlemanager.enemy_health -= realdamage	
 	
 					if bossbattlemanager.enemy_health == 0:
 						for bossbattle in bossbattles:
@@ -399,7 +397,10 @@ def bossbattle(request):
 							randbossbattle.ally_health = 0
 							randbossbattle.save()
 
-			return JsonResponse({"type": "everyonesecond", "bosstype": bossbattlemanager.boss_type, "bossdamage": bossbattlemanager.bossmonster.damage, "bannedtype": bossbattlemanager.banned_type, "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "ally_health": bossbattle.ally_health, "enemy_health": bossbattlemanager.enemy_health})
+					bossbattlemanager.bossskill = bossskill
+					bossbattlemanager.save()
+
+			return JsonResponse({"type": "everyonesecond", "bossskill": bossbattlemanager.bossskill, "bosstype": bossbattlemanager.boss_type, "bossdamage": bossbattlemanager.bossmonster.damage, "bannedtype": bossbattlemanager.banned_type, "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "ally_health": bossbattle.ally_health, "enemy_health": bossbattlemanager.enemy_health})
 
 @server_check
 @login_required

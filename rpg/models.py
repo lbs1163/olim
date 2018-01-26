@@ -256,6 +256,7 @@ class Bossbattlemanager(models.Model):
 	state = models.CharField(max_length=20, default="waiting")
 	group = models.ForeignKey(Group, on_delete=models.CASCADE)
 	start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+	bossskill = models.IntegerField(default=0, null=True, blank=True)
 
 	def __str__(self):
 		return self.group.group_name + u": " + self.bossmonster.name

@@ -150,9 +150,27 @@ var everyonesecond = function() {
 					} else {
 						dialog(str, 1, function() {
 							setTimeout(function() {
-								dialog("다음엔 무엇을 할까?", 1, function() {
-									buttonOn();
-								});
+								if (data.bossskill == 0) {
+									if (data.bosstype == "math")
+										type = "수학";
+									else if (data.bosstype == "phys")
+										type = "물리";
+									else if (data.bosstype == "chem")
+										type = "화학";
+									else if (data.bosstype == "life")
+										type = "생물";
+									else if (data.bosstype == "prog")
+										type = "프밍";
+									$(".battleground").removeClass("math phys chem life prog");
+									$(".battleground").addClass(data.bosstype);
+									dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
+										setTimeout(function() {
+											dialog("다음엔 무엇을 할까?", 1, function() {
+												buttonOn();
+											});
+										});
+									});
+								}
 							}, 1000);
 						});
 					}
