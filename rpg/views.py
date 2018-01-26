@@ -451,15 +451,18 @@ def monsterbook(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
 		group = character.group
-		mathmonsterlist = Monster.objects.filter(math_exp__gt=0).order_by("health")
-		physmonsterlist = Monster.objects.filter(phys_exp__gt=0).order_by("health")
-		chemmonsterlist = Monster.objects.filter(chem_exp__gt=0).order_by("health")
-		lifemonsterlist = Monster.objects.filter(life_exp__gt=0).order_by("health")
-		progmonsterlist = Monster.objects.filter(prog_exp__gt=0).order_by("health")
+		mathmonsterlist = Monster.objects.filter(math_exp__gt=0).order_by('health')
+		physmonsterlist = Monster.objects.filter(phys_exp__gt=0).order_by('health')
+		chemmonsterlist = Monster.objects.filter(chem_exp__gt=0).order_by('health')
+		lifemonsterlist = Monster.objects.filter(life_exp__gt=0).order_by('health')
+		progmonsterlist = Monster.objects.filter(prog_exp__gt=0).order_by('health')
 		monsterbooklist = Monsterbook.objects.filter(group=group)
 		monsterbookmonsters = [monsterbook.monster for monsterbook in monsterbooklist]
+		bossmonsterlist = Bossmonster.objects.all().order_by('health')
+		bossmonsterbooklist = Bossmonsterbook.objects.filter(group=group)
+		bossmonsterbookmonsters = [bossmonsterbook.bossmonster for bossmonsterbook in bossmonsterbooklist]
 		
-		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist, 'monsterbookmonsters': monsterbookmonsters})
+		return render(request, 'rpg/monsterbook.html', {'group': group, 'mathmonsterlist': mathmonsterlist, 'physmonsterlist': physmonsterlist, 'chemmonsterlist': chemmonsterlist, 'lifemonsterlist': lifemonsterlist, 'progmonsterlist': progmonsterlist,'monsterbooklist': monsterbooklist, 'monsterbookmonsters': monsterbookmonsters, 'bossmonsterlist': bossmonsterlist, 'bossmonsterbooklist': bossmonsterbooklist, 'bossmonsterbookmonsters': bossmonsterbookmonsters})
 
 @server_check
 @login_required
@@ -468,7 +471,7 @@ def skillbook(request):
 		character = Character.objects.get(user=request.user.id)
 		skillbooks = Skillbook.objects.filter(group = character.group)
 		skills = [skillbook.skill for skillbook in skillbooks]
-		allSkills = Skill.objects.all().order_by("damage")
+		allSkills = Skill.objects.all().order_by('damage')
 		allSkillsWithBoolean = [{'skill': skill, 'is_owned': skill in skills} for skill in allSkills]
 		allCombinations = Combination.objects.all()
 		
