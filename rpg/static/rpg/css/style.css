@@ -62,12 +62,17 @@ button.skill {
 	padding-right: 0;
 }
 
+.battleground {
+	image-rendering: pixelated;
+	background-size: 250px 250px;
+}
+
 .battleground.math {
-	background-image: url("/static/rpg/image/math.jpg");
+	background-image: url("/static/rpg/image/math.png");
 }
 
 .battleground.phys {
-	background-image: url("/static/rpg/image/phys.jpg");
+	background-image: url("/static/rpg/image/phys.png");
 }
 
 .battleground.chem {
@@ -79,7 +84,7 @@ button.skill {
 }
 
 .battleground.prog {
-	background-image: url("/static/rpg/image/prog.jpg");
+	background-image: url("/static/rpg/image/prog.png");
 }
 
 /* SELECTSKILL */
