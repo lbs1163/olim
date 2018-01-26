@@ -83,6 +83,8 @@ class Skill(models.Model):
 	chem = models.BooleanField(default=False)
 	life = models.BooleanField(default=False)
 	prog = models.BooleanField(default=False)
+	boss = models.BooleanField(default=False)
+	improvise = models.BooleanField(default=False)
 	health = models.IntegerField(default=10)
 	damage = models.IntegerField(default=0)
 	limit = models.IntegerField(default=0)

@@ -389,7 +389,7 @@ def bossbattle(request):
 							else:
 								realdamage = random.randrange(round(damage*0.9), round(damage*1.1))
 							bossbattlemanager.enemy_health -= realdamage
-							bossbattle.ally_health -= health_used
+							bossbattle.ally_health -= skill.health
 							if bossbattle.ally_health > 100:
 								bossbattle.ally_health = 100
 	
