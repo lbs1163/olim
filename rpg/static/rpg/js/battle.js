@@ -98,7 +98,7 @@ var buttonOff = function() {
 var dialogStart = function(data) {
 	var str1 = "체력 " + data.health_used + "(을)를 사용하여 " + data.skill + " 공격!";
 	if (data.health_used < 0) {
-		$("#ally_health").html("체력: " + data.ally_health);
+		$("#ally_health").css("width", data.ally_health + "%");
 		str1 = "체력을 " + (-data.health_used) + "만큼 회복!";
 		dialog(str1, 1, function() {
 			$("html").on("click touchstart", function(e) {
@@ -111,7 +111,7 @@ var dialogStart = function(data) {
 		});
 		return;
 	}
-	$("#ally_health").html("체력: " + data.ally_health);
+	$("#ally_health").css("width", data.ally_health + "%");
 	$(".character").effect("shake", {times:1, distance: 10, direction: "left"}, 1000);
 	dialog(str1, 1, function() {
 		$("html").on("click touchstart", function(e) {
@@ -121,7 +121,7 @@ var dialogStart = function(data) {
 				str2 = "효과가 굉장했다! " + str2;
 			}
 			hit.play();
-			$("#enemy_health").html("체력: " + data.enemy_health);
+			$("#enemy_health").css("width", (data.enemy_health * 100 / data.monsterhealth) + "%");
 			$("#monster").effect("shake", {times:4, distance: 10}, 500);
 			dialog(str2, 1, function() {
 				$("html").on("click touchstart", function(e) {
@@ -130,7 +130,6 @@ var dialogStart = function(data) {
 						$("html").on("click touchstart", function(e) {
 							$("html").off("click touchstart");
 							if(data.type == "battleWin") {
-								$("p#enemy_health").remove();
 								$("#monster").effect("puff");
 								battle.pause();
 								win.play();

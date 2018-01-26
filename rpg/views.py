@@ -103,7 +103,9 @@ def battle(request):
 		battle.save()
 
 	if request.method == 'GET':
-		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character })
+		print("asdfasdfasdfasdf")
+		percentage = battle.enemy_health * 100.0 / battle.monster.health
+		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character, 'percentage': percentage })
 	elif request.method == 'POST':
 
 		if request.POST.get('type', False) == 'runaway':
@@ -260,9 +262,9 @@ def battle(request):
 
 		if battle.enemy_health == 0:
 			battle.delete()
-			return JsonResponse({'type': 'battleWin', 'exp_type': exp_type, 'exp': exp, 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleWin', 'exp_type': exp_type, 'exp': exp, 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health, 'monsterhealth': battle.monster.health})
 		else:
-			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health, 'monsterhealth': battle.monster.health})
 
 @server_check
 @login_required
