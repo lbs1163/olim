@@ -357,9 +357,9 @@
                 {% for monsterbook in bossmonsterbooklist %}
                 {% if monsterbook.bossmonster.name == monster.name %}
                 <div class="col s6 m6 l3">
-                    <img class="responsive-img modal-trigger" href="#{{monsterbook.id}}" src="{{ monster.img.url }}">
+                    <img class="responsive-img modal-trigger" href="#boss{{monsterbook.id}}" src="{{ monster.img.url }}">
 
-                    <div id="{{monsterbook.id}}" class="modal modal-fixed-footer">
+                    <div id="boss{{monsterbook.id}}" class="modal modal-fixed-footer">
                         <div class="modal-content">
                             <h4 class="center-align">{{monsterbook.bossmonster.name}}</h4>
                             <div class="row">
