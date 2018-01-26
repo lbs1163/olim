@@ -68,6 +68,14 @@ class Grade(models.Model):
 		return self.name + u": " + unicode(self.turn)
 
 @python_2_unicode_compatible
+class Bossgrade(models.Model):
+	name = models.CharField(max_length=5)
+	turn = models.IntegerField(default=1)
+
+	def __str__(self):
+		return self.name + u": " + unicode(self.turn)
+
+@python_2_unicode_compatible
 class Skill(models.Model):
 	name = models.CharField(max_length=20)
 	math = models.BooleanField(default=False)
@@ -245,6 +253,15 @@ class Bossmonster(models.Model):
 
 	def __str__(self):
 		return u"[" + self.map.name + u"] " + self.name + u"(" + unicode(self.health) + u")"
+
+@python_2_unicode_compatible
+class Bossmonsterbook(models.Model):
+	group = models.ForeignKey(Group)
+	grade = models.ForeignKey(Bossgrade, default=1)
+	bossmonster = models.ForeignKey(Bossmonster)
+	
+	def __str__(self):
+		return u"[" + unicode(self.group) + "] " + unicode(self.bossmonster)
 
 @python_2_unicode_compatible
 class Bossbattlemanager(models.Model):

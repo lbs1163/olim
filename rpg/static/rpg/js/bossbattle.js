@@ -44,13 +44,8 @@ bossbattle.addEventListener('ended', function() {
 bossbattle.play();
 
 var dialog = function(string, i, callback) {
-	if (string.length == i - 1) {
-		callback();
-	} else {
-		$("#dialog").html(string.substring(0, i));
-		talk.play();
-		setTimeout(function() { dialog(string, i+1, callback) }, 70);
-	}
+	$("#dialog").html(string);
+	setTimeout(function(){callback();}, 2000);
 }
 
 var buttonOn = function() {
@@ -118,6 +113,11 @@ var everyonesecond = function() {
 		data: { type: "everyonesecond", turn: turn },
 	}).done(function(data) {
 		if (turn != data.turn) {
+
+			if (data.type == "win" || data.type == "lose") {
+				window.clearInterval(id);
+			}
+
 			turn = data.turn;
 			console.log(data);
 			if (data.type == "gameover") {
@@ -127,23 +127,41 @@ var everyonesecond = function() {
 			$(".character").effect("shake", {times:1, distance:5, direction: "left"}, 1000);
 			dialog("전원 총 공격!", 1, function() {
 				setTimeout(function() {
-					$("#ally_health").html("내 체력: " + data.ally_health);
-					$("#enemy_health").html("체력: " + data.enemy_health);
+					if (data.ally_health) {
+						$("#ally_health").html("내 체력: " + data.ally_health);
+					}
+					if (data.enemy_health < 0) {
+						$("#enemy_health").html("체력: 0");
+					} else {
+						$("#enemy_health").html("체력: " + data.enemy_health);
+					}
 					hit.play();
 					$("#monster").effect("shake", {times:4, distance:10}, 500);
 					var str = data.monster + "(은)는 " + (enemy_health - data.enemy_health) + "의 피해를 입었다.";
 					monster = data.monster;
 					enemy_health = data.enemy_health;
 
-					if (enemy_health == 0) {
+					if (data.type == "win") {
 						dialog(str, 1, function() {
 							setTimeout(function() {
 								bossbattle.pause();
 								win.play();
 								dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
 									setTimeout(function() {
-										window.location.replace("/");
+										window.location.replace("/map/");
 									}, 1000);
+								});
+							}, 1000);
+						});
+					} else if (data.type == "lose") {
+						dialog(str, 1, function() {
+							setTimeout(function() {
+								bossbattle.pause();
+								lose.play();
+								dialog(data.monster + "에게 패배했다...", 1, function() {
+									setTimeout(function() {
+										window.location.replace("/map/");
+									}, 3000);
 								});
 							}, 1000);
 						});
@@ -180,5 +198,5 @@ var everyonesecond = function() {
 	});
 }
 
-	setInterval(everyonesecond, 1000);
-	buttonOn();
+var id = setInterval(everyonesecond, 1000);
+buttonOn();
