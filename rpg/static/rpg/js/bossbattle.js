@@ -1,31 +1,31 @@
 // using jQuery
 function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
+	var cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+			var cookie = jQuery.trim(cookies[i]);
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
 }
 var csrftoken = getCookie('csrftoken');
 
 function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	// these HTTP methods do not require CSRF protection
+	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
+	beforeSend: function(xhr, settings) {
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+			xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		}
+	}
 });
 
 var bossbattle = new Audio('/static/rpg/sound/battle.mp3');
@@ -44,22 +44,16 @@ bossbattle.addEventListener('ended', function() {
 bossbattle.play();
 
 var dialog = function(string, i, callback) {
-	if (string.length == i - 1) {
-		callback();
-	} else {
-		$("#dialog").html(string.substring(0, i));
-		talk.load();
-		talk.play();
-		setTimeout(function() { dialog(string, i+1, callback) }, 70);
-	}
+	$("#dialog").html(string);
+	setTimeout(function(){callback();}, 2000);
 }
 
 var buttonOn = function() {
 	$("button.skill").off("click touchstart")
-	$("button.skill").on("click touchstart", function(e) {
-		var skill = $(this).attr("skill");
-		useSkill(skill);
-	});
+		$("button.skill").on("click touchstart", function(e) {
+			var skill = $(this).attr("skill");
+			useSkill(skill);
+		});
 	$("button.skill").on("touchend", function(e) {
 		e.preventDefault();
 	});
@@ -85,7 +79,7 @@ var useSkill = function(skill) {
 	$.ajax({
 		method: "POST",
 		url: "/bossbattle/",
-		data: { type: "attack", skill: skill },
+		data: { type: "attack", skill: skill, turn: turn },
 	}).done(function(data) {
 		if (data.type == "healthNotEnough") {
 			dialog("그 기술을 쓰기엔 체력이 부족하다!", 1, function() {
@@ -110,55 +104,99 @@ var useSkill = function(skill) {
 	});
 }
 
-var countSeconds = function(seconds) {
-	if (seconds <= 0) {
-		$.ajax({
-			method: "POST",
-			url: "/bossbattle/",
-			data: { type: "turnover", turn: turn },
-		}).done(function(data) {
+var monster;
+
+var everyonesecond = function() {
+	$.ajax({
+		method: "POST",
+		url: "/bossbattle/",
+		data: { type: "everyonesecond", turn: turn },
+	}).done(function(data) {
+		if (turn != data.turn) {
+
+			if (data.type == "win" || data.type == "lose") {
+				window.clearInterval(id);
+			}
+
+			turn = data.turn;
 			console.log(data);
+			if (data.type == "gameover") {
+				data.enemy_health = 0;
+				data.monster = monster;
+			}
 			$(".character").effect("shake", {times:1, distance:5, direction: "left"}, 1000);
 			dialog("전원 총 공격!", 1, function() {
 				setTimeout(function() {
-					$("#ally_health").html("내 체력: " + data.ally_health);
-					$("#enemy_health").html("체력: " + data.enemy_health);
+					if (data.ally_health) {
+						$("#ally_health").html("내 체력: " + data.ally_health);
+					}
+					if (data.enemy_health < 0) {
+						$("#enemy_health").html("체력: 0");
+					} else {
+						$("#enemy_health").html("체력: " + data.enemy_health);
+					}
 					hit.play();
 					$("#monster").effect("shake", {times:4, distance:10}, 500);
 					var str = data.monster + "(은)는 " + (enemy_health - data.enemy_health) + "의 피해를 입었다.";
+					monster = data.monster;
 					enemy_health = data.enemy_health;
-					turn = data.turn;
-					
-					if (enemy_health == 0) {
+
+					if (data.type == "win") {
 						dialog(str, 1, function() {
 							setTimeout(function() {
 								bossbattle.pause();
 								win.play();
 								dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
 									setTimeout(function() {
-										window.location.replace("/");
+										window.location.replace("/map/");
 									}, 1000);
+								});
+							}, 1000);
+						});
+					} else if (data.type == "lose") {
+						dialog(str, 1, function() {
+							setTimeout(function() {
+								bossbattle.pause();
+								lose.play();
+								dialog(data.monster + "에게 패배했다...", 1, function() {
+									setTimeout(function() {
+										window.location.replace("/map/");
+									}, 3000);
 								});
 							}, 1000);
 						});
 					} else {
 						dialog(str, 1, function() {
 							setTimeout(function() {
-								dialog("다음엔 무엇을 할까?", 1, function() {
-									buttonOn();
-									countSeconds(turnseconds);
-								});
+								if (data.bossskill == 0) {
+									if (data.bosstype == "math")
+										type = "수학";
+									else if (data.bosstype == "phys")
+										type = "물리";
+									else if (data.bosstype == "chem")
+										type = "화학";
+									else if (data.bosstype == "life")
+										type = "생물";
+									else if (data.bosstype == "prog")
+										type = "프밍";
+									$(".battleground").removeClass("math phys chem life prog");
+									$(".battleground").addClass(data.bosstype);
+									dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
+										setTimeout(function() {
+											dialog("다음엔 무엇을 할까?", 1, function() {
+												buttonOn();
+											});
+										});
+									});
+								}
 							}, 1000);
 						});
 					}
 				}, 1000);
 			});
-		});
-	} else {
-		$("#count").html(seconds);
-		setTimeout(function() {countSeconds(seconds-1); }, 1000);
-	}
+		}
+	});
 }
 
-countSeconds(turnseconds);
+var id = setInterval(everyonesecond, 1000);
 buttonOn();

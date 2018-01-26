@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from functools import wraps
 from collections import Counter
-import random
+import random, datetime
+from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
@@ -78,8 +79,11 @@ def signup(request):
 @server_check
 @login_required
 def map(request):
-	maps = Map.objects.all()
-	return render(request, 'rpg/map.html', { 'maps': maps })
+	maps = Map.objects.all().order_by("id")
+	openmaps = Map.objects.filter(is_open=True).order_by("-id")
+	exam = openmaps[0].name
+	exam = exam[0:len(exam) - 2]
+	return render(request, 'rpg/map.html', { 'maps': maps, 'exam': exam })
 
 @server_check
 @login_required
@@ -109,7 +113,7 @@ def battle(request):
 		skillid = request.POST['skillid']
 
 		if skillid == "0":
-			damage = random.randrange(1,5)
+			damage = 5
 			skillname = u"발버둥치기"
 			health_used = 5
 			double = False
@@ -128,15 +132,15 @@ def battle(request):
 			# calculate damage
 			damage = skill.damage
 			if skill.math:
-				damage += character.math
+				damage += round((character.math - skill.limit) * 0.7)
 			elif skill.phys:
-				damage += character.phys
+				damage += round((character.phys - skill.limit) * 0.7)
 			elif skill.chem:
-				damage += character.chem
+				damage += round((character.chem - skill.limit) * 0.7)
 			elif skill.life:
-				damage += character.life
+				damage += round((character.life - skill.limit) * 0.7)
 			elif skill.prog:
-				damage += character.prog
+				damage += round((character.prog - skill.limit) * 0.7)
 
 			if battle.monster.math_exp != 0 and skill.math:
 				damage *= 2
@@ -162,7 +166,8 @@ def battle(request):
 			return JsonResponse({'type': 'healthNotEnough'})
 
 		battle.ally_health -= health_used
-		battle.enemy_health -= damage
+		realdamage = random.randrange(round(damage * 0.7), damage)
+		battle.enemy_health -= realdamage
 		battle.turn += 1
 
 		givenskill = None
@@ -202,25 +207,36 @@ def battle(request):
 					bookgrade = grade
 					break
 
-			num = random.randrange(1, 100)
+			num = random.randrange(0, 2)
 
-			if num <= battle.monster.drop_rate:
-				skill = battle.monster.skill
+			if num == 0:
+				skill = None
 			else:
-				normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False)
-				skill = random.choice(normalskills)
+				num2 = random.randrange(1, 101)
+				if num2 < battle.monster.drop_rate:
+					skill = battle.monster.skill
+				else:
+					normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False)
+					combinations = Combination.objects.all()
+					skillsWithComb = set([combination.new_skill for combination in combinations])
+					normSkillsWithoutComb = list(set(normalskills) - skillsWithComb)
+					skill = random.choice(normSkillsWithoutComb)
 
-			have, created = Have.objects.get_or_create(character=character, skill=skill)
-			have.number += 1
-			have.save()
+				have, created = Have.objects.get_or_create(character=character, skill=skill)
+				have.number += 1
+				have.save()
 
-			givenskill = skill.name
+			if skill is not None:
+				givenskill = skill.name
+			else:
+				givenskill = False
 
-			try:
-				skillbook = Skillbook.objects.get(group=character.group, skill=skill)
-			except:
-				skillbook = Skillbook(group=character.group, skill=skill, finder=character)
-				skillbook.save()
+			if skill is not None:
+				try:
+					skillbook = Skillbook.objects.get(group=character.group, skill=skill)
+				except:
+					skillbook = Skillbook(group=character.group, skill=skill, finder=character)
+					skillbook.save()
 
 			try:
 				monsterbook = Monsterbook.objects.get(group=character.group, monster=battle.monster)
@@ -239,31 +255,45 @@ def battle(request):
 
 		if battle.enemy_health == 0:
 			battle.delete()
-			return JsonResponse({'type': 'battleWin', 'exp_type': exp_type, 'exp': exp, 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleWin', 'exp_type': exp_type, 'exp': exp, 'double': double, 'skillname': givenskill, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 		else:
-			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': damage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
+			return JsonResponse({'type': 'battleOngoing', 'double': double, 'skill': skillname, 'health_used': health_used, 'damage': realdamage, 'monster': battle.monster.name, 'dialog': dialog, 'ally_health': battle.ally_health, 'enemy_health': battle.enemy_health})
 
 @server_check
 @login_required
 def bossbattle(request):
 
 	character = Character.objects.get(user=request.user.id)
-	characters = Character.objects.filter(group=character.group)
-	map = Map.objects.filter(is_open=True).order_by("-id")[0]
-	bossmonster = Bossmonster.objects.get(map=map)
-	bossbattlemanager, created = Bossbattlemanager.objects.get_or_create(bossmonster=bossmonster, group=character.group)
-	if created:
+	bossbattle, _ = Bossbattle.objects.get_or_create(character=character)
+	try:
+		bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group).order_by("-start_time")[0]
+	except:
+		map = Map.objects.filter(is_open=True).order_by("-id")[0]
+		bossmonster = Bossmonster.objects.get(map=map)
+		bossbattlemanager = Bossbattlemanager.objects.create(group=character.group, bossmonster=bossmonster)
+		characters = Character.objects.filter(group=character.group)
 		bossbattlemanager.enemy_health = bossmonster.health * len(characters)
-	bossbattle, created = Bossbattle.objects.get_or_create(character=character)
-	bossbattles = Bossbattle.objects.filter(character__in=characters)
+		bossbattlemanager.save()
 
 	if request.method == 'GET':
 		if bossbattlemanager.state == "ready":
+			characters = Character.objects.filter(group=character.group)
 			return render(request, 'rpg/bossbattle.html', {'bossbattlemanager': bossbattlemanager, 'bossbattle': bossbattle, 'character': character, 'characters': characters})
+		elif bossbattlemanager.state == "waiting":
+			return render(request, 'rpg/getready.html', {'bossbattle': bossbattle, 'bossbattlemanager': bossbattlemanager})
 		else:
+			map = Map.objects.filter(is_open=True).order_by("-id")[0]
+			bossmonster = Bossmonster.objects.get(map=map)
+			bossbattlemanager = Bossbattlemanager.objects.create(group=character.group, bossmonster=bossmonster)
+			characters = Character.objects.filter(group=character.group)
+			bossbattlemanager.enemy_health = bossmonster.health * len(characters)
+			bossbattlemanager.save()
 			return render(request, 'rpg/getready.html', {'bossbattle': bossbattle, 'bossbattlemanager': bossbattlemanager})
 
+
 	elif request.method == 'POST':
+		characters = Character.objects.filter(group=character.group)
+		bossbattles = Bossbattle.objects.filter(character__in=characters)
 
 		if request.POST.get("type", False) == 'ready':
 			bossbattle.ready = True
@@ -280,100 +310,140 @@ def bossbattle(request):
 			
 			if len(bossbattles) == len(bossbattles.filter(ready=True)):
 				bossbattlemanager.state = "ready"
+				bossbattlemanager.boss_type = random.choice(["math", "phys", "chem", "life", "prog"])
+				bossbattlemanager.start_time = timezone.now()
 				bossbattlemanager.save()
 			
 			return JsonResponse({'numOfReady': len(bossbattles.filter(ready=True)), 'numOfGroup': len(bossbattles)})
 
 		elif request.POST.get("type", False) == 'attack':
 
-			if bossbattle.ready == False:
-				return JsonResponse({"type": "alreadyAttacked"})
+			if request.POST.get("turn", False) == unicode(bossbattlemanager.turn):
 
-			if request.POST.get("skill", False) == 'skill1':
-				skill = character.skill1
-			elif request.POST.get("skill", False) == 'skill2':
-				skill = character.skill2
-			elif request.POST.get("skill", False) == 'skill3':
-				skill = character.skill3
-			elif request.POST.get("skill", False) == 'skill4':
-				skill = character.skill4
+				if request.POST.get("skill", False) == 'skill1':
+					skill = character.skill1
+				elif request.POST.get("skill", False) == 'skill2':
+					skill = character.skill2
+				elif request.POST.get("skill", False) == 'skill3':
+					skill = character.skill3
+				elif request.POST.get("skill", False) == 'skill4':
+					skill = character.skill4
+				else:
+					skill = None
+
+				if skill != None and bossbattlemanager.banned_type == skill.type:
+					return JsonResponse({"type": "typeBanned", "turn": bossbattlemanager.turn})
+				elif skill != None and skill.health > bossbattle.ally_health:
+					return JsonResponse({"type": "healthNotEnough", "turn": bossbattlemanager.turn})
+
+				bossbattle.skill = skill
+				bossbattle.save()
+
+				return JsonResponse({"type": "attackSuccess", "turn": bossbattlemanager.turn})
+
 			else:
-				skill = None
+				return JsonResponse({"type": "turnMismatch", "turn": bossbattlemanager.turn})
 
-			if skill == None:
-				damage = random.randrange(1, 5)
-				health_used = 5
-			else:
-				damage = skill.damage
+		elif request.POST.get("type", False) == 'everyonesecond':
 
-				if skill.math:
-					damage += character.math
-				elif skill.phys:
-					damage += character.phys
-				elif skill.chem:
-					damage += character.chem
-				elif skill.life:
-					damage += character.life
-				elif skill.prog:
-					damage += character.prog
-
-				if bossbattlemanager.boss_type == skill.type:
-					damage *= 2
-
-				if skill.type == bossbattlemanager.boss_type:
-					return JsonResponse({"type": "typeBanned"})
-
-				health_used = skill.health
-
-			if health_used > bossbattle.ally_health:
-				print(health_used, bossbattle.ally_health)
-				return JsonResponse({"type": "healthNotEnough"})
-
-			bossbattlemanager.enemy_health -= damage
-
-			if bossbattlemanager.enemy_health < 0:
-				bossbattlemanager.enemy_health = 0
-
-			bossbattle.ally_health -= health_used
-			bossbattle.ready = False
-			bossbattlemanager.save()
-			bossbattle.save()
-
-			return JsonResponse({"type": "attackSuccess", "turn": bossbattlemanager.turn})
-
-		elif request.POST.get("type", False) == 'turnover':
+			if bossbattlemanager.state != "ready":
+				return JsonResponse({"type": bossbattlemanager.state, "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "enemy_health": bossbattlemanager.enemy_health})
 
 			if request.POST.get("turn", False) == unicode(bossbattlemanager.turn):
-				bossbattlemanager.turn += 1
-				bossbattlemanager.save()
-				for bossbattle in bossbattles:
-					bossbattle.ready = True
-					bossbattle.save()
-
-				bossskill = 0
+				if bossbattlemanager.start_time + datetime.timedelta(seconds=15) < timezone.now():
 				
-				if bossskill == 0:
-					type = random.choice(["math", "phys", "chem", "life", "prog"])
-					bossbattlemanager.boss_type = type
-					bossbattlemanager.save()
-				elif bossskill == 1:
+					bossbattlemanager.turn += 1
+					bossbattlemanager.start_time = timezone.now()
+
 					for bossbattle in bossbattles:
-						bossbattle.ally_health -= bossmonster.damage
+						skill = bossbattle.skill
+						bossbattle.skill = None
 						bossbattle.save()
-				elif bossskill == 2:
-					type = random.choice(["math", "phys", "chem", "life", "prog"])
-					bossbattlemanager.banned_type = type
-					bossbattlemanager.save()
-				elif bossskill == 3:
-					bossbattlemanager.redo = True
+						
+						if skill != None:
+							damage = skill.damage
+	
+							if skill.math:
+								damage += round((bossbattle.character.math - skill.limit) * 0.7)
+							elif skill.phys:
+								damage += round((bossbattle.character.phys - skill.limit) * 0.7)
+							elif skill.chem:
+								damage += round((bossbattle.character.chem - skill.limit) * 0.7)
+							elif skill.life:
+								damage += round((bossbattle.character.life - skill.limit) * 0.7)
+							elif skill.prog:
+								damage += round((bossbattle.character.prog - skill.limit) * 0.7)
+	
+							if skill.type == bossbattlemanager.boss_type:
+								damage *= 2
+	
+							realdamage = random.randrange(round(damage*0.8), damage)
+							bossbattlemanager.enemy_health -= realdamage	
+	
+					if bossbattlemanager.enemy_health <= 0:
+						
+						bossgrades = Bossgrade.objects.all().order_by('turn')
+
+						for bossgrade in bossgrades:
+							if bossbattlemanager.turn <= bossgrade.turn:
+								bookgrade = bossgrade
+								break;
+
+						try:
+							bossmonsterbook = Bossmonsterbook.objects.get(group=character.group, bossmonster=bossbattlemanager.bossmonster)
+							if bossmonsterbook.grade.turn > bookgrade.turn:
+								bossmonsterbook.grade = bookgrade
+								bossmonsterbook.save()
+						except:
+							Bossmonsterbook.objects.create(group=character.group, bossmonster=bossbattlemanager.bossmonster, grade=bookgrade)
+
+						for bossbattle in bossbattles:
+							bossbattle.delete()
+						bossbattlemanager.state = "win"
+						bossbattlemanager.save()
+						return JsonResponse({"type": "win", "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "enemy_health": bossbattlemanager.enemy_health})
+
+					elif bossbattlemanager.turn > 20:
+						
+						bossgrade = Bossgrade.objects.all().order_by('-turn')[0]
+
+						try:
+							bossmonsterbook = Bossmonsterbook.objects.get(group=character.group, bossmonster=bossbattlemanager.bossmonster)
+						except:
+							Bossmonsterbook.objects.create(group=character.group, bossmonster=bossbattlemanager.bossmonster, grade=bossgrade)
+
+						for bossbattle in bossbattles:
+							bossbattle.delete()
+						bossbattlemanager.state = "lose"
+						bossbattlemanager.save()
+						return JsonResponse({"type": "lose", "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "enemy_health": bossbattlemanager.enemy_health})
+	
+					maps = Map.objects.filter(is_open=True)
+					bossskill = random.randrange(0, len(maps))
+				
+					if bossskill == 0:
+						type = random.choice(["math", "phys", "chem", "life", "prog"])
+						bossbattlemanager.boss_type = type
+						bossbattlemanager.save()
+					elif bossskill == 1:
+						for bossbattle in bossbattles:
+							bossbattle.ally_health -= bossmonster.damage
+							bossbattle.save()
+					elif bossskill == 2:
+						type = random.choice(["math", "phys", "chem", "life", "prog"])
+						bossbattlemanager.banned_type = type
+						bossbattlemanager.save()
+					elif bossskill == 3:
+						randbossbattles = random.shuffle(bossbattles)
+						randbossbattles = randbossbattles[0:floor(len(randbossbattles)/2)]
+						for randbossbattle in randbossbattles:
+							randbossbattle.ally_health = 0
+							randbossbattle.save()
+
+					bossbattlemanager.bossskill = bossskill
 					bossbattlemanager.save()
 
-			if bossbattlemanager.enemy_health == 0:
-				if len(bossbattles) == 1:
-					bossbattlemanager.delete()
-				bossbattle.delete()
-
-			return JsonResponse({"type": "turnover", "bosstype": bossbattlemanager.boss_type, "bossdamage": bossmonster.damage, "bannedtype": bossbattlemanager.banned_type, "monster": bossmonster.name, "turn": bossbattlemanager.turn, "ally_health": bossbattle.ally_health, "enemy_health": bossbattlemanager.enemy_health})
+			return JsonResponse({"type": "everyonesecond", "bossskill": bossbattlemanager.bossskill, "bosstype": bossbattlemanager.boss_type, "bossdamage": bossbattlemanager.bossmonster.damage, "bannedtype": bossbattlemanager.banned_type, "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "ally_health": bossbattle.ally_health, "enemy_health": bossbattlemanager.enemy_health})
 
 @server_check
 @login_required

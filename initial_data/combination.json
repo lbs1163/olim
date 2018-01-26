@@ -21,8 +21,8 @@
     "model": "rpg.combination",
     "pk": 3,
     "fields": {
-        "skill01": 4,
-        "skill02": 5,
+        "skill01": 8,
+        "skill02": 11,
         "new_skill": 10
     }
 },
@@ -131,7 +131,7 @@
     "fields": {
         "skill01": 19,
         "skill02": 8,
-        "new_skill": 20
+        "new_skill": 59
     }
 },
 {
@@ -276,6 +276,357 @@
         "skill01": 43,
         "skill02": 38,
         "new_skill": 44
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 32,
+    "fields": {
+        "skill01": 37,
+        "skill02": 2,
+        "new_skill": 53
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 33,
+    "fields": {
+        "skill01": 37,
+        "skill02": 8,
+        "new_skill": 39
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 34,
+    "fields": {
+        "skill01": 37,
+        "skill02": 1,
+        "new_skill": 54
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 35,
+    "fields": {
+        "skill01": 37,
+        "skill02": 11,
+        "new_skill": 55
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 36,
+    "fields": {
+        "skill01": 38,
+        "skill02": 55,
+        "new_skill": 56
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 37,
+    "fields": {
+        "skill01": 37,
+        "skill02": 12,
+        "new_skill": 41
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 39,
+    "fields": {
+        "skill01": 11,
+        "skill02": 3,
+        "new_skill": 57
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 40,
+    "fields": {
+        "skill01": 15,
+        "skill02": 11,
+        "new_skill": 58
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 41,
+    "fields": {
+        "skill01": 10,
+        "skill02": 15,
+        "new_skill": 58
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 42,
+    "fields": {
+        "skill01": 11,
+        "skill02": 19,
+        "new_skill": 20
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 43,
+    "fields": {
+        "skill01": 19,
+        "skill02": 58,
+        "new_skill": 60
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 44,
+    "fields": {
+        "skill01": 1,
+        "skill02": 2,
+        "new_skill": 4
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 45,
+    "fields": {
+        "skill01": 4,
+        "skill02": 9,
+        "new_skill": 9
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 46,
+    "fields": {
+        "skill01": 9,
+        "skill02": 9,
+        "new_skill": 4
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 47,
+    "fields": {
+        "skill01": 11,
+        "skill02": 5,
+        "new_skill": 61
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 48,
+    "fields": {
+        "skill01": 7,
+        "skill02": 8,
+        "new_skill": 65
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 49,
+    "fields": {
+        "skill01": 7,
+        "skill02": 12,
+        "new_skill": 65
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 50,
+    "fields": {
+        "skill01": 35,
+        "skill02": 8,
+        "new_skill": 65
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 51,
+    "fields": {
+        "skill01": 35,
+        "skill02": 12,
+        "new_skill": 65
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 52,
+    "fields": {
+        "skill01": 5,
+        "skill02": 12,
+        "new_skill": 66
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 53,
+    "fields": {
+        "skill01": 31,
+        "skill02": 30,
+        "new_skill": 67
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 54,
+    "fields": {
+        "skill01": 12,
+        "skill02": 30,
+        "new_skill": 34
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 55,
+    "fields": {
+        "skill01": 30,
+        "skill02": 32,
+        "new_skill": 68
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 56,
+    "fields": {
+        "skill01": 12,
+        "skill02": 32,
+        "new_skill": 68
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 57,
+    "fields": {
+        "skill01": 11,
+        "skill02": 6,
+        "new_skill": 62
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 58,
+    "fields": {
+        "skill01": 47,
+        "skill02": 12,
+        "new_skill": 63
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 59,
+    "fields": {
+        "skill01": 12,
+        "skill02": 64,
+        "new_skill": 63
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 60,
+    "fields": {
+        "skill01": 22,
+        "skill02": 21,
+        "new_skill": 69
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 61,
+    "fields": {
+        "skill01": 24,
+        "skill02": 28,
+        "new_skill": 70
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 62,
+    "fields": {
+        "skill01": 24,
+        "skill02": 26,
+        "new_skill": 71
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 63,
+    "fields": {
+        "skill01": 25,
+        "skill02": 70,
+        "new_skill": 72
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 64,
+    "fields": {
+        "skill01": 48,
+        "skill02": 12,
+        "new_skill": 63
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 66,
+    "fields": {
+        "skill01": 8,
+        "skill02": 46,
+        "new_skill": 49
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 67,
+    "fields": {
+        "skill01": 12,
+        "skill02": 46,
+        "new_skill": 49
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 69,
+    "fields": {
+        "skill01": 45,
+        "skill02": 47,
+        "new_skill": 64
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 70,
+    "fields": {
+        "skill01": 11,
+        "skill02": 47,
+        "new_skill": 64
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 71,
+    "fields": {
+        "skill01": 12,
+        "skill02": 46,
+        "new_skill": 51
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 72,
+    "fields": {
+        "skill01": 8,
+        "skill02": 49,
+        "new_skill": 52
+    }
+},
+{
+    "model": "rpg.combination",
+    "pk": 73,
+    "fields": {
+        "skill01": 12,
+        "skill02": 49,
+        "new_skill": 52
     }
 }
 ]

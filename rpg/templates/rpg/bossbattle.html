@@ -7,21 +7,17 @@
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
 <div class="container center-align">
-	<div class="row">
+	<div class="row battleground {{bossbattlemanager.boss_type}}">
 		<div class="col s6">
 			<div class="row">
 				{% for character in characters %}
 				<div class="col s2">
-					<div class="progress">
-						<div class="determinate" style="width: {{ character.bossbattle.ally_health }}%"></div>
-					</div>
 					<div class="character">
 						<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
 						<img class="responsive-img absolute" src="{{ character.eye.img.url }}">
 						<img class="responsive-img absolute" src="{{ character.hair.img.url }}">
 						<img class="responsive-img absolute" src="{{ character.clothes.img.url }}">
 					</div>
-					<p>{{ character.user.last_name }}{{character.user.first_name }}</p>
 				</div>
 				{% endfor %}
 			</div>
@@ -39,7 +35,6 @@
 				<span id="dialog" class="white-text">{{ bossbattlemanager.bossmonster.name }}(이)가 나타났다!</span>
 			</div>
 			<div class="row">
-				<p>남은 시간: <span id="count"></span>초</p>
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill1 %}
 					<button skill="skill1" class="skill waves-effect waves-light btn">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>
