@@ -191,7 +191,7 @@
         "prog": false,
         "health": 5,
         "damage": 5,
-        "limit": 0
+        "limit": 3
     }
 },
 {
@@ -206,7 +206,7 @@
         "prog": false,
         "health": 5,
         "damage": 20,
-        "limit": 5
+        "limit": 14
     }
 },
 {
@@ -220,8 +220,8 @@
         "life": false,
         "prog": false,
         "health": 10,
-        "damage": 70,
-        "limit": 20
+        "damage": 80,
+        "limit": 56
     }
 },
 {
@@ -235,8 +235,8 @@
         "life": false,
         "prog": false,
         "health": 15,
-        "damage": 150,
-        "limit": 40
+        "damage": 100,
+        "limit": 70
     }
 },
 {
@@ -251,7 +251,7 @@
         "prog": false,
         "health": 20,
         "damage": 1500,
-        "limit": 300
+        "limit": 1050
     }
 },
 {
@@ -266,7 +266,7 @@
         "prog": false,
         "health": 25,
         "damage": 4000,
-        "limit": 800
+        "limit": 2800
     }
 },
 {
@@ -281,7 +281,7 @@
         "prog": false,
         "health": 30,
         "damage": 12000,
-        "limit": 3000
+        "limit": 8400
     }
 },
 {
@@ -296,7 +296,7 @@
         "prog": false,
         "health": 40,
         "damage": 17000,
-        "limit": 6000
+        "limit": 11900
     }
 },
 {
@@ -310,8 +310,8 @@
         "life": true,
         "prog": false,
         "health": 5,
-        "damage": 5,
-        "limit": 0
+        "damage": 10,
+        "limit": 7
     }
 },
 {
@@ -326,7 +326,7 @@
         "prog": false,
         "health": 10,
         "damage": 20,
-        "limit": 0
+        "limit": 14
     }
 },
 {
@@ -341,7 +341,7 @@
         "prog": false,
         "health": 15,
         "damage": 80,
-        "limit": 20
+        "limit": 56
     }
 },
 {
@@ -355,8 +355,8 @@
         "life": true,
         "prog": false,
         "health": 20,
-        "damage": 200,
-        "limit": 40
+        "damage": 1800,
+        "limit": 1260
     }
 },
 {
@@ -369,9 +369,9 @@
         "chem": false,
         "life": true,
         "prog": false,
-        "health": 25,
-        "damage": 1000,
-        "limit": 150
+        "health": 15,
+        "damage": 280,
+        "limit": 196
     }
 },
 {
@@ -386,7 +386,7 @@
         "prog": false,
         "health": 30,
         "damage": 12000,
-        "limit": 2500
+        "limit": 8400
     }
 },
 {
@@ -401,7 +401,7 @@
         "prog": false,
         "health": 35,
         "damage": 16000,
-        "limit": 5000
+        "limit": 11200
     }
 },
 {
@@ -414,9 +414,9 @@
         "chem": false,
         "life": true,
         "prog": false,
-        "health": 50,
-        "damage": 30000,
-        "limit": 7000
+        "health": 25,
+        "damage": 4200,
+        "limit": 2940
     }
 },
 {
@@ -430,8 +430,8 @@
         "life": false,
         "prog": false,
         "health": 5,
-        "damage": 5,
-        "limit": 0
+        "damage": 7,
+        "limit": 5
     }
 },
 {
@@ -446,7 +446,7 @@
         "prog": false,
         "health": 10,
         "damage": 100,
-        "limit": 20
+        "limit": 70
     }
 },
 {
@@ -460,8 +460,8 @@
         "life": false,
         "prog": false,
         "health": 15,
-        "damage": 1500,
-        "limit": 200
+        "damage": 2000,
+        "limit": 1400
     }
 },
 {
@@ -475,8 +475,8 @@
         "life": false,
         "prog": false,
         "health": 20,
-        "damage": 2500,
-        "limit": 400
+        "damage": 450,
+        "limit": 315
     }
 },
 {
@@ -490,8 +490,8 @@
         "life": false,
         "prog": false,
         "health": 25,
-        "damage": 11000,
-        "limit": 3000
+        "damage": 40,
+        "limit": 28
     }
 },
 {
@@ -505,8 +505,8 @@
         "life": false,
         "prog": false,
         "health": 30,
-        "damage": 12500,
-        "limit": 3000
+        "damage": 11000,
+        "limit": 7700
     }
 },
 {
@@ -520,8 +520,8 @@
         "life": false,
         "prog": false,
         "health": 35,
-        "damage": 15000,
-        "limit": 5000
+        "damage": 6000,
+        "limit": 4200
     }
 },
 {
@@ -536,7 +536,7 @@
         "prog": false,
         "health": 60,
         "damage": 35000,
-        "limit": 10000
+        "limit": 24500
     }
 },
 {
@@ -551,7 +551,7 @@
         "prog": true,
         "health": 5,
         "damage": 10,
-        "limit": 0
+        "limit": 7
     }
 },
 {
@@ -564,9 +564,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 7,
-        "damage": 50,
-        "limit": 10
+        "health": 15,
+        "damage": 70,
+        "limit": 49
     }
 },
 {
@@ -579,9 +579,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 10,
-        "damage": 100,
-        "limit": 20
+        "health": 20,
+        "damage": 120,
+        "limit": 84
     }
 },
 {
@@ -594,9 +594,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 15,
-        "damage": 1000,
-        "limit": 200
+        "health": 35,
+        "damage": 1100,
+        "limit": 770
     }
 },
 {
@@ -609,9 +609,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 20,
-        "damage": 10000,
-        "limit": 2000
+        "health": 45,
+        "damage": 9200,
+        "limit": 6440
     }
 },
 {
@@ -624,9 +624,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 25,
+        "health": 50,
         "damage": 15000,
-        "limit": 3000
+        "limit": 10500
     }
 },
 {
@@ -639,9 +639,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 30,
-        "damage": 20000,
-        "limit": 7000
+        "health": 55,
+        "damage": 24000,
+        "limit": 16800
     }
 },
 {
@@ -654,9 +654,9 @@
         "chem": false,
         "life": false,
         "prog": true,
-        "health": 50,
-        "damage": 30000,
-        "limit": 10000
+        "health": 60,
+        "damage": 35000,
+        "limit": 24500
     }
 },
 {
@@ -670,8 +670,8 @@
         "life": false,
         "prog": false,
         "health": 5,
-        "damage": 10,
-        "limit": 0
+        "damage": 7,
+        "limit": 5
     }
 },
 {
@@ -684,9 +684,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 10,
-        "damage": 100,
-        "limit": 100
+        "health": 5,
+        "damage": 20,
+        "limit": 14
     }
 },
 {
@@ -699,9 +699,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 20,
-        "damage": 1700,
-        "limit": 1500
+        "health": 15,
+        "damage": 100,
+        "limit": 70
     }
 },
 {
@@ -714,9 +714,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 15,
-        "damage": 2500,
-        "limit": 2000
+        "health": 10,
+        "damage": 80,
+        "limit": 56
     }
 },
 {
@@ -729,9 +729,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 30,
-        "damage": 8000,
-        "limit": 3500
+        "health": 25,
+        "damage": 4000,
+        "limit": 2800
     }
 },
 {
@@ -744,9 +744,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 35,
+        "health": 30,
         "damage": 12000,
-        "limit": 4000
+        "limit": 8400
     }
 },
 {
@@ -759,9 +759,9 @@
         "chem": true,
         "life": false,
         "prog": false,
-        "health": 40,
-        "damage": 15000,
-        "limit": 5000
+        "health": 50,
+        "damage": 25000,
+        "limit": 17500
     }
 },
 {
@@ -774,9 +774,309 @@
         "chem": true,
         "life": false,
         "prog": false,
+        "health": 55,
+        "damage": 35000,
+        "limit": 24500
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 53,
+    "fields": {
+        "name": "\uc190\ucf54\ub529",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": true,
+        "health": 10,
+        "damage": 30,
+        "limit": 21
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 54,
+    "fields": {
+        "name": "\ucf54\ub4dc \uc77d\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": true,
+        "health": 25,
+        "damage": 340,
+        "limit": 238
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 55,
+    "fields": {
+        "name": "\ud14c\uc2a4\ud2b8 \ucf54\ub4dc \uc9dc\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": true,
+        "health": 30,
+        "damage": 770,
+        "limit": 539
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 56,
+    "fields": {
+        "name": "\uc790\ub3d9 \ud14c\uc2a4\ud2b8 \uad6c\ucd95\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": true,
+        "health": 40,
+        "damage": 4300,
+        "limit": 3010
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 57,
+    "fields": {
+        "name": "\uadfc\uc0ac\ud558\uae30",
+        "math": false,
+        "phys": true,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 10,
+        "damage": 50,
+        "limit": 35
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 58,
+    "fields": {
+        "name": "\ubc95\uce59 \ubc1c\uacac\ud558\uae30",
+        "math": false,
+        "phys": true,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 15,
+        "damage": 150,
+        "limit": 105
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 59,
+    "fields": {
+        "name": "\uac00\uc815\ud558\uae30",
+        "math": false,
+        "phys": true,
+        "chem": false,
+        "life": false,
+        "prog": false,
         "health": 50,
+        "damage": 25000,
+        "limit": 17500
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 60,
+    "fields": {
+        "name": "\uc774\ub860\ub9cc\ub4e4\uae30",
+        "math": false,
+        "phys": true,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 55,
+        "damage": 35000,
+        "limit": 24500
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 61,
+    "fields": {
+        "name": "\uc2e4\ud5d8\uc2e4 \uc548\uc804 \ud655\uc778\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": true,
+        "life": false,
+        "prog": false,
+        "health": 10,
+        "damage": 50,
+        "limit": 35
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 62,
+    "fields": {
+        "name": "\uc2e4\ud5d8\ubc24\uc0d8",
+        "math": false,
+        "phys": false,
+        "chem": true,
+        "life": false,
+        "prog": false,
+        "health": 15,
+        "damage": 150,
+        "limit": 105
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 63,
+    "fields": {
+        "name": "\uc624\ucc28 \ubd84\uc11d\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": true,
+        "life": false,
+        "prog": false,
+        "health": 20,
+        "damage": 1500,
+        "limit": 1050
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 64,
+    "fields": {
+        "name": "\ub18d\ub3c4 \uad6c\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": true,
+        "life": false,
+        "prog": false,
+        "health": 40,
+        "damage": 17000,
+        "limit": 11900
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 65,
+    "fields": {
+        "name": "\uae30\ud558\ud559\uc801 \uc758\ubbf8 \uc774\ud574\ud558\uae30",
+        "math": true,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 15,
+        "damage": 20,
+        "limit": 14
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 66,
+    "fields": {
+        "name": "\uba85\uc81c\uc758 \ucc38 \uac70\uc9d3 \ud310\ubcc4\ud558\uae30",
+        "math": true,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 25,
+        "damage": 250,
+        "limit": 175
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 67,
+    "fields": {
+        "name": "\uc218\uc5f4 \uc77c\ubc18\ud56d \uad6c\ud558\uae30",
+        "math": true,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 20,
+        "damage": 3500,
+        "limit": 2450
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 68,
+    "fields": {
+        "name": "\ubbf8\ubd84 \ubc0f \uc801\ubd84\ud558\uae30",
+        "math": true,
+        "phys": false,
+        "chem": false,
+        "life": false,
+        "prog": false,
+        "health": 45,
+        "damage": 23000,
+        "limit": 16100
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 69,
+    "fields": {
+        "name": "\ubc31\uc2e0\ud22c\uc5ec\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": true,
+        "prog": false,
+        "health": 20,
+        "damage": 400,
+        "limit": 280
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 70,
+    "fields": {
+        "name": "\uc720\uc804\uc815\ubcf4\ud655\uc778\ud558\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": true,
+        "prog": false,
+        "health": 40,
         "damage": 20000,
-        "limit": 8000
+        "limit": 14000
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 71,
+    "fields": {
+        "name": "\ud574\ubd80\ub3c4\uadf8\ub9ac\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": true,
+        "prog": false,
+        "health": 40,
+        "damage": 25000,
+        "limit": 17500
+    }
+},
+{
+    "model": "rpg.skill",
+    "pk": 72,
+    "fields": {
+        "name": "\ubcf5\uc6d0\uc2dc\ud0a4\uae30",
+        "math": false,
+        "phys": false,
+        "chem": false,
+        "life": true,
+        "prog": false,
+        "health": 50,
+        "damage": 35000,
+        "limit": 24500
     }
 }
 ]
