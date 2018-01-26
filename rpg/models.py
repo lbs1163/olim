@@ -269,3 +269,12 @@ class Bossbattle(models.Model):
 
 	def __str__(self):
 		return unicode(self.character)
+
+@python_2_unicode_compatible
+class Bossmonsterbook(models.Model):
+	group = models.ForeignKey(Group)
+	grade = models.ForeignKey(Grade, default=1)
+	bossmonster = models.ForeignKey(Bossmonster)
+
+	def __str__(self):
+		return u"[" + unicode(self.group) + "] " + unicode(self.bossmonster)
