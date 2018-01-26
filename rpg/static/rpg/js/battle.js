@@ -96,7 +96,21 @@ var buttonOff = function() {
 }
 
 var dialogStart = function(data) {
-	var str1 = "체력 " + data.health_used + "(을)를 사용하여 " + data.skill + " 공격!"
+	var str1 = "체력 " + data.health_used + "(을)를 사용하여 " + data.skill + " 공격!";
+	if (data.health_used < 0) {
+		$("#ally_health").html("체력: " + data.ally_health);
+		str1 = "체력을 " + (-data.health_used) + "만큼 회복!";
+		dialog(str1, 1, function() {
+			$("html").on("click touchstart", function(e) {
+				$("html").off("click touchstart");
+				var str2 = "다음엔 무엇을 할까?";
+				dialog(str2, 1, function() {
+					buttonOn();
+				});
+			});
+		});
+		return;
+	}
 	$("#ally_health").html("체력: " + data.ally_health);
 	$(".character").effect("shake", {times:1, distance: 10, direction: "left"}, 1000);
 	dialog(str1, 1, function() {

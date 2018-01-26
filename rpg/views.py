@@ -166,7 +166,12 @@ def battle(request):
 			return JsonResponse({'type': 'healthNotEnough'})
 
 		battle.ally_health -= health_used
-		realdamage = random.randrange(round(damage * 0.7), damage)
+		if battle.ally_health > 100:
+			battle.ally_health = 100
+		if damage == 0:
+			realdamage = 0
+		else:
+			realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
 		battle.enemy_health -= realdamage
 		battle.turn += 1
 
@@ -376,9 +381,15 @@ def bossbattle(request):
 	
 							if skill.type == bossbattlemanager.boss_type:
 								damage *= 2
-	
-							realdamage = random.randrange(round(damage*0.8), damage)
-							bossbattlemanager.enemy_health -= realdamage	
+							
+							if damage == 0:
+								realdamage = 0
+							else:
+								realdamage = random.randrange(round(damage*0.9), round(damage*1.1))
+							bossbattlemanager.enemy_health -= realdamage
+							bossbattle.ally_health -= health_used
+							if bossbattle.ally_health > 100:
+								bossbattle.ally_health = 100
 	
 					if bossbattlemanager.enemy_health <= 0:
 						
