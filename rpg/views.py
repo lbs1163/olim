@@ -176,7 +176,10 @@ def battle(request):
 		if damage == 0:
 			realdamage = 0
 		else:
-			realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
+			if round(damage * 0.9) == round(damage * 1.1):
+				realdamage = round(damage * 0.9)
+			else:
+				realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
 		battle.enemy_health -= realdamage
 		battle.turn += 1
 
@@ -387,8 +390,8 @@ def bossbattle(request):
 							if skill.type == bossbattlemanager.boss_type or skill.improvise:
 								damage *= 2
 							
-							if damage == 0:
-								realdamage = 0
+							if round(damage*0.9) == round(damage*1.1):
+								realdamage = round(damage*0.9)
 							else:
 								realdamage = random.randrange(round(damage*0.9), round(damage*1.1))
 							bossbattlemanager.enemy_health -= realdamage
