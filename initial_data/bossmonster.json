@@ -5,9 +5,10 @@
     "fields": {
         "name": "Maxe Mret Dim I",
         "img": "images/monster/default.png",
-        "health": 1000,
-        "damage": 10,
-        "map": 1
+        "health": 144,
+        "damage": 0,
+        "map": 1,
+        "skill": 73
     }
 },
 {
@@ -16,9 +17,10 @@
     "fields": {
         "name": "Maxe Lanif I",
         "img": "images/monster/default.png",
-        "health": 10000,
-        "damage": 10,
-        "map": 2
+        "health": 1597,
+        "damage": 20,
+        "map": 2,
+        "skill": 74
     }
 },
 {
@@ -27,9 +29,10 @@
     "fields": {
         "name": "Maxe Mret Dim II",
         "img": "images/monster/default.png",
-        "health": 100000,
-        "damage": 10,
-        "map": 3
+        "health": 17711,
+        "damage": 20,
+        "map": 3,
+        "skill": 75
     }
 },
 {
@@ -38,9 +41,10 @@
     "fields": {
         "name": "Maxe Lanif II",
         "img": "images/monster/default.png",
-        "health": 1000000,
-        "damage": 10,
-        "map": 4
+        "health": 196418,
+        "damage": 20,
+        "map": 4,
+        "skill": 76
     }
 }
 ]
