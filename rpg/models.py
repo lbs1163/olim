@@ -252,6 +252,7 @@ class Bossmonster(models.Model):
 	health = models.IntegerField(default=100000)
 	damage = models.IntegerField(default=10)
 	map = models.ForeignKey(Map)
+	skill = models.ForeignKey(Skill, null=True, blank=True)
 
 	def __str__(self):
 		return u"[" + self.map.name + u"] " + self.name + u"(" + unicode(self.health) + u")"

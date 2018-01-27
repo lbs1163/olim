@@ -45,20 +45,23 @@ bossbattle.play();
 
 var dialog = function(string, i, callback) {
 	$("#dialog").html(string);
-	setTimeout(function(){callback();}, 2000);
+	setTimeout(function(){callback();}, 1000);
 }
 
 var buttonOn = function() {
 	$("button.skill").off("click touchstart")
 		$("button.skill").on("click touchstart", function(e) {
 			var skill = $(this).attr("skill");
-			useSkill(skill);
+			var health = parseInt($(this).attr("health"));
+			useSkill(skill, health);
 		});
 	$("button.skill").on("touchend", function(e) {
 		e.preventDefault();
 	});
 
 	$("button").removeClass("disabled");
+	$("button[type='" + bannedtype + "']").addClass("disabled");
+	$("button[skill='skill0']").addClass("disabled");
 }
 
 var buttonOff = function() {
@@ -72,7 +75,7 @@ $("html").on("touchend", function(e) {
 
 var turnseconds = 10;
 
-var useSkill = function(skill) {
+var useSkill = function(skill, health) {
 	buttonOff();
 	select.play();
 	$.ajax({
@@ -99,6 +102,10 @@ var useSkill = function(skill) {
 		} else if (data.type == "attackSuccess") {
 			turn = data.turn;
 			$("#dialog").html("턴이 끝나기를 기다리는 중...");
+			console.log(ally_health);
+			console.log(health);
+			ally_health -= health;
+			console.log(ally_health);
 		}
 	});
 }
@@ -125,74 +132,108 @@ var everyonesecond = function() {
 				data.monster = monster;
 			}
 			$(".character").effect("shake", {times:1, distance:5, direction: "left"}, 1000);
+			$("#ally_health").css("width", ally_health + "%");
+			ally_health = data.ally_health;
 			dialog("전원 총 공격!", 1, function() {
-				setTimeout(function() {
-					if (data.ally_health) {
-						$("#ally_health").html("내 체력: " + data.ally_health);
-					}
-					if (data.enemy_health < 0) {
-						$("#enemy_health").html("체력: 0");
-					} else {
-						$("#enemy_health").html("체력: " + data.enemy_health);
-					}
-					hit.play();
-					$("#monster").effect("shake", {times:4, distance:10}, 500);
-					var str = data.monster + "(은)는 " + (enemy_health - data.enemy_health) + "의 피해를 입었다.";
-					monster = data.monster;
-					enemy_health = data.enemy_health;
+				if (data.enemy_health < 0) {
+					$("#enemy_health").css("width", "0%");
+				} else {
+					$("#enemy_health").css("width", (data.enemy_health * 100 / data.monsterhealth) + "%");
+				}
+				hit.play();
+				$("#monster").effect("shake", {times:4, distance:10}, 500);
+				var str = data.monster + "(은)는 " + (enemy_health - data.enemy_health) + "의 피해를 입었다.";
+				monster = data.monster;
+				enemy_health = data.enemy_health;
 
-					if (data.type == "win") {
-						dialog(str, 1, function() {
-							setTimeout(function() {
-								bossbattle.pause();
-								win.play();
-								dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
-									setTimeout(function() {
-										window.location.replace("/map/");
-									}, 1000);
+				if (data.type == "win") {
+					dialog(str, 1, function() {
+						setTimeout(function() {
+							bossbattle.pause();
+							win.play();
+							dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
+								dialog(data.givenskill + " 스킬을 획득했다!", 1, function() {
+									window.location.replace("/map/");
 								});
-							}, 1000);
-						});
-					} else if (data.type == "lose") {
-						dialog(str, 1, function() {
+							});
+						}, 3000);
+					});
+				} else if (data.type == "lose") {
+					dialog(str, 1, function() {
+						bossbattle.pause();
+						lose.play();
+						dialog(data.monster + "에게 패배했다...", 1, function() {
 							setTimeout(function() {
-								bossbattle.pause();
-								lose.play();
-								dialog(data.monster + "에게 패배했다...", 1, function() {
-									setTimeout(function() {
-										window.location.replace("/map/");
-									}, 3000);
+								window.location.replace("/map/");
+							}, 3000);
+						});
+					});
+				} else {
+					dialog(str, 1, function() {
+						if (data.bossskill == 0) {
+							if (data.bosstype == "math")
+								type = "수학";
+							else if (data.bosstype == "phys")
+								type = "물리";
+							else if (data.bosstype == "chem")
+								type = "화학";
+							else if (data.bosstype == "life")
+								type = "생물";
+							else if (data.bosstype == "prog")
+								type = "프밍";
+							$(".battleground").removeClass("math phys chem life prog");
+							$(".battleground").addClass(data.bosstype);
+							dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
+								dialog("다음엔 무엇을 할까?", 1, function() {
+									buttonOn();
 								});
-							}, 1000);
-						});
-					} else {
-						dialog(str, 1, function() {
-							setTimeout(function() {
-								if (data.bossskill == 0) {
-									if (data.bosstype == "math")
-										type = "수학";
-									else if (data.bosstype == "phys")
-										type = "물리";
-									else if (data.bosstype == "chem")
-										type = "화학";
-									else if (data.bosstype == "life")
-										type = "생물";
-									else if (data.bosstype == "prog")
-										type = "프밍";
-									$(".battleground").removeClass("math phys chem life prog");
-									$(".battleground").addClass(data.bosstype);
-									dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
-										setTimeout(function() {
-											dialog("다음엔 무엇을 할까?", 1, function() {
-												buttonOn();
-											});
-										});
+							});
+						} else if (data.bossskill == 1) {
+							$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
+							dialog(data.monster + "의 공격!", 1, function() {
+								$("#ally_health").css("width", data.ally_health + "%");
+								hit.play();
+								$(".character").effect("shake", {times:4, distance:10}, 500);
+								dialog("모두 " + data.bossdamage + "의 피해를 입었다.", 1, function() {
+									dialog("다음엔 무엇을 할까?", 1, function() {
+										buttonOn();
 									});
-								}
-							}, 1000);
-						});
-					}
-				}, 1000);
+								});
+							});
+						} else if (data.bossskill == 2) {
+							bannedtype = data.bannedtype;
+							if (data.bannedtype == "math")
+								type = "수학";
+							else if (data.bannedtype == "phys")
+								type = "물리";
+							else if (data.bannedtype == "chem")
+								type = "화학";
+							else if (data.bannedtype == "life")
+								type = "생물";
+							else if (data.bannedtype == "prog")
+								type = "프밍";
+							dialog(data.monster + "(은)는 " + type + " 속성의 스킬을 봉인했다!", 1, function() {
+								dialog("이제 " + type + " 속성의 스킬은 사용할 수 없다!", 1, function() {
+									dialog("다음엔 무엇을 할까?", 1, function() {
+										buttonOn();
+									});
+								});
+							});
+						} else if (data.bossskill == 3) {
+							$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
+							dialog(data.monster + "의 필살기!", 1, function() {
+								$("#ally_health").css("width", data.ally_health + "%");
+								hit.play();
+								$(".character").effect("shake", {times: 4, distance: 10}, 500);
+								dialog("남은 인원 중 절반의 체력이 0이 되었다!", 1, function() {
+									dialog("다음엔 무엇을 할까?", 1, function() {
+										buttonOn();
+									});
+								});
+							});
+						}
+					});
+				}
 			});
 		}
 	});
