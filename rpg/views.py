@@ -40,7 +40,7 @@ def calculate_damage(character, skill, monstertype):
 	elif skill.prog or (skill.improvise and monstertype=="prog"):
 		damage += round((character.prog - skill.limit) * 0.7)
 
-	if skill.type == monstertype or skill.improvise:
+	if skill.type() == monstertype or skill.improvise:
 		damage *= 2
 		double = True
 	else:
