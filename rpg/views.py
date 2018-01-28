@@ -17,6 +17,44 @@ from .models import *
 
 # Create your views here.
 
+def calculate_damage(character, skill, monstertype):
+	
+	if skill == None:
+		health_used = 5
+		damage = 5
+		realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
+		double = False
+		return (realdamage, health_used, double)
+	else:
+		health_used = skill.health
+		damage = skill.damage
+	
+	if skill.math or (skill.improvise and monster.math_exp != 0):
+		damage += round((character.math - skill.limit) * 0.7)
+	elif skill.phys or (skill.improvise and monster.phys_exp != 0):
+		damage += round((character.phys - skill.limit) * 0.7)
+	elif skill.chem or (skill.improvise and monster.chem_exp != 0):
+		damage += round((character.chem - skill.limit) * 0.7)
+	elif skill.life or (skill.improvise and monster.life_exp != 0):
+		damage += round((character.life - skill.limit) * 0.7)
+	elif skill.prog or (skill.improvise and monster.prog_exp != 0):
+		damage += round((character.prog - skill.limit) * 0.7)
+
+	if skill.type == monstertype or skill.improvise:
+		damage *= 2
+		double = True
+	else:
+		double = False
+
+	health_used = skill.health
+
+	if round(damage * 0.9) == round(damage * 1.1):
+		realdamage = round(damage * 0.9)
+	else:
+		realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
+	
+	return (realdamage, health_used, double)
+
 def server_check(original_function):
 	@wraps(original_function)
 	def wrapper(*args, **kwargs):
@@ -51,7 +89,7 @@ def signup(request):
 		form = SignupForm(request.POST)
 		if form.is_valid():
 			user = form.save(commit=False)
-			code_used = form.cleaned_data.get('registration_code')
+			code_used = form.cleaned_data.get('RegistrationCode')
 			code = RegistrationCode.objects.filter(code=code_used)[0]
 			code.is_used = True
 			code.save()
@@ -106,6 +144,7 @@ def battle(request):
 	if request.method == 'GET':
 		percentage = battle.enemy_health * 100.0 / battle.monster.health
 		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character, 'percentage': percentage })
+
 	elif request.method == 'POST':
 
 		if request.POST.get('type', False) == 'runaway':
@@ -115,10 +154,8 @@ def battle(request):
 		skillid = request.POST['skillid']
 
 		if skillid == "0":
-			damage = 5
+			realdamage, health_used, double = calculate_damage(character, None, battle.monster.skill.type)
 			skillname = u"발버둥치기"
-			health_used = 5
-			double = False
 		else:
 			try:
 				skill = Skill.objects.get(id=skillid)
@@ -130,56 +167,17 @@ def battle(request):
 
 			except ObjectDoesNotExist:
 				return JsonResponse({'type': 'skillDoesNotExist'})
-			
-			# calculate damage
-			damage = skill.damage
-			if skill.math or (skill.improvise and battle.monster.math_exp != 0):
-				damage += round((character.math - skill.limit) * 0.7)
-			elif skill.phys or (skill.improvise and battle.monster.phys_exp != 0):
-				damage += round((character.phys - skill.limit) * 0.7)
-			elif skill.chem or (skill.improvise and battle.monster.chem_exp != 0):
-				damage += round((character.chem - skill.limit) * 0.7)
-			elif skill.life or (skill.improvise and battle.monster.life_exp != 0):
-				damage += round((character.life - skill.limit) * 0.7)
-			elif skill.prog or (skill.improvise and battle.monster.prog_exp != 0):
-				damage += round((character.prog - skill.limit) * 0.7)
 
-			if battle.monster.math_exp != 0 and skill.math:
-				damage *= 2
-				double = True
-			elif battle.monster.phys_exp != 0 and skill.phys:
-				damage *= 2
-				double = True
-			elif battle.monster.chem_exp != 0 and skill.chem:
-				damage *= 2
-				double = True
-			elif battle.monster.life_exp != 0 and skill.life:
-				damage *= 2
-				double = True
-			elif battle.monster.prog_exp != 0 and skill.prog:
-				damage *= 2
-				double = True
-			elif skill.improvise:
-				damage *= 2
-				double = True
-			else:
-				double = False
-
-			health_used = skill.health
+			realdamage, health_used, double = calculate_damage(character, skill, battle.monster.skill.type)
 
 		if battle.ally_health < health_used:
 			return JsonResponse({'type': 'healthNotEnough'})
 
 		battle.ally_health -= health_used
+
 		if battle.ally_health > 100:
 			battle.ally_health = 100
-		if damage == 0:
-			realdamage = 0
-		else:
-			if round(damage * 0.9) == round(damage * 1.1):
-				realdamage = round(damage * 0.9)
-			else:
-				realdamage = random.randrange(round(damage * 0.9), round(damage * 1.1))
+
 		battle.enemy_health -= realdamage
 		battle.turn += 1
 
@@ -284,14 +282,15 @@ def bossbattle(request):
 		map = Map.objects.filter(is_open=True).order_by("-id")[0]
 		bossmonster = Bossmonster.objects.get(map=map)
 		bossbattlemanager = Bossbattlemanager.objects.create(group=character.group, bossmonster=bossmonster)
-		characters = Character.objects.filter(group=character.group)
-		bossbattlemanager.enemy_health = bossmonster.health * len(characters)
+		codes = RegistrationCode.objects.filter(group=character.group)
+		bossbattlemanager.enemy_health = bossmonster.health * len(codes)
 		bossbattlemanager.save()
 
 	if request.method == 'GET':
 		if bossbattlemanager.state == "ready":
+			codes = RegistrationCode.objects.filter(group=character.group)
 			characters = Character.objects.filter(group=character.group)
-			percentage = bossbattlemanager.enemy_health * len(characters) * 100 / bossbattlemanager.bossmonster.health
+			percentage = bossbattlemanager.enemy_health * len(codes) * 100 / bossbattlemanager.bossmonster.health
 			return render(request, 'rpg/bossbattle.html', {'bossbattlemanager': bossbattlemanager, 'bossbattle': mybossbattle, 'character': character, 'characters': characters, 'percentage': percentage})
 		elif bossbattlemanager.state == "waiting":
 			return render(request, 'rpg/getready.html', {'bossbattle': mybossbattle, 'bossbattlemanager': bossbattlemanager})
@@ -299,15 +298,16 @@ def bossbattle(request):
 			map = Map.objects.filter(is_open=True).order_by("-id")[0]
 			bossmonster = Bossmonster.objects.get(map=map)
 			bossbattlemanager = Bossbattlemanager.objects.create(group=character.group, bossmonster=bossmonster)
-			characters = Character.objects.filter(group=character.group)
-			bossbattlemanager.enemy_health = bossmonster.health * len(characters)
+			codes = RegistrationCode.objects.filter(group=character.group)
+			bossbattlemanager.enemy_health = bossmonster.health * len(codes)
 			bossbattlemanager.save()
 			return render(request, 'rpg/getready.html', {'bossbattle': mybossbattle, 'bossbattlemanager': bossbattlemanager})
 
 
 	elif request.method == 'POST':
 		characters = Character.objects.filter(group=character.group)
-		bossbattles = Bossbattle.objects.filter(character__in=characters)
+		threshold = timezone.now() - datetime.timedelta(seconds=5)
+		bossbattles = Bossbattle.objects.filter(character__in=characters, ready_time__gt=threshold)
 
 		if request.POST.get("type", False) == 'ready':
 			mybossbattle.ready = True
@@ -321,8 +321,10 @@ def bossbattle(request):
 			return JsonResponse({'numOfReady': len(bossbattles.filter(ready=True)), 'numOfGroup': len(bossbattles)})
 
 		elif request.POST.get("type", False) == 'refresh':
+			mybossbattle.ready_time = timezone.now()
+			mybossbattle.save()
 			
-			if len(bossbattles) == len(bossbattles.filter(ready=True)):
+			if len(bossbattles) == len(bossbattles.filter(ready=True)) and len(bossbattles) != 0:
 				bossbattlemanager.state = "ready"
 				bossbattlemanager.boss_type = random.choice(["math", "phys", "chem", "life", "prog"])
 				bossbattlemanager.start_time = timezone.now()
@@ -365,49 +367,37 @@ def bossbattle(request):
 
 			if request.POST.get("turn", False) == unicode(bossbattlemanager.turn):
 				if bossbattlemanager.start_time + datetime.timedelta(seconds=15) < timezone.now():
-				
-					bossbattlemanager.turn += 1
 					bossbattlemanager.start_time = timezone.now()
+					bossbattlemanager.save()
 
 					for bossbattle in bossbattles:
 						skill = bossbattle.skill
 						bossbattle.skill = None
-						
+
 						if skill != None:
-							damage = skill.damage
+							realdamage, health_used, _ = calculate_damage(bossbattle.character, skill, bossbattlemanager.boss_type)
+						else:
+							realdamage = 0
+							health_used = 0
 	
-							if skill.math or (skill.improvise and bossbattlemanager.boss_type == "math"):
-								damage += round((bossbattle.character.math - skill.limit) * 0.7)
-							elif skill.phys or (skill.improvise and bossbattlemanager.boss_type == "phys"):
-								damage += round((bossbattle.character.phys - skill.limit) * 0.7)
-							elif skill.chem or (skill.improvise and bossbattlemanager.boss_type == "chem"):
-								damage += round((bossbattle.character.chem - skill.limit) * 0.7)
-							elif skill.life or (skill.improvise and bossbattlemanager.boss_type == "life"):
-								damage += round((bossbattle.character.life - skill.limit) * 0.7)
-							elif skill.prog or (skill.improvise and bossbattlemanager.boss_type == "prog"):
-								damage += round((bossbattle.character.prog - skill.limit) * 0.7)
-	
-							if skill.type == bossbattlemanager.boss_type or skill.improvise:
-								damage *= 2
-							
-							if round(damage*0.9) == round(damage*1.1):
-								realdamage = round(damage*0.9)
-							else:
-								realdamage = random.randrange(round(damage*0.9), round(damage*1.1))
-							bossbattlemanager.enemy_health -= realdamage
-							bossbattle.ally_health -= skill.health
-							if bossbattle.ally_health > 100:
-								bossbattle.ally_health = 100
-							bossbattle.save()
+						bossbattlemanager.enemy_health -= realdamage
+						bossbattle.ally_health -= health_used
+						if bossbattle.ally_health > 100:
+							bossbattle.ally_health = 100
+						bossbattle.save()
 	
 					if bossbattlemanager.enemy_health <= 0:
 						
 						bossgrades = Bossgrade.objects.all().order_by('turn')
 
 						for bossgrade in bossgrades:
-							if bossbattlemanager.turn <= bossgrade.turn:
+							if bossbattlemanager.turn + 1 <= bossgrade.turn:
 								bookgrade = bossgrade
 								break;
+
+						chs = Character.objects.filter(group=character.group)
+						for ch in chs:
+							Have.objects.get_or_create(skill=bossbattlemanager.bossmonster.skill, character=ch, number=1)
 
 						try:
 							bossmonsterbook = Bossmonsterbook.objects.get(group=character.group, bossmonster=bossbattlemanager.bossmonster)
@@ -416,18 +406,16 @@ def bossbattle(request):
 								bossmonsterbook.save()
 						except:
 							Bossmonsterbook.objects.create(group=character.group, bossmonster=bossbattlemanager.bossmonster, grade=bookgrade)
-							chs = Character.objects.filter(group=character.group)
-							Skillbook.objects.create(group=character.group, skill=bossbattlemanager.bossmonster.skill, finder=character)
-							for ch in chs:
-								Have.objects.create(skill=bossbattlemanager.bossmonster.skill, character=ch, number=1)
-
+							Skillbook.objects.get_or_create(group=character.group, skill=bossbattlemanager.bossmonster.skill, finder=character)
+							
 						for bossbattle in bossbattles:
 							bossbattle.delete()
 						bossbattlemanager.state = "win"
+						bossbattlemanager.turn += 1
 						bossbattlemanager.save()
 						return JsonResponse({"type": "win", "givenskill": bossbattlemanager.bossmonster.skill.name, "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "enemy_health": bossbattlemanager.enemy_health})
 
-					elif bossbattlemanager.turn > 20:
+					elif bossbattlemanager.turn + 1 >= 20:
 						
 						bossgrade = Bossgrade.objects.all().order_by('-turn')[0]
 
@@ -439,6 +427,7 @@ def bossbattle(request):
 						for bossbattle in bossbattles:
 							bossbattle.delete()
 						bossbattlemanager.state = "lose"
+						bossbattlemanager.turn += 1
 						bossbattlemanager.save()
 						return JsonResponse({"type": "lose", "monster": bossbattlemanager.bossmonster.name, "turn": bossbattlemanager.turn, "enemy_health": bossbattlemanager.enemy_health})
 	
@@ -468,9 +457,11 @@ def bossbattle(request):
 							randbossbattle.save()
 
 					bossbattlemanager.bossskill = bossskill
+					bossbattlemanager.turn += 1
 					bossbattlemanager.save()
 
-			monsterhealth = len(characters) * bossbattlemanager.bossmonster.health
+			codes = RegistrationCode.objects.filter(group=character.group)
+			monsterhealth = len(codes) * bossbattlemanager.bossmonster.health
 
 			mybossbattle = Bossbattle.objects.get(character=character)
 

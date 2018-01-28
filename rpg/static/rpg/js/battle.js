@@ -85,6 +85,8 @@ var dialog = function(string, i, callback) {
 		callback();
 	} else {
 		$("#dialog").html(string.substring(0, i));
+		talk.pause();
+		talk.currentTime = 0;
 		talk.play();
 		setTimeout(function() { dialog(string, i+1, callback) }, 70);
 	}

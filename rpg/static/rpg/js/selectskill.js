@@ -68,7 +68,7 @@ $("div#select button.skill.cannot").bind("click touchstart", function(e) {
 	alert(type + " 스탯이 부족합니다! 필요 스탯: " + skilllimit + " , 현재 스탯: " + stat);
 });
 
-$("#skill1").bind("click touchstart", function(e) {
+$("#skill1").children().first().bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (skill1 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
@@ -80,7 +80,7 @@ $("#skill1").bind("click touchstart", function(e) {
 	}
 });
 
-$("#skill2").bind("click touchstart", function(e) {
+$("#skill2").children().first().bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (skill2 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
@@ -92,7 +92,7 @@ $("#skill2").bind("click touchstart", function(e) {
 	}
 });
 
-$("#skill3").bind("click touchstart", function(e) {
+$("#skill3").children().first().bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (skill3 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
@@ -104,7 +104,7 @@ $("#skill3").bind("click touchstart", function(e) {
 	}
 });
 
-$("#skill4").bind("click touchstart", function(e) {
+$("#skill4").children().first().bind("click touchstart", function(e) {
 	e.preventDefault();
 	if (skill4 == true) {
 		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());

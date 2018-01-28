@@ -90,7 +90,9 @@ class Skill(models.Model):
 	limit = models.IntegerField(default=0)
 
 	def type(self):
-		if self.math:
+		if self.boss:
+			return "boss"
+		elif self.math:
 			return "math"
 		elif self.phys:
 			return "phys"
@@ -104,7 +106,9 @@ class Skill(models.Model):
 			return "normal"
 
 	def __str__(self):
-		if self.math:
+		if self.boss:
+			category = u"[보스]"
+		elif self.math:
 			category = u"[수학] "
 		elif self.phys:
 			category = u"[물리] "
@@ -288,6 +292,7 @@ class Bossbattle(models.Model):
 	skill = models.ForeignKey(Skill, null=True, blank=True)
 	ready = models.BooleanField(default=False)
 	turn = models.IntegerField(default=0)
+	ready_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
 	def __str__(self):
 		return unicode(self.character)

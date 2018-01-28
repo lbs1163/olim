@@ -12,7 +12,13 @@ var bannedtype = "{{bossbattlemanager.banned_type}}";
 var enemy_health = {{bossbattlemanager.enemy_health}};
 var ally_health = {{bossbattle.ally_health}};
 </script>
-<div class="container center-align">
+<div id="loading" class="container center-align">
+	<div class="row">
+		<h1>Loading...</h1>
+		<button id="gamestart" class="btn waves-effect waves-light">게임 시작</button>
+	</div>
+</div>
+<div class="container center-align invisible">
 	<div class="row battleground {{bossbattlemanager.boss_type}}">
 		<div class="col s6">
 			<div class="row">
