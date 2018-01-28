@@ -89,7 +89,8 @@ def signup(request):
 		form = SignupForm(request.POST)
 		if form.is_valid():
 			user = form.save(commit=False)
-			code_used = form.cleaned_data.get('RegistrationCode')
+			code_used = form.cleaned_data.get('registration_code')
+			print(code_used)
 			code = RegistrationCode.objects.filter(code=code_used)[0]
 			code.is_used = True
 			code.save()
@@ -151,7 +152,7 @@ def battle(request):
 			battle.delete()
 			return JsonResponse({'type': 'runawaySuccess'})
 		
-		skillid = request.POST['skillid']
+		skillid = request.POST.get('skillid', "0")
 
 		if skillid == "0":
 			realdamage, health_used, double = calculate_damage(character, None, battle.monster.skill.type)
@@ -284,6 +285,7 @@ def bossbattle(request):
 		bossbattlemanager = Bossbattlemanager.objects.create(group=character.group, bossmonster=bossmonster)
 		codes = RegistrationCode.objects.filter(group=character.group)
 		bossbattlemanager.enemy_health = bossmonster.health * len(codes)
+		bossbattlemanager.boss_type = random.choice(["math", "phys", "chem", "life", "prog"])
 		bossbattlemanager.save()
 
 	if request.method == 'GET':
@@ -400,7 +402,11 @@ def bossbattle(request):
 
 						chs = Character.objects.filter(group=character.group)
 						for ch in chs:
-							Have.objects.get_or_create(skill=bossbattlemanager.bossmonster.skill, character=ch, number=1)
+							have, created = Have.objects.get_or_create(skill=bossbattlemanager.bossmonster.skill, character=ch)
+							have.number += 1
+							have.save()
+
+						Skillbook.objects.get_or_create(group=character.group, skill=bossbattlemanager.bossmonster.skill, finder=character)
 
 						try:
 							bossmonsterbook = Bossmonsterbook.objects.get(group=character.group, bossmonster=bossbattlemanager.bossmonster)
@@ -409,7 +415,6 @@ def bossbattle(request):
 								bossmonsterbook.save()
 						except:
 							Bossmonsterbook.objects.create(group=character.group, bossmonster=bossbattlemanager.bossmonster, grade=bookgrade)
-							Skillbook.objects.get_or_create(group=character.group, skill=bossbattlemanager.bossmonster.skill, finder=character)
 							
 						for bossbattle in bossbattles:
 							bossbattle.delete()
@@ -439,7 +444,10 @@ def bossbattle(request):
 					#bossskill = 3
 				
 					if bossskill == 0:
-						type = random.choice(["math", "phys", "chem", "life", "prog"])
+						while True:
+							type = random.choice(["math", "phys", "chem", "life", "prog"])
+							if type != bossbattlemanager.boss_type:
+								break
 						bossbattlemanager.boss_type = type
 						bossbattlemanager.save()
 					elif bossskill == 1:
@@ -449,7 +457,10 @@ def bossbattle(request):
 								bossbattle.ally_health = 0
 							bossbattle.save()
 					elif bossskill == 2:
-						type = random.choice(["math", "phys", "chem", "life", "prog"])
+						while True:
+							type = random.choice(["math", "phys", "chem", "life", "prog"])
+							if type != bossbattlemanager.banned_type:
+								break
 						bossbattlemanager.banned_type = type
 						bossbattlemanager.save()
 					elif bossskill == 3:
@@ -598,18 +609,24 @@ def selectskill(request):
 	if request.method == 'GET':
 		try:
 			battle = Battle.objects.get(character=character)
-			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")
 			return render(request, 'rpg/cannotselectskill.html')
 		except:
-			return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
+			try:
+				bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")[0]
+				return render(request, 'rpg/cannotselectskill.html')
+			except:
+				return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
 
 	elif request.method == 'POST':
 		try:
 			battle = Battle.objects.get(character=character)
-			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")
 			return JsonResponse({'type': 'selectFailed'})
 		except:
-			pass
+			try:
+				bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")[0]
+				return JsonResponse({'type': 'selectFailed'})
+			except:
+				pass
 
 		if character.skill1 is not None:
 			have, created = Have.objects.get_or_create(character=character, skill=character.skill1)

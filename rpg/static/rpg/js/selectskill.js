@@ -36,23 +36,27 @@ var skillEventHandler = function(e) {
 		$(this).parent().remove();
 		$("#skill1").children().remove();
 		$("#skill1").append(temp);
+		$("#skill1").children().first().bind("click touchstart", skill1handler);
 		skill1 = true;
 	} else if (skill2 == false) {
 		var temp = $(this);
 		$(this).parent().remove();
 		$("#skill2").children().remove();
 		$("#skill2").append(temp);
+		$("#skill2").children().first().bind("click touchstart", skill2handler);
 		skill2 = true;
 	} else if (skill3 == false) {
 		var temp = $(this);
 		$(this).parent().remove();
 		$("#skill3").children().remove();
+		$("#skill3").children().first().bind("click touchstart", skill3handler);
 		$("#skill3").append(temp);
 		skill3 = true;
 	} else if (skill4 == false) {
 		var temp = $(this);
 		$(this).parent().remove();
 		$("#skill4").children().remove();
+		$("#skill4").children().first().bind("click touchstart", skill4handler);
 		$("#skill4").append(temp);
 		skill4 = true;
 	}
@@ -68,53 +72,58 @@ $("div#select button.skill.cannot").bind("click touchstart", function(e) {
 	alert(type + " 스탯이 부족합니다! 필요 스탯: " + skilllimit + " , 현재 스탯: " + stat);
 });
 
-$("#skill1").children().first().bind("click touchstart", function(e) {
+var skill1handler = function(e) {
 	e.preventDefault();
 	if (skill1 == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
-		$(this).children().first().remove();
-		$(this).append('<button class="skill btn"></button>');
+		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).clone());
+		$(this).parent().append('<button class="skill btn"></button>');
+		$(this).remove();
 		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill1 = false;
 	}
-});
+}
 
-$("#skill2").children().first().bind("click touchstart", function(e) {
+var skill2handler = function(e) {
 	e.preventDefault();
 	if (skill2 == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
-		$(this).children().first().remove();
-		$(this).append('<button class="skill btn"></button>');
+		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).clone());
+		$(this).parent().append('<button class="skill btn"></button>');
+		$(this).remove();
 		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill2 = false;
 	}
-});
+}
 
-$("#skill3").children().first().bind("click touchstart", function(e) {
+var skill3handler = function(e) {
 	e.preventDefault();
 	if (skill3 == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
-		$(this).children().first().remove();
-		$(this).append('<button class="skill btn"></button>');
+		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).clone());
+		$(this).parent().append('<button class="skill btn"></button>');
+		$(this).remove();
 		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill3 = false;
 	}
-});
+}
 
-$("#skill4").children().first().bind("click touchstart", function(e) {
+var skill4handler = function(e) {
 	e.preventDefault();
 	if (skill4 == true) {
-		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).children().first());
-		$(this).children().first().remove();
-		$(this).append('<button class="skill btn"></button>');
+		var temp = $("<div class='col s12 m6 l4 xl3'>").append($(this).clone());
+		$(this).parent().append('<button class="skill btn"></button>');
+		$(this).remove();
 		temp.children().first().bind("click touchstart", skillEventHandler)
 		$("#" + temp.children().first().attr("type")).prepend(temp);
 		skill4 = false;
 	}
-});
+}
+
+$("#skill1").children().first().bind("click touchstart", skill1handler);
+$("#skill2").children().first().bind("click touchstart", skill2handler);
+$("#skill3").children().first().bind("click touchstart", skill3handler);
+$("#skill4").children().first().bind("click touchstart", skill4handler);
 
 $("button#submit").bind("click touchstart", function(e) {
 	e.preventDefault();

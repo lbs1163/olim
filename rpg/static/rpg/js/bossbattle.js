@@ -186,7 +186,7 @@ var everyonesecond = function() {
 				if (data.type == "win") {
 					dialog(str, 1, function() {
 						setTimeout(function() {
-							bossbattle.pause();
+							battle.pause();
 							win.play();
 							dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
 								dialog(data.givenskill + " 스킬을 획득했다!", 1, function() {

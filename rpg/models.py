@@ -157,7 +157,7 @@ class Character(models.Model):
 	skill4 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill4')
 
 	def __str__(self):
-		return self.user.last_name + self.user.first_name
+		return self.user.last_name + self.user.first_name 
 
 @python_2_unicode_compatible
 class Have(models.Model):
