@@ -29,15 +29,15 @@ def calculate_damage(character, skill, monstertype):
 		health_used = skill.health
 		damage = skill.damage
 	
-	if skill.math or (skill.improvise and monster.math_exp != 0):
+	if skill.math or (skill.improvise and monstertype=="math"):
 		damage += round((character.math - skill.limit) * 0.7)
-	elif skill.phys or (skill.improvise and monster.phys_exp != 0):
+	elif skill.phys or (skill.improvise and monstertype=="phys"):
 		damage += round((character.phys - skill.limit) * 0.7)
-	elif skill.chem or (skill.improvise and monster.chem_exp != 0):
+	elif skill.chem or (skill.improvise and monstertype=="chem"):
 		damage += round((character.chem - skill.limit) * 0.7)
-	elif skill.life or (skill.improvise and monster.life_exp != 0):
+	elif skill.life or (skill.improvise and monstertype=="life"):
 		damage += round((character.life - skill.limit) * 0.7)
-	elif skill.prog or (skill.improvise and monster.prog_exp != 0):
+	elif skill.prog or (skill.improvise and monstertype=="prog"):
 		damage += round((character.prog - skill.limit) * 0.7)
 
 	if skill.type == monstertype or skill.improvise:
@@ -168,7 +168,7 @@ def battle(request):
 			except ObjectDoesNotExist:
 				return JsonResponse({'type': 'skillDoesNotExist'})
 
-			realdamage, health_used, double = calculate_damage(character, skill, battle.monster.skill.type)
+			realdamage, health_used, double = calculate_damage(character, skill, battle.monster.type())
 
 		if battle.ally_health < health_used:
 			return JsonResponse({'type': 'healthNotEnough'})
@@ -369,6 +369,9 @@ def bossbattle(request):
 				if bossbattlemanager.start_time + datetime.timedelta(seconds=15) < timezone.now():
 					bossbattlemanager.start_time = timezone.now()
 					bossbattlemanager.save()
+
+					characters = Character.objects.filter(group=character.group)
+					bossbattles = Bossbattle.objects.filter(character__in=characters)
 
 					for bossbattle in bossbattles:
 						skill = bossbattle.skill
@@ -595,7 +598,7 @@ def selectskill(request):
 	if request.method == 'GET':
 		try:
 			battle = Battle.objects.get(character=character)
-			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group)
+			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")
 			return render(request, 'rpg/cannotselectskill.html')
 		except:
 			return render(request, 'rpg/selectskill.html', {'character': character, 'skills': skills})
@@ -603,7 +606,7 @@ def selectskill(request):
 	elif request.method == 'POST':
 		try:
 			battle = Battle.objects.get(character=character)
-			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group)
+			bossbattlemanager = Bossbattlemanager.objects.filter(group=character.group, state="ready")
 			return JsonResponse({'type': 'selectFailed'})
 		except:
 			pass

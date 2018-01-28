@@ -196,6 +196,18 @@ class Monster(models.Model):
 	dialog5 = models.CharField(max_length=50, default=u"dialog5")
 	death_dialog = models.CharField(max_length=50, default=u"death dialog")
 
+	def type(self):
+		if self.math_exp > 0:
+			return "math"
+		elif self.phys_exp > 0:
+			return "phys"
+		elif self.chem_exp > 0:
+			return "chem"
+		elif self.life_exp > 0:
+			return "life"
+		elif self.prog_exp > 0:
+			return "prog"
+
 	def __str__(self):
 		if self.math_exp > 0:
 			category = u"[수학] "

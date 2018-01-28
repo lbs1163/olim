@@ -197,7 +197,7 @@ var everyonesecond = function() {
 					});
 				} else if (data.type == "lose") {
 					dialog(str, 1, function() {
-						bossbattle.pause();
+						battle.pause();
 						lose.play();
 						dialog(data.monster + "에게 패배했다...", 1, function() {
 							setTimeout(function() {
