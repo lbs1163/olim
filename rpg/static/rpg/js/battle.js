@@ -36,19 +36,55 @@ var win = new Audio('/static/rpg/sound/win.mp3');
 var lose = new Audio('/static/rpg/sound/lose.mp3');
 var talk = new Audio('/static/rpg/sound/talk.mp3');
 
-battle.addEventListener('ended', function() {
-	this.currentTime = 0;
-	this.play();
-}, false);
+function initAudio() {
+	battle.volume = 0;
+	select.volume = 0;
+	hit.volume = 0;
+	destroy.volume = 0;
+	win.volume = 0;
+	lose.volume = 0;
+	talk.volume = 0;
 
-battle.play();
+	battle.play();
+	battle.pause();
+	select.play();
+	select.pause();
+	hit.play();
+	hit.pause();
+	destroy.play();
+	destroy.pause();
+	win.play();
+	win.pause();
+	lose.play();
+	lose.pause();
+	talk.play();
+	talk.pause();
+
+	battle.currentTime = 0;
+	select.currentTime = 0;
+	hit.currentTime = 0;
+	destroy.currentTime = 0;
+	win.currentTime = 0;
+	lose.currentTime = 0;
+	talk.currentTime = 0;
+
+	battle.volume = 1;
+	select.volume = 1;
+	hit.volume = 1;
+	destroy.volume = 1;
+	win.volume = 1;
+	lose.volume = 1;
+	talk.volume = 1;
+
+	battle.loop = true;
+	battle.play();
+}
 
 var dialog = function(string, i, callback) {
 	if (string.length == i - 1) {
 		callback();
 	} else {
 		$("#dialog").html(string.substring(0, i));
-		talk.load();
 		talk.play();
 		setTimeout(function() { dialog(string, i+1, callback) }, 70);
 	}
@@ -74,9 +110,11 @@ var buttonOn = function() {
 				battle.pause();
 				lose.play();
 				dialog("무사히 도망쳤다!", 1, function() {
-					$("html").on("click touchstart", function(e) {
-						window.location.replace("/map/");
-					});
+					setTimeout(function() {
+						$("html").on("click touchstart", function(e) {
+							window.location.replace("/map/");
+						});
+					}, 3000);
 				});
 			} else {
 				location.reload();
@@ -196,4 +234,9 @@ var useSkill = function(skillid) {
 	});
 }
 
-buttonOn();
+$("button#gamestart").on("click touchstart", function() {
+	$("div#loading").remove();
+	$(".invisible").removeClass("invisible");
+	initAudio();
+	buttonOn();
+});

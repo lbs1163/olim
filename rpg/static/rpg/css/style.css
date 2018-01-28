@@ -1,5 +1,9 @@
 /* SETTINGS */
 
+.invisible {
+	display: none;
+}
+
 nav {
 	margin-bottom: 10px;
 }

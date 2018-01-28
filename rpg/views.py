@@ -417,8 +417,9 @@ def bossbattle(request):
 						except:
 							Bossmonsterbook.objects.create(group=character.group, bossmonster=bossbattlemanager.bossmonster, grade=bookgrade)
 							chs = Character.objects.filter(group=character.group)
+							Skillbook.objects.create(group=character.group, skill=bossbattlemanager.bossmonster.skill, finder=character)
 							for ch in chs:
-								Have.objects.create(skill=bossbattlemanager.bossmonster.skill, character=ch)
+								Have.objects.create(skill=bossbattlemanager.bossmonster.skill, character=ch, number=1)
 
 						for bossbattle in bossbattles:
 							bossbattle.delete()

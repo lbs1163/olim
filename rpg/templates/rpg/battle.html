@@ -6,7 +6,13 @@
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
-<div class="container center-align">
+<div id="loading" class="container center-align">
+	<div class="row">
+		<h2>Loading...</h2>
+		<button id="gamestart" class="btn waves-effect waves-light">게임 시작</button>
+	</div>
+</div>
+<div class="container center-align invisible">
 	<div class="row battleground {{battle.monster.skill.type}}">
 		<div class="col s6 m4 offset-m1 l3 offset-l2">
 			<div class="character">
