@@ -28,7 +28,7 @@ $.ajaxSetup({
 	}
 });
 
-var bossbattle = new Audio('/static/rpg/sound/battle.mp3');
+var battle = new Audio('/static/rpg/sound/bossbattle.mp3');
 var select = new Audio('/static/rpg/sound/select.mp3');
 var hit = new Audio('/static/rpg/sound/hit.mp3');
 var destroy = new Audio('/static/rpg/sound/destroy.mp3');
@@ -36,12 +36,49 @@ var win = new Audio('/static/rpg/sound/win.mp3');
 var lose = new Audio('/static/rpg/sound/lose.mp3');
 var talk = new Audio('/static/rpg/sound/talk.mp3');
 
-bossbattle.addEventListener('ended', function() {
-	this.currentTime = 0;
-	this.play();
-}, false);
+function initAudio() {
+	battle.volume = 0;
+	select.volume = 0;
+	hit.volume = 0;
+	destroy.volume = 0;
+	win.volume = 0;
+	lose.volume = 0;
+	talk.volume = 0;
 
-bossbattle.play();
+	battle.play();
+	battle.pause();
+	select.play();
+	select.pause();
+	hit.play();
+	hit.pause();
+	destroy.play();
+	destroy.pause();
+	win.play();
+	win.pause();
+	lose.play();
+	lose.pause();
+	talk.play();
+	talk.pause();
+
+	battle.currentTime = 0;
+	select.currentTime = 0;
+	hit.currentTime = 0;
+	destroy.currentTime = 0;
+	win.currentTime = 0;
+	lose.currentTime = 0;
+	talk.currentTime = 0;
+
+	battle.volume = 1;
+	select.volume = 1;
+	hit.volume = 1;
+	destroy.volume = 1;
+	win.volume = 1;
+	lose.volume = 1;
+	talk.volume = 1;
+
+	battle.loop = true;
+	battle.play();
+}
 
 var dialog = function(string, i, callback) {
 	$("#dialog").html(string);
@@ -239,5 +276,12 @@ var everyonesecond = function() {
 	});
 }
 
-var id = setInterval(everyonesecond, 1000);
-buttonOn();
+var id;
+
+$("button#gamestart").on("click touchstart", function() {
+	$("div#loading").remove();
+	$(".invisible").removeClass("invisible");
+	id = setInterval(everyonesecond, 1000);
+	initAudio();
+	buttonOn();
+});
