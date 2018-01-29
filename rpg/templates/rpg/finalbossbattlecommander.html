@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	{% include 'rpg/head.html' %}
+	<body class="grey darken-4 white-text">
+		<script>
+		var turn = {{ finalbossbattle.turn }};
+		</script>
+		<div class="container center-align">
+			<div class="row">
+				<div class="col s6 offset-s3 m4 offset-m4 l2 offset-l5">
+					<div class="character">
+						<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+						<img class="responsive-img absolute" src="{{ character.eye.img.url }}">
+						<img class="responsive-img absolute" src="{{ character.hair.img.url }}">
+						<img class="responsive-img absolute" src="{{ character.clothes.img.url }}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-panel grey darken-3">
+					<span id="dialog" class="white-text">다음엔 무엇을 할까?</span>
+				</div>
+			</div>
+			<div class="row">
+				<p class="left-align">내 체력</p>
+				<div class="progress">
+					<div id="ally_health" class="determinate" style="width: {{finalbossbattle.ally_health}}%"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill1 %}
+					<button skill="skill1" health="{{character.skill1.health}}" type="{{character.skill1.type}}" class="skill grey darken-3 waves-effect waves-light btn">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill2 %}
+					<button skill="skill2" health="{{character.skill2.health}}" type="{{character.skill2.type}}" class="skill grey darken-3 waves-effect waves-light btn">{{ character.skill2.name }} ({{ character.skill2.health }},{{ character.skill2.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill3 %}
+					<button skill="skill3" health="{{character.skill3.health}}" type="{{character.skill3.type}}" class="skill grey darken-3 waves-effect waves-light btn">{{ character.skill3.name }} ({{ character.skill3.health }},{{ character.skill3.damage }})</button>
+					{% else %}
+					<button skill="skill0" health="{{character.skill4.heatlh}} "class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					{% endif %}
+				</div>
+				<div class="col s12 m12 l6 center-align">
+					{% if character.skill4 %}
+					<button skill="skill4" health="{{character.skill4.health}}" type="{{character.skill4.type}}" class="skill grey darken-3 waves-effect waves-light btn">{{ character.skill4.name }} ({{ character.skill4.health }},{{ character.skill4.damage }})</button>
+					{% else %}
+					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					{% endif %}
+				</div>
+			</div>
+			<div class="row invisible">
+				<button id="help" class="skill grey darken-3 waves-effect waves-light btn">도와주기</button>
+			</div>
+		</div>
+		<script src="{% static 'rpg/js/finalbossbattlecommander.js' %}"></script>
+	</body>
+</html>

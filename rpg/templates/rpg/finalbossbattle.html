@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	{% include 'rpg/head.html' %}
+	<body>
+		<script
+			src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  			integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			crossorigin="anonymous"></script>
+		<div id="before" class="container">
+			<div class="row">
+				<div id="phoenix" class="col s6 offset-s3">
+					<img class="responsive-img non-pixel" src="/static/rpg/image/normal_phoenix.png">
+				</div>
+				<div id="dialogsection" class="col s12">
+					<div class=" center-align card-panel teal">
+						<span id="dialog1" class="white-text big">안녕 친구들!</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="after" class="container invisible">
+			<div class="row">
+				<div id="monster" class="col s10 offset-s1">
+					<img class="responsive-img" src="/static/rpg/image/phoenix.gif">
+				</div>
+				<div class="progress">
+					<div id="enemy_health" class="determinate" style="width: {{percentage}}%"></div>
+				</div>
+				<div id="dialogsection" class="col s12">
+					<div class="center-align card-panel teal grey darken-3">
+						<span id="dialog2" class="white-text big">다음엔 무엇을 할까?</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	var enemy_health = "{{ finalbossbattlemanager.enemy_health }}";
+	var state = "{{ finalbossbattlemanager.state }}";
+	</script>
+	<script src="{% static 'rpg/js/finalbossbattle.js' %}"></script>
+</html>
