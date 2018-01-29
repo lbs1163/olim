@@ -257,7 +257,7 @@
     "pk": 12,
     "fields": {
         "name": "\ub2e4\ud56d\ud568\uc218",
-        "img": "images/monster/default.png",
+        "img": "images/monster/math_polynominal_function.png",
         "math_exp": 144,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -303,7 +303,7 @@
     "pk": 14,
     "fields": {
         "name": "\uacbd\uc6b0\uc758 \uc218",
-        "img": "images/monster/default.png",
+        "img": "images/monster/math_number_of_cases.png",
         "math_exp": 377,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -464,7 +464,7 @@
     "pk": 21,
     "fields": {
         "name": "\ub3c4\ub974\ub798",
-        "img": "images/monster/phys_pulley_w1Hv38f.png",
+        "img": "images/monster/phys_pulley_P4rd8pP.png",
         "math_exp": 0,
         "phys_exp": 1,
         "chem_exp": 0,
@@ -740,7 +740,7 @@
     "pk": 33,
     "fields": {
         "name": "\ub3c4\ud50c\ub7ec \ud6a8\uacfc",
-        "img": "images/monster/phys_dopplereffect_ZOAKunm.png",
+        "img": "images/monster/phys_dopplereffect_SxjO36k.png",
         "math_exp": 0,
         "phys_exp": 233,
         "chem_exp": 0,
@@ -1384,7 +1384,7 @@
     "pk": 61,
     "fields": {
         "name": "\ucd08\ud30c\ub9ac",
-        "img": "images/monster/default.png",
+        "img": "images/monster/Life_fly.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -1499,7 +1499,7 @@
     "pk": 66,
     "fields": {
         "name": "\ud6a8\uc18c",
-        "img": "images/monster/default.png",
+        "img": "images/monster/Life_enzyme.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -1591,7 +1591,7 @@
     "pk": 70,
     "fields": {
         "name": "\ud638\ub974\ubaac",
-        "img": "images/monster/default.png",
+        "img": "images/monster/Life_hormone.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 0,
