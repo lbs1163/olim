@@ -94,8 +94,8 @@ var dialog = function(string, i, callback) {
 
 var buttonOn = function() {
 	$("button.skill").on("click touchstart", function(e) {
-		var skillid = $(this).attr("skillid");
-		useSkill(skillid);
+		var skill = $(this).attr("skill");
+		useSkill(skill);
 	});
 	$("button.skill").on("touchend", function(e) {
 		e.preventDefault();
@@ -213,13 +213,13 @@ $("html").on("touchend", function(e) {
 	e.preventDefault();
 });
 
-var useSkill = function(skillid) {
+var useSkill = function(skill) {
 	buttonOff();
 	select.play();
 	$.ajax({
 		method: "POST",
 		url: "/battle/",
-		data: { skillid: skillid },
+		data: { skill: skill },
 	}).done(function(data) {
 		if (data.type && data.type == "healthNotEnough") {
 			dialog("그 기술을 쓰기엔 체력이 부족하다!", 1, function() {
