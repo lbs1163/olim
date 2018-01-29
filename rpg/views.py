@@ -140,10 +140,10 @@ def make_monsterbook(battle):
 		monsterbook = Monsterbook.objects.get(group=battle.character.group, monster=battle.monster)
 		if monsterbook.grade.turn > bookgrade.turn:
 			monsterbook.grade = bookgrade
-			monsterbook.champion = character
+			monsterbook.champion = battle.character
 			monsterbook.save()
 	except:
-		monsterbook = Monsterbook(group=character.group, monster=battle.monster, grade=bookgrade, finder=character, champion=character)
+		monsterbook = Monsterbook(group=battle.character.group, monster=battle.monster, grade=bookgrade, finder=battle.character, champion=battle.character)
 		monsterbook.save()
 
 def calculate_boss_damage(bossbattles, bossbattlemanager):
@@ -475,6 +475,7 @@ def bossbattle(request):
 			
 			if len(bossbattles) == len(bossbattles.filter(ready=True)) and len(bossbattles) != 0:
 				bossbattlemanager.state = "ready"
+				bossbattlemanager.boss_type = random.choice(["math", "phys", "chem", "life", "prog"])
 				bossbattlemanager.start_time = timezone.now()
 				bossbattlemanager.save()
 			

@@ -245,7 +245,7 @@ class Battle(models.Model):
 class Skillbook(models.Model):
 	group = models.ForeignKey(Group)
 	skill = models.ForeignKey(Skill)
-	finder = models.ForeignKey(Character, on_delete=models.CASCADE)
+	finder = models.ForeignKey(Character, null=True, blank=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return u"[" + unicode(self.group) + "] " + unicode(self.skill)
