@@ -1,3 +1,41 @@
+/* PHOENIX */
+
+span#dialog1 {
+	font-size: 25px;
+}
+
+span#dialog2 {
+	font-size: 25px;
+}
+
+#finalbossbattle {
+	color: white;
+}
+
+#before div#phoenix {
+	margin-top: 10vh;
+	height: 50vh;
+}
+
+#before div#dialogsection {
+	margin-top: 10vh;
+	height: 20vh;
+}
+
+#after div#phoenix {
+	margin-top: 0;
+	height: 80vh;
+}
+
+#after div#dialogsection {
+	margin-top: 0;
+	height: 10vh;
+}
+
+body#darkphoenix {
+	color: white;
+}
+
 /* SETTINGS */
 
 .invisible {

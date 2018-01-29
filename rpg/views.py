@@ -8,7 +8,7 @@ from math import floor
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -16,6 +16,10 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 
 # Create your views here.
+
+def ending(request):
+	if request.method == 'GET':
+		return HttpResponse(u"엔딩 크레딧 아직 구현하지 못했습니다 호호호호호호");
 
 def get_skill(character, skillnum):
 	if skillnum == 'skill1':
@@ -247,8 +251,163 @@ def server_check(original_function):
 			return original_function(*args, **kwargs)
 	return wrapper
 
+def final_boss_check(original_function):
+	@wraps(original_function)
+	def wrapper(*args, **kwargs):
+		try:
+			server = Server.objects.all()[1]
+		except:
+			return HttpResponse("Please check the server instance of DB")
+
+		if server.is_open:
+			return redirect('finalbossbattle')
+		else:
+			return original_function(*args, **kwargs)
+	return wrapper
+
+@login_required
+def finalbossbattle(request):
+	character = Character.objects.get(user=request.user.id)
+	myfinalbossbattle, _ = Finalbossbattle.objects.get_or_create(character=character)
+	finalbossbattlemanager, created = Finalbossbattlemanager.objects.get_or_create()
+	if created:
+		codes = RegistrationCode.objects.all()
+		finalbossbattlemanager.enemy_health = len(codes) * 1000000
+		finalbossbattlemanager.save()
+	
+	if request.method == 'GET':
+		if request.user.is_staff:
+			codes = RegistrationCode.objects.all()
+			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 1000000)
+			return render(request, 'rpg/finalbossbattle.html', { 'finalbossbattlemanager': finalbossbattlemanager, 'percentage': percentage })
+		else:
+			return render(request, 'rpg/finalbossbattlecommander.html', {
+				'finalbossbattle': myfinalbossbattle, 'character': character })
+	
+	elif request.method == 'POST':
+		if request.user.is_staff:
+			if request.POST.get('type', False) == "finalbattle":
+				finalbossbattlemanager.state = "finalbattle"
+				finalbossbattlemanager.save()
+				return JsonResponse({'state': finalbossbattlemanager.state})
+			elif request.POST.get('type', False) == "ending":
+				finalbossbattlemanager.state = "ending"
+				finalbossbattlemanager.save()
+				return JsonResponse({'state': finalbossbattlemanager.state})
+			elif request.POST.get('type', False) == "getDamage":
+				enemy_health = finalbossbattlemanager.enemy_health;
+				codes = RegistrationCode.objects.all()
+				monsterhealth = len(codes) * 1000000
+				return JsonResponse({'state': finalbossbattlemanager.state, 'enemy_health': enemy_health, 'monsterhealth': monsterhealth})
+			elif request.POST.get('type', False) == "calculate":
+				finalbossbattlemanager.turn += 1
+				finalbossbattlemanager.save()
+
+				codes = RegistrationCode.objects.all()
+				monsterhealth = len(codes) * 1000000
+
+				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None).order_by('?')
+				
+				frustednumber = len(Finalbossbattle.objects.filter(frusted=True))
+				if frustednumber == 0 and finalbossbattlemanager.state == "helpeachother":
+					finalbossbattlemanager.state = "helpphoenix"
+					finalbossbattlemanager.save()
+
+				elif len(notfrusteds) == 1 and finalbossbattlemanager.state == "finalbattle":
+					finalbossbattlemanager.state = "allfrusted"
+					finalbossbattlemanager.save()
+
+				notfrusteds = notfrusteds[:len(notfrusteds)/2]
+
+				for notfrusted in notfrusteds:
+					notfrusted.frusted = True
+					notfrusted.save()
+
+				frustednumber = len(Finalbossbattle.objects.filter(frusted=True))
+				return JsonResponse({
+					'type': "ongoing",
+					'frustednumber': frustednumber,
+					'enemy_health': finalbossbattlemanager.enemy_health,
+					'monsterhealth': monsterhealth})
+			elif request.POST.get('type', False) == "helpeachother":
+				finalbossbattlemanager.state = "helpeachother"
+				finalbossbattlemanager.save()
+				return JsonResponse({'state': finalbossbattlemanager.state})
+			elif request.POST.get('type', False) == "finalattack":
+				finalbossbattlemanager.state = "finalattack"
+				finalbossbattlemanager.save()
+				return JsonResponse({'state': finalbossbattlemanager.state})
+			return JsonResponse({'state': finalbossbattlemanager.state})
+
+		else:
+			if request.POST.get('type', False) == "everyonesecond":
+				if finalbossbattlemanager.state != "before" and finalbossbattlemanager.state != "finalbattle" and finalbossbattlemanager.state != "allfrusted":
+					hope = True
+				else:
+					hope = False
+
+				if finalbossbattlemanager.state == "finalattack":
+					finalattack = True
+				else:
+					finalattack = False
+				return JsonResponse({'finalattack': finalattack, 'turn': finalbossbattlemanager.turn, 'ally_health': myfinalbossbattle.ally_health, 'frusted': myfinalbossbattle.frusted, 'hope': hope,'helper': unicode(myfinalbossbattle.helper)})
+
+			elif request.POST.get('type', False) == "help":
+				if finalbossbattlemanager.state == "helpphoenix":
+					return JsonResponse({'type': 'helped'})
+				if myfinalbossbattle.turn <= finalbossbattlemanager.turn:
+					myfinalbossbattle.turn = finalbossbattlemanager.turn + 1
+					myfinalbossbattle.save()
+					
+					if myfinalbossbattle.frusted:
+						return JsonResponse({'type': 'frusted'})
+					try:
+						frusted = Finalbossbattle.objects.filter(frusted=True).order_by('?')[0]
+						frusted.frusted = False
+						frusted.helper = character
+						frusted.save()
+						return JsonResponse({'type': 'helped'})
+					except:
+						return JsonResponse({'type': 'noFrusted'})
+
+			elif request.POST.get('type', False) == "attack":
+				if myfinalbossbattle.turn <= finalbossbattlemanager.turn or finalbossbattlemanager.state == "finalattack":
+					myfinalbossbattle.turn = finalbossbattlemanager.turn + 1
+					myfinalbossbattle.save()
+
+					if myfinalbossbattle.frusted:
+						return JsonResponse({'type': 'frusted'})
+
+					skill = get_skill(character, request.POST.get('skill', False))
+
+					if skill == None:
+						realdamage = 0
+						health_used = 0
+					else:
+						realdamage, health_used, _ = calculate_damage(character, skill, "normal")
+
+					if myfinalbossbattle.ally_health < health_used:
+						return JsonResponse({'type': 'healthNotEnough'})
+
+					myfinalbossbattle.ally_health -= health_used
+					finalbossbattlemanager.enemy_health -= realdamage
+
+					if myfinalbossbattle.ally_health > 100:
+						myfinalbossbattle.ally_health = 100
+
+					if finalbossbattlemanager.enemy_health < 0:
+						finalbossbattlemanager.enemy_health = 0
+
+					myfinalbossbattle.save()
+					finalbossbattlemanager.save()
+
+					return JsonResponse({'type': 'attackSuccess', 'turn': myfinalbossbattle.turn})
+				else:
+					return JsonResponse({'type': 'attackFailure', 'turn': myfinalbossbattle.turn})
+
 @server_check
 @login_required
+@final_boss_check
 def index(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
@@ -296,6 +455,7 @@ def signup(request):
 
 @server_check
 @login_required
+@final_boss_check
 def map(request):
 	maps = Map.objects.all().order_by("id")
 	openmaps = Map.objects.filter(is_open=True).order_by("-id")
@@ -305,6 +465,7 @@ def map(request):
 
 @server_check
 @login_required
+@final_boss_check
 def battle(request):
 	character = Character.objects.get(user=request.user.id)
 	try:
@@ -405,6 +566,7 @@ def battle(request):
 
 @server_check
 @login_required
+@final_boss_check
 def bossbattle(request):
 
 	character = Character.objects.get(user=request.user.id)
@@ -570,6 +732,7 @@ def bossbattle(request):
 
 @server_check
 @login_required
+@final_boss_check
 def monsterbook(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
@@ -589,6 +752,7 @@ def monsterbook(request):
 
 @server_check
 @login_required
+@final_boss_check
 def skillbook(request):
 	if request.method == 'GET':
 		character = Character.objects.get(user=request.user.id)
@@ -602,6 +766,7 @@ def skillbook(request):
 
 @server_check
 @login_required
+@final_boss_check
 def combination(request):
 	character = Character.objects.get(user=request.user.id)
 	haves = Have.objects.filter(character=character, number__gt=0, skill__boss=False).order_by('skill')
@@ -688,6 +853,7 @@ def combination(request):
 
 @server_check
 @login_required
+@final_boss_check
 def selectskill(request):
 	character = Character.objects.get(user=request.user.id)
 	haves = Have.objects.filter(character=character, number__gt=0).order_by('skill')
