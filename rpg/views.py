@@ -269,27 +269,38 @@ def final_boss_check(original_function):
 def finalbossbattle(request):
 	character = Character.objects.get(user=request.user.id)
 	myfinalbossbattle, _ = Finalbossbattle.objects.get_or_create(character=character)
+	characters = Character.objects.all()
+	for cha in characters:
+		Finalbossbattle.objects.get_or_create(character=cha)
 	finalbossbattlemanager, created = Finalbossbattlemanager.objects.get_or_create()
 	if created:
 		codes = RegistrationCode.objects.all()
-		finalbossbattlemanager.enemy_health = len(codes) * 1000000
+		finalbossbattlemanager.enemy_health = len(codes) * 200000
 		finalbossbattlemanager.save()
 	
 	if request.method == 'GET':
 		if request.user.is_staff:
 			codes = RegistrationCode.objects.all()
-			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 1000000)
+			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 200000)
 			return render(request, 'rpg/finalbossbattle.html', { 'finalbossbattlemanager': finalbossbattlemanager, 'percentage': percentage })
 		else:
 			server = Server.objects.all().order_by('id')[1]
 			if server.is_open:
 				return render(request, 'rpg/finalbossbattlecommander.html', {
-				'finalbossbattle': myfinalbossbattle, 'character': character })
+					'finalbossbattle': myfinalbossbattle,
+					'character': character,
+					'finalbossbattlemanager': finalbossbattlemanager})
 			else:
 				return redirect('index')
 	
 	elif request.method == 'POST':
 		if request.user.is_staff:
+			if request.POST.get('type', False) == "ready":
+				finalbossbattles = Finalbossbattle.objects.filter(character__user__is_staff=False, frusted=False)
+				for finalbossbattle in finalbossbattles:
+					finalbossbattle.ready = True
+					finalbossbattle.save()
+				return JsonResponse({'state': finalbossbattlemanager.state})
 			if request.POST.get('type', False) == "finalbattle":
 				finalbossbattlemanager.state = "finalbattle"
 				finalbossbattlemanager.save()
@@ -301,25 +312,34 @@ def finalbossbattle(request):
 			elif request.POST.get('type', False) == "getDamage":
 				enemy_health = finalbossbattlemanager.enemy_health;
 				codes = RegistrationCode.objects.all()
-				monsterhealth = len(codes) * 1000000
+				monsterhealth = len(codes) * 200000
 				return JsonResponse({'state': finalbossbattlemanager.state, 'enemy_health': enemy_health, 'monsterhealth': monsterhealth})
 			elif request.POST.get('type', False) == "calculate":
-				finalbossbattlemanager.turn += 1
-				finalbossbattlemanager.save()
-
+				finalbossbattles = Finalbossbattle.objects.all()
+				for finalbossbattle in finalbossbattles:
+					finalbossbattle.ready = False
+					finalbossbattle.save()
 				codes = RegistrationCode.objects.all()
-				monsterhealth = len(codes) * 1000000
+				monsterhealth = len(codes) * 200000
 
-				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None).order_by('?')
+				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None, character__user__is_staff=False).order_by('?')
 				
-				frustednumber = len(Finalbossbattle.objects.filter(frusted=True))
+				frustednumber = len(Finalbossbattle.objects.filter(frusted=True, character__user__is_staff=False))
 				if frustednumber == 0 and finalbossbattlemanager.state == "helpeachother":
 					finalbossbattlemanager.state = "helpphoenix"
 					finalbossbattlemanager.save()
+					return JsonResponse({'type': "helpphoenix"})
 
 				elif len(notfrusteds) == 1 and finalbossbattlemanager.state == "finalbattle":
 					finalbossbattlemanager.state = "allfrusted"
 					finalbossbattlemanager.save()
+					frustednumber = len(Finalbossbattle.objects.filter(frusted=True))
+					return JsonResponse({
+						'state': "finalbattle",
+						'type': "allfrusted",
+						'frustednumber': frustednumber,
+						'enemy_health': finalbossbattlemanager.enemy_health,
+						'monsterhealth': monsterhealth})
 
 				notfrusteds = notfrusteds[:len(notfrusteds)/2]
 
@@ -345,22 +365,20 @@ def finalbossbattle(request):
 
 		else:
 			if request.POST.get('type', False) == "everyonesecond":
-				if finalbossbattlemanager.state != "before" and finalbossbattlemanager.state != "finalbattle" and finalbossbattlemanager.state != "allfrusted":
-					hope = True
-				else:
-					hope = False
-
-				if finalbossbattlemanager.state == "finalattack":
-					finalattack = True
-				else:
-					finalattack = False
-				return JsonResponse({'finalattack': finalattack, 'turn': finalbossbattlemanager.turn, 'ally_health': myfinalbossbattle.ally_health, 'frusted': myfinalbossbattle.frusted, 'hope': hope,'helper': unicode(myfinalbossbattle.helper)})
+				return JsonResponse({
+					'state': finalbossbattlemanager.state,
+					'ally_health': myfinalbossbattle.ally_health,
+					'ready': myfinalbossbattle.ready,
+					'frusted': myfinalbossbattle.frusted,
+					'helper': unicode(myfinalbossbattle.helper)})
 
 			elif request.POST.get('type', False) == "help":
 				if finalbossbattlemanager.state == "helpphoenix":
+					myfinalbossbattle.ready = False
+					myfinalbossbattle.save()
 					return JsonResponse({'type': 'helped'})
-				if myfinalbossbattle.turn <= finalbossbattlemanager.turn:
-					myfinalbossbattle.turn = finalbossbattlemanager.turn + 1
+				if myfinalbossbattle.ready:
+					myfinalbossbattle.ready = False
 					myfinalbossbattle.save()
 					
 					if myfinalbossbattle.frusted:
@@ -373,14 +391,22 @@ def finalbossbattle(request):
 						return JsonResponse({'type': 'helped'})
 					except:
 						return JsonResponse({'type': 'noFrusted'})
+				else:
+					return JsonResponse({'type': 'helped'})
 
 			elif request.POST.get('type', False) == "attack":
-				if myfinalbossbattle.turn <= finalbossbattlemanager.turn or finalbossbattlemanager.state == "finalattack":
-					myfinalbossbattle.turn = finalbossbattlemanager.turn + 1
+				if myfinalbossbattle.ready:
+					if finalbossbattlemanager.state != 'finalattack':
+						myfinalbossbattle.ready = False
 					myfinalbossbattle.save()
 
 					if myfinalbossbattle.frusted:
 						return JsonResponse({'type': 'frusted'})
+
+					if finalbossbattlemanager.state != 'finalbattle' and finalbossbattlemanager.state != 'finalattack':
+						myfinalbossbattle.ready = True
+						myfinalbossbattle.save()
+						return JsonResponse({'type': 'time2help'})
 
 					skill = get_skill(character, request.POST.get('skill', False))
 
@@ -390,10 +416,13 @@ def finalbossbattle(request):
 					else:
 						realdamage, health_used, _ = calculate_damage(character, skill, "normal")
 
-					if myfinalbossbattle.ally_health < health_used:
+					if myfinalbossbattle.ally_health < health_used and finalbossbattlemanager.state != 'finalattack':
+						myfinalbossbattle.ready = True
+						myfinalbossbattle.save()
 						return JsonResponse({'type': 'healthNotEnough'})
 
-					myfinalbossbattle.ally_health -= health_used
+					if finalbossbattlemanager.state != 'finalattack':
+						myfinalbossbattle.ally_health -= health_used
 					finalbossbattlemanager.enemy_health -= realdamage
 
 					if myfinalbossbattle.ally_health > 100:
@@ -405,9 +434,9 @@ def finalbossbattle(request):
 					myfinalbossbattle.save()
 					finalbossbattlemanager.save()
 
-					return JsonResponse({'type': 'attackSuccess', 'turn': myfinalbossbattle.turn})
+					return JsonResponse({'type': 'attackSuccess'})
 				else:
-					return JsonResponse({'type': 'attackFailure', 'turn': myfinalbossbattle.turn})
+					return JsonResponse({'type': 'attackFailure'})
 
 @server_check
 @login_required

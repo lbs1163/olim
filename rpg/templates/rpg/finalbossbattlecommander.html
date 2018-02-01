@@ -5,9 +5,11 @@
 	{% include 'rpg/head.html' %}
 	<body class="grey darken-4 white-text">
 		<script>
-		var turn = {{ finalbossbattle.turn }};
+		var state = "{{ finalbossbattlemanager.state }}";
+		var frusted = {% if finalbossbattle.frusted %}true{% else %}false{% endif %};
+		var ready = {% if finalbossbattle.ready %}true{% else %}false{% endif %};
 		</script>
-		<div class="container center-align">
+		<div id="whole" class="container center-align invisible">
 			<div class="row">
 				<div class="col s6 offset-s3 m4 offset-m4 l2 offset-l5">
 					<div class="character">
@@ -29,7 +31,7 @@
 					<div id="ally_health" class="determinate" style="width: {{finalbossbattle.ally_health}}%"></div>
 				</div>
 			</div>
-			<div class="row">
+			<div id="skills" class="row">
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill1 %}
 					<button skill="skill1" health="{{character.skill1.health}}" type="{{character.skill1.type}}" class="skill grey darken-3 waves-effect waves-light btn">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>

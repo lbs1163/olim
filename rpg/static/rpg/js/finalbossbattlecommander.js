@@ -41,6 +41,7 @@ var buttonOn = function() {
 	});
 
 	$("button").removeClass("disabled");
+	$('button[skill="skill0"]').addClass("disabled");
 
 	$("button#help").off("click touchstart");
 	$("button#help").on("click touchstart", function(e) {
@@ -51,18 +52,7 @@ var buttonOn = function() {
 			url: "/finalbossbattle/",
 			data: { type: "help" },
 		}).done(function(data) {
-			console.log("help", data);
-			if (data.type == "helpSuccess") {
-				turn = data.turn;
-				$("#dialog").html("턴이 끝나기를 기다리는 중...");
-				id = setInterval(everyonesecond, 1000);
-			} else if (data.type == "noFrusted") {
-				dialog("좌절한 사람이 더 이상 없다!", 1, function() {
-					dialog("다음엔 무엇을 할까?", 1, function() {
-						buttonOn();
-					});
-				});
-			}
+			$("#dialog").html("턴이 끝나기를 기다리는 중...");
 		});
 	});
 }
@@ -77,7 +67,7 @@ var useSkill = function(skill) {
 	$.ajax({
 		method: "POST",
 		url: "/finalbossbattle/",
-		data: { type: "attack", skill: skill, turn: turn },
+		data: { type: "attack", skill: skill },
 	}).done(function(data) {
 		console.log("useSkill", data);
 		if (data.type == "healthNotEnough") {
@@ -87,58 +77,132 @@ var useSkill = function(skill) {
 				});
 			});
 		} else if (data.type == "frusted") {
-			dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {
-			});
-			id = setInterval(everyonesecond, 1000);
+			$("#dialog").html("좌절하고 있어 기술을 쓸 수 없다!");
+		} else if (data.type == "time2help") {
+			$("#dialog").html("친구들을 도와야 한다!");
 		} else if (data.type == "attackSuccess") {
-			turn = data.turn;
 			$("#dialog").html("턴이 끝나기를 기다리는 중...");
-			id = setInterval(everyonesecond, 1000);
 		} else if (data.type == "attackFailure") {
-			turn = data.turn;
 			$("#dialog").html("턴이 끝나기를 기다리는 중...");
-			id = setInterval(everyonesecond, 1000);
 		}
 	});
 }
 
-var frusted = false;
-
 var everyonesecond = function() {
+	clearInterval(id);
 	$.ajax({
 		method: "POST",
 		url: "/finalbossbattle/",
 		data: { type: "everyonesecond" }
 	}).done(function(data) {
 		console.log("everyonesecond", data);
-		clearInterval(id);
-		if (data.hope) {
-			$(".invisible").removeClass("invisible");
-		}
-		if (data.frusted) {
+		$("#ally_health").css("width", data.ally_health + "%");
+		if (data.state == "before") {
+			id = setInterval(everyonesecond, 1000);
+		} else if (data.state == "finalbattle") {
+			$("#whole").removeClass("invisible");
+			if (data.frusted) {
+				buttonOff();
+				dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {});
+				frusted = true;
+				id = setInterval(everyonesecond, 1000);
+			} else if (data.ready && !data.frusted) {
+				dialog("다음엔 무엇을 할까?", 1, function() {
+					buttonOff();
+					buttonOn();
+					id = setInterval(everyonesecond, 1000);
+				});
+			} else {
+				$("#dialog").html("턴이 끝나기를 기다리는 중...");
+				buttonOff();
+				id = setInterval(everyonesecond, 1000);
+			}
+		} else if (data.state == "allfrusted") {
 			buttonOff();
-			dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {});
-			frusted = true;
 			id = setInterval(everyonesecond, 1000);
-		} else if (!data.frusted && frusted) {
-			frusted = false;
-			dialog(data.helper + "(이)가 도와줘서 좌절에서 벗어났다!", 1, function() {
-				setTimeout(function() {
-					dialog("다음엔 무엇을 할까?", 1, function() {
-						buttonOn();
+		} else if (data.state == "helpeachother") {
+			$("#help").parent().removeClass("invisible");
+			if (data.frusted) {
+				buttonOff();
+				dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {});
+				id = setInterval(everyonesecond, 1000);
+			} else if (data.ready && !data.frusted) {
+				if (frusted) {
+					console.log("sasdfasdf");
+					frusted = false;
+					dialog(data.helper + "(이)가 도와줘서 좌절에서 벗어났다!", 1, function() {
+						setTimeout(function() {
+							dialog("다음엔 무엇을 할까?", 1, function() {
+								buttonOff();
+								buttonOn();
+								$("#skills button").addClass("disabled");
+								id = setInterval(everyonesecond, 1000);
+							});
+						}, 2000);
 					});
-				}, 1000);
-			});
-		} else if (turn == data.turn || data.finalattack) {
-			$("#ally_health").css("width", data.ally_health + "%");
-			dialog("다음엔 무엇을 할까?", 1, function() {
+				} else {
+					dialog("다음엔 무엇을 할까?", 1, function() {
+						buttonOff();
+						buttonOn();
+						$("#skills button").addClass("disabled");
+						id = setInterval(everyonesecond, 1000);
+					});
+				}
+			} else {
+				buttonOff();
+				$("#dialog").html("턴이 끝나기를 기다리는 중...");
+				id = setInterval(everyonesecond, 1000);
+			}
+		} else if (data.state == "helpphoenix") {
+			if (data.ready) {
+				buttonOff();
 				buttonOn();
-			});
-		}
-		else {
+				$("#skills button").addClass("disabled");
+				id = setInterval(everyonesecond, 1000);
+			} else {
+				buttonOff();
+				$("#dialog").html("턴이 끝나기를 기다리는 중...");
+				id = setInterval(everyonesecond, 1000);
+			}
+		} else if (data.state == "finalattack") {
+			buttonOff();
+			buttonOn();
+			$("#help").addClass("disabled");
 			id = setInterval(everyonesecond, 1000);
+		} else if (data.state == "ending") {
+			$("#whole").addClass("invisible");
 		}
 	});
 }
 
-buttonOn();
+if (state == "before") {
+} else if (state == "finalbattle") {
+	$("#whole").removeClass("invisible");
+	buttonOff();
+	buttonOn();
+} else if (state == "allfrusted") {
+	$("#whole").removeClass("invisible");
+	buttonOff();
+} else if (state == "helpeachother") {
+	$("#whole").removeClass("invisible");
+	buttonOff();
+	buttonOn();
+	$("#help").parent().removeClass("invisible");
+	$("#skills button").addClass("disabled");
+} else if (state == "helpphoenix") {
+	$("#whole").removeClass("invisible");
+	buttonOff();
+	buttonOn();
+	$("#help").parent().removeClass("invisible");
+	$("#skills button").addClass("disabled");
+} else if (state == "finalattack") {
+	$("#whole").removeClass("invisible");
+	buttonOff();
+	buttonOn();
+	$("#help").parent().removeClass("invisible");
+	$("#help").addClass("disabled");
+} else if (state == "ending") {
+	$("#whole").addClass("invisible");
+}
+
+id = setInterval(everyonesecond, 1000);

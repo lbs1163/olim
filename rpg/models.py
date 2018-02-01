@@ -312,7 +312,6 @@ class Bossbattle(models.Model):
 @python_2_unicode_compatible
 class Finalbossbattlemanager(models.Model):
 	enemy_health = models.IntegerField(default=10000000)
-	turn = models.IntegerField(default=0)
 	state = models.CharField(max_length=20, default="before")
 	
 	def __str__(self):
@@ -322,9 +321,9 @@ class Finalbossbattlemanager(models.Model):
 class Finalbossbattle(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE, related_name='character')
 	ally_health = models.IntegerField(default=100)
-	turn = models.IntegerField(default=0)
 	frusted = models.BooleanField(default=False)
 	helper = models.ForeignKey(Character, null=True, blank=True, related_name='helper')
+	ready = models.BooleanField(default=False)
 
 	def __str__(self):
 		return unicode(self.character)
