@@ -280,7 +280,7 @@
     "pk": 13,
     "fields": {
         "name": "\uc0bc\uac01\ud568\uc218",
-        "img": "images/monster/default.png",
+        "img": "images/monster/math_trigonaometric_function.png",
         "math_exp": 233,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -395,7 +395,7 @@
     "pk": 18,
     "fields": {
         "name": "\ub0b4\uc801",
-        "img": "images/monster/default.png",
+        "img": "images/monster/math_inner_product.png",
         "math_exp": 2584,
         "phys_exp": 0,
         "chem_exp": 0,
@@ -1039,7 +1039,7 @@
     "pk": 46,
     "fields": {
         "name": "\uc0b0\ud654\ud658\uc6d0",
-        "img": "images/monster/default.png",
+        "img": "images/monster/chem_oxidation.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 8,
@@ -1200,7 +1200,7 @@
     "pk": 53,
     "fields": {
         "name": "\uc774\uc0c1\uae30\uccb4",
-        "img": "images/monster/default.png",
+        "img": "images/monster/chem_idealgas.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 233,
@@ -1361,7 +1361,7 @@
     "pk": 60,
     "fields": {
         "name": "\uc804\uc790\uc30d\ubc18\ubc1c\uc774\ub860",
-        "img": "images/monster/default.png",
+        "img": "images/monster/chem_electronpair.png",
         "math_exp": 0,
         "phys_exp": 0,
         "chem_exp": 6765,

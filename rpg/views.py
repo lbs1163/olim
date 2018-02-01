@@ -241,7 +241,7 @@ def server_check(original_function):
 	@wraps(original_function)
 	def wrapper(*args, **kwargs):
 		try:
-			server = Server.objects.all()[0]
+			server = Server.objects.all().order_by('id')[0]
 		except:
 			return HttpResponse("Please check the server instance of DB")
 
@@ -255,7 +255,7 @@ def final_boss_check(original_function):
 	@wraps(original_function)
 	def wrapper(*args, **kwargs):
 		try:
-			server = Server.objects.all()[1]
+			server = Server.objects.all().order_by('id')[1]
 		except:
 			return HttpResponse("Please check the server instance of DB")
 
@@ -281,8 +281,12 @@ def finalbossbattle(request):
 			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 1000000)
 			return render(request, 'rpg/finalbossbattle.html', { 'finalbossbattlemanager': finalbossbattlemanager, 'percentage': percentage })
 		else:
-			return render(request, 'rpg/finalbossbattlecommander.html', {
+			server = Server.objects.all().order_by('id')[1]
+			if server.is_open:
+				return render(request, 'rpg/finalbossbattlecommander.html', {
 				'finalbossbattle': myfinalbossbattle, 'character': character })
+			else:
+				return redirect('index')
 	
 	elif request.method == 'POST':
 		if request.user.is_staff:
