@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container center-align">
 	<h1>{{ group.group_name }} 스킬 도감</h1>
-	<p>발견된 스킬을 눌러 정보를 확인하세요! 지금까지 발견된 조합법도 확인할 수 있습니다!
+	<p>발견된 스킬을 눌러 정보를 확인하세요! 지금까지 발견된 조합법도 확인할 수 있습니다!</p>
 	<h3>일반 스킬</h3>
 	<div class="row" id="normal">
 		{% for dict in allSkillsWithBoolean %}
@@ -268,6 +268,15 @@
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
+					{% if dict.skill.name == '임기응변하기' %}
+					<p class="center-align"> 설명 : 상대방의 속성에 맞게 스킬의 속성이 변한다.</p>
+					{% elif dict.skill.name == '꿀잠 자기' %}
+					<p class="center-align"> 설명 : 스킬 '핫식스 마시기'의 업그레이드 버전. 많은 힐이 가능하다.</p>
+					{% elif dict.skill.name == '구글링 하기' %}
+					<p class="center-align"> 설명 : 따로 속성이 없는 일반 스킬의 업그레이드 버전. 속성 무효화를 무시하고 많은 딜이 가능하다.</p>
+					{% elif dict.skill.name == '듀 이펙트 받기' %}
+					<p class="center-align"> 설명 : 스킬 '꿀잠 자기'의 업그레이드 버전. 더 많은 힐이 가능하다.</p>
+					{% endif %}
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
 					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
 					<p class="center-align">스탯 제한 : 없음</p>

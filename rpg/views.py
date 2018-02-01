@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from functools import wraps
 from collections import Counter
-import random, datetime
+import random, datetime#, operator
 from math import floor
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .models import *
+from django.db.models import Q
 
 # Create your views here.
 
@@ -934,3 +935,55 @@ def selectskill(request):
 		character.save()
 
 		return JsonResponse({'type': 'selectSuccess'})
+
+@server_check
+@login_required
+def reward(request):
+	grouplist = Group.objects.all()
+#	bossmonsterbooks = Bossmonsterbook.objects.all()
+#	monsterbooks = Monsterbooks.objects.all()
+#	failedCombinations = FailedCombination.objects.all()
+	bossbattlemanagers = Bossbattlemanager.objects.all()
+	characters = Character.objects.all()
+	skillbooks = Skillbook.objects.all()
+	groupbossgrades = []
+	groupmonstergrades = []
+	groupfailedCombicounts = []
+	groupbossbattles = []
+
+	for group in grouplist:
+		bossmonsterbooks = Bossmonsterbook.objects.filter(group = group)
+		bossgrades = [[bossmonsterbook.bossmonster.name, bossmonsterbook.grade.name] for bossmonsterbook in bossmonsterbooks]
+		groupbossgrades += [[group.group_name, bossgrades]]
+		monsterbooks = Monsterbook.objects.filter(group = group)
+		monstergrades = [monsterbook.grade.name for monsterbook in monsterbooks]
+		Acount = monstergrades.count('A')
+		Bcount = monstergrades.count('B')
+		Ccount = monstergrades.count('C')
+		Dcount = monstergrades.count('D')
+		Fcount = monstergrades.count('F')
+		groupmonstergrades += [[group.group_name, Acount, Bcount, Ccount, Dcount, Fcount]]
+		failedCombinations = FailedCombination.objects.filter(group = group)
+		groupfailedCombicounts += [[group.group_name, len(failedCombinations)]]
+		bossbattlemanagers = Bossbattlemanager.objects.filter(Q(group = group)&(Q(state = 'win') | Q(state = 'lose')))
+		groupbossbattles += [[group.group_name, len(bossbattlemanagers)]]
+
+	#groupmonstergrades = sorted(groupmonstergrades, key=operator.itemgetter(1))
+
+	characterstats = {}
+	monsterfinders = []
+	monsterchampions = []
+	skillfinders = []
+
+	for idx, character in enumerate(characters):
+		stat = character.math+character.phys+character.chem+character.life+character.prog
+		characterstats[character.user.last_name+character.user.first_name]=stat
+		monsterfinders += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Monsterbook.objects.filter(finder=character))]]
+		monsterchampions += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Monsterbook.objects.filter(champion=character))]]
+		skillfinders += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Skillbook.objects.filter(finder=character))]]
+	#	if idx == 4:
+	#		break
+
+	characterstats = sorted(characterstats.items(), key=lambda t : t[1], reverse=True)
+
+	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})

@@ -281,7 +281,7 @@ class Bossmonsterbook(models.Model):
 	
 	def __str__(self):
 		return u"[" + unicode(self.group) + "] " + unicode(self.bossmonster)
-
+		
 @python_2_unicode_compatible
 class Bossbattlemanager(models.Model):
 	bossmonster = models.ForeignKey(Bossmonster, on_delete=models.CASCADE)

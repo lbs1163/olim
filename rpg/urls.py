@@ -16,4 +16,5 @@ urlpatterns = [
 	url(r'^selectskill/$', selectskill, name='selectskill'),
 	url(r'^finalbossbattle/$', finalbossbattle, name='finalbossbattle'),
 	url(r'^ending/$', ending, name='ending'),
+	url(r'^reward/$', reward, name='reward'),
 ]
