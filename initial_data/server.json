@@ -3,7 +3,14 @@
     "model": "rpg.server",
     "pk": 1,
     "fields": {
-        "is_open": true
+        "is_open": false
+    }
+},
+{
+    "model": "rpg.server",
+    "pk": 2,
+    "fields": {
+        "is_open": false
     }
 }
 ]
