@@ -3,16 +3,128 @@
     "model": "rpg.hair",
     "pk": 1,
     "fields": {
-        "name": "\ub354\ubc85\uba38\ub9ac",
-        "img": "images/hair/hair.png"
+        "name": "\ud22c\ube14\ub7ed \uba38\ub9ac",
+        "img": "images/hair/\ud22c\ube14\ub7ed1_\uae30\ubcf8.png"
     }
 },
 {
     "model": "rpg.hair",
     "pk": 2,
     "fields": {
-        "name": "\ube61\ube61\uc774",
-        "img": "images/hair/bald.png"
+        "name": "\ube61\ube61\uc774 \uba38\ub9ac",
+        "img": "images/hair/\ub300\uba38\ub9ac.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 3,
+    "fields": {
+        "name": "\ubb34\uc9c0\uac1c \uc544\ud504\ub85c \uba38\ub9ac",
+        "img": "images/hair/AfroPerm.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 4,
+    "fields": {
+        "name": "\uc678\uacc4\uc778 \uba38\ub9ac",
+        "img": "images/hair/alienhair.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 5,
+    "fields": {
+        "name": "\uae34\uba38\ub9ac",
+        "img": "images/hair/basicmiddlehair.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 6,
+    "fields": {
+        "name": "\ubfb0\uc871\uba38\ub9ac",
+        "img": "images/hair/conehead.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 7,
+    "fields": {
+        "name": "\uae30\uc601\uc774 \uba38\ub9ac",
+        "img": "images/hair/giyeonghair.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 8,
+    "fields": {
+        "name": "\uc5ec\uc131 \ub2e8\ubc1c \uba38\ub9ac",
+        "img": "images/hair/shorthair.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 9,
+    "fields": {
+        "name": "\ub9c8\ud2f8\ub2e4 \uba38\ub9ac",
+        "img": "images/hair/\ub9c8\ud2f8\ub2e4\uba38\ub9ac2.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 10,
+    "fields": {
+        "name": "\ub9cc\ub450 \uba38\ub9ac",
+        "img": "images/hair/\ub9cc\ub450\uba38\ub9ac2.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 11,
+    "fields": {
+        "name": "\ubbf8\ucfe0 \uba38\ub9ac",
+        "img": "images/hair/\ubbf8\ucfe0\uba38\ub9ac2.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 12,
+    "fields": {
+        "name": "\ub8e8\ud53c \uba38\ub9ac",
+        "img": "images/hair/\ubc00\uc9da\ubaa8\uc790.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 13,
+    "fields": {
+        "name": "\ubd84\ud64d \uc7a5\ubc1c \uba38\ub9ac",
+        "img": "images/hair/\ubd84\ud64d\uba38\ub9ac2.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 14,
+    "fields": {
+        "name": "\ube44\ub2c8 \uba38\ub9ac",
+        "img": "images/hair/\ube44\ub2c8.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 15,
+    "fields": {
+        "name": "\ube68\uac04\uba38\ub9ac \uc564 \uba38\ub9ac",
+        "img": "images/hair/\ube68\uac04\uba38\ub9ac\uc5642.png"
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 16,
+    "fields": {
+        "name": "\uc6d0\ube14\ub7ed \uba38\ub9ac",
+        "img": "images/hair/\uc6d0\ube14\ub7ed.png"
     }
 }
 ]

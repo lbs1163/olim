@@ -3,16 +3,72 @@
     "model": "rpg.clothes",
     "pk": 1,
     "fields": {
-        "name": "1\ubd84\ubc18 \ubd84\ubc18\uc7a0",
-        "img": "images/clothes/clothes.png"
+        "name": "\uc18c\ub9bc\uc0ac \uc637",
+        "img": "images/clothes/\uc18c\ub9bc\uc0ac_\uc637.png"
     }
 },
 {
     "model": "rpg.clothes",
     "pk": 2,
     "fields": {
-        "name": "2\ubd84\ubc18 \ubd84\ubc18\uc7a0",
-        "img": "images/clothes/clothes2.png"
+        "name": "\ucd78\ud30c \uc637",
+        "img": "images/clothes/chopaclothes.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 3,
+    "fields": {
+        "name": "\uc678\uacc4\uc778 \uc637",
+        "img": "images/clothes/alienclothes.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 4,
+    "fields": {
+        "name": "\uad50\ubcf5 \uc637",
+        "img": "images/clothes/brownneatclothes.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 5,
+    "fields": {
+        "name": "\uc2a4\ud3f0\uc9c0\ubc25 \uc637",
+        "img": "images/clothes/spongebobclothes.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 6,
+    "fields": {
+        "name": "\uc815\uc7a5 \uc637",
+        "img": "images/clothes/suit.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 7,
+    "fields": {
+        "name": "\ubc31\uc218 \uc637",
+        "img": "images/clothes/\ubc31\uc218\uce04\ub9ac\ub2dd.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 8,
+    "fields": {
+        "name": "\ube14\ub77c\uc6b0\uc2a4 \uce58\ub9c8 \uc637",
+        "img": "images/clothes/\ube14\ub77c\uc6b0\uc2a4\uce58\ub9c8.png"
+    }
+},
+{
+    "model": "rpg.clothes",
+    "pk": 9,
+    "fields": {
+        "name": "\ube68\uac04\uba38\ub9ac \uc564 \uc637",
+        "img": "images/clothes/\ube68\uac04\uba38\ub9ac\uc564\uc637.png"
     }
 }
 ]

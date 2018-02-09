@@ -3,16 +3,80 @@
     "model": "rpg.eye",
     "pk": 1,
     "fields": {
-        "name": "\uae30\ubcf8 \ub208",
-        "img": "images/eye/eye.png"
+        "name": "\uae30\ubcf8 \uc5bc\uad74",
+        "img": "images/eye/simple.png"
     }
 },
 {
     "model": "rpg.eye",
     "pk": 2,
     "fields": {
-        "name": "\ud654\ub09c \ub208",
-        "img": "images/eye/angryeye.png"
+        "name": "\ud654\ub09c \uc5bc\uad74",
+        "img": "images/eye/anger_2.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 3,
+    "fields": {
+        "name": "\uc678\uacc4\uc778 \uc5bc\uad74",
+        "img": "images/eye/alienface.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 4,
+    "fields": {
+        "name": "\ub9e4\uc6b0 \ud654\ub09c \uc5bc\uad74",
+        "img": "images/eye/anger.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 5,
+    "fields": {
+        "name": "\uc6b0\ub294 \uc5bc\uad74",
+        "img": "images/eye/cryeye.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 6,
+    "fields": {
+        "name": "\uc548\uacbd \uc5bc\uad74",
+        "img": "images/eye/glasseseye.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 7,
+    "fields": {
+        "name": "\uc6c3\ub294 \uc548\uacbd \uc5bc\uad74",
+        "img": "images/eye/glassesmileseye.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 8,
+    "fields": {
+        "name": "\ud589\ubcf5\ud55c \uc5bc\uad74",
+        "img": "images/eye/happiness.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 9,
+    "fields": {
+        "name": "\uc2ac\ud508 \uc5bc\uad74",
+        "img": "images/eye/sadness.png"
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 10,
+    "fields": {
+        "name": "\ub6b1\ud55c \uc5bc\uad74",
+        "img": "images/eye/soso.png"
     }
 }
 ]
