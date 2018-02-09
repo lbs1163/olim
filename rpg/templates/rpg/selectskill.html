@@ -12,16 +12,16 @@
 	<div class="row">
 		<h3>선택할 스킬</h3>
 		<div id="skill1" class="col s12 m6 offset-m3 l6 xl3">
-			<button class="skill btn" type="{{ character.skill1.type }}" skillid="{{character.skill1.id}}">{% if character.skill1 %}{{ character.skill1.name }}({{character.skill1.health}},{{character.skill1.damage}}){% endif %}</button>
+			<button class="skill {{ character.skill1.type }} btn" type="{{ character.skill1.type }}" skillid="{{character.skill1.id}}">{% if character.skill1 %}{{ character.skill1.name }}({{character.skill1.health}},{{character.skill1.damage}}){% endif %}</button>
 		</div>
 		<div id="skill2" class="col s12 m6 offset-m3 l6 xl3">
-			<button class="skill btn" type="{{ character.skill2.type }}" skillid="{{character.skill2.id}}">{% if character.skill2 %}{{ character.skill2.name }}({{character.skill2.health}},{{character.skill2.damage}}){% endif %}</button>
+			<button class="skill {{ character.skill2.type }} btn" type="{{ character.skill2.type }}" skillid="{{character.skill2.id}}">{% if character.skill2 %}{{ character.skill2.name }}({{character.skill2.health}},{{character.skill2.damage}}){% endif %}</button>
 		</div>
 		<div id="skill3" class="col s12 m6 offset-m3 l6 xl3">
-			<button class="skill btn" type="{{ character.skill3.type }}" skillid="{{character.skill3.id}}">{% if character.skill3 %}{{ character.skill3.name }}({{character.skill3.health}},{{character.skill3.damage}}){% endif %}</button>
+			<button class="skill {{ character.skill3.type }} btn" type="{{ character.skill3.type }}" skillid="{{character.skill3.id}}">{% if character.skill3 %}{{ character.skill3.name }}({{character.skill3.health}},{{character.skill3.damage}}){% endif %}</button>
 		</div>
 		<div id="skill4" class="col s12 m6 offset-m3 l6 xl3">
-			<button class="skill btn" type="{{ character.skill4.type }}" skillid="{{character.skill4.id}}">{% if character.skill4 %}{{ character.skill4.name }}({{character.skill4.health}},{{character.skill4.damage}}){% endif %}</button>
+			<button class="skill {{ character.skill4.type }} btn" type="{{ character.skill4.type }}" skillid="{{character.skill4.id}}">{% if character.skill4 %}{{ character.skill4.name }}({{character.skill4.health}},{{character.skill4.damage}}){% endif %}</button>
 		</div>
 		<script>
 			var skill1 = {% if character.skill1 %} true {% else %} false {% endif %}
@@ -39,7 +39,7 @@
 			{% for skill in skills %}
 			{% if not skill.math and not skill.phys and not skill.chem and not skill.life and not skill.prog and not skill.boss %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="normal" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
+				<button class="skill normal btn" type="normal" skillid="{{skill.id}}">{{skill.name}}({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -53,7 +53,7 @@
 				{% if skill.limit > character.math %}
 				<button class="skill btn cannot" skilllimit={{skill.limit}} stat={{character.math}} type="math" koreantype="수학" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% else %}
-				<button class="skill btn" type="math" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill math btn" type="math" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
 			</div>
 			{% endif %}
@@ -68,7 +68,7 @@
 				{% if skill.limit > character.phys %}
 				<button class="skill btn cannot" skilllimit={{skill.limit}} stat={{character.phys}} type="phys" koreantype="물리" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% else %}
-				<button class="skill btn" type="phys" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill phys btn" type="phys" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
 			</div>
 			{% endif %}
@@ -83,7 +83,7 @@
 				{% if skill.limit > character.chem %}
 				<button class="skill btn cannot" skilllimit={{skill.limit}} stat={{character.chem}} type="chem" koreantype="화학" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% else %}
-				<button class="skill btn" type="chem" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill chem btn" type="chem" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
 			</div>
 			{% endif %}
@@ -98,7 +98,7 @@
 				{% if skill.limit > character.life %}
 				<button class="skill btn cannot" skilllimit={{skill.limit}} stat={{character.life}} type="life" koreantype="생물" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% else %}
-				<button class="skill btn" type="life" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill life btn" type="life" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
 			</div>
 			{% endif %}
@@ -113,7 +113,7 @@
 				{% if skill.limit > character.prog %}
 				<button class="skill btn cannot" skilllimit={{skill.limit}} stat={{character.prog}} type="prog" koreantype="프밍" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% else %}
-				<button class="skill btn" type="prog" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill prog btn" type="prog" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 				{% endif %}
 			</div>
 			{% endif %}
@@ -125,7 +125,7 @@
 			{% for skill in skills %}
 			{% if skill.boss %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="boss" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
+				<button class="skill boss btn" type="boss" skillid="{{skill.id}}">{{skill.name}} ({{skill.health}},{{skill.damage}})</button>
 			</div>
 			{% endif %}
 			{% endfor %}

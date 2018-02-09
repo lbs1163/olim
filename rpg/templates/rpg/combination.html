@@ -30,7 +30,7 @@
 			{% for have in haves %}
 			{% if not have.skill.math and not have.skill.phys and not have.skill.chem and not have.skill.life and not have.skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="normal" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill normal btn" type="normal" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -41,7 +41,7 @@
 			{% for have in haves %}
 			{% if have.skill.math %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="math" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill math btn" type="math" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -52,7 +52,7 @@
 			{% for have in haves %}
 			{% if have.skill.phys %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="phys" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill phys btn" type="phys" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -63,7 +63,7 @@
 			{% for have in haves %}
 			{% if have.skill.chem %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="chem" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill chem btn" type="chem" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -74,7 +74,7 @@
 			{% for have in haves %}
 			{% if have.skill.life %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="life" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill life btn" type="life" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}
@@ -85,7 +85,7 @@
 			{% for have in haves %}
 			{% if have.skill.prog %}
 			<div class="col s12 m6 l4 xl3">
-				<button class="skill btn" type="prog" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				<button class="skill prog btn" type="prog" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
 			</div>
 			{% endif %}
 			{% endfor %}

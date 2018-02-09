@@ -138,3 +138,31 @@ button.skill.cannot {
 	color: #9F9F9F;
 	box-shadow: none;
 }
+
+button.skill.normal {
+	background-color: #f06292;
+}
+
+button.skill.math {
+	background-color: #fbc02d;
+}
+
+button.skill.phys {
+	background-color: #0288d1;
+}
+
+button.skill.chem {
+	background-color: #d32f2f;
+}
+
+button.skill.life {
+	background-color: #388e3c;
+}
+
+button.skill.prog {
+	background-color: #7b1fa2;
+}
+
+button.skill.boss {
+	background-color: #616161;
+}

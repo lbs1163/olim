@@ -10,7 +10,7 @@
 		{% if not dict.skill.math and not dict.skill.phys and not dict.skill.chem and not dict.skill.life and not dict.skill.prog and not dict.skill.boss %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill normal waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -40,7 +40,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill normal waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -52,7 +52,7 @@
 		{% if dict.skill.math %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill math waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -82,7 +82,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill math waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -94,7 +94,7 @@
 		{% if dict.skill.phys %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill phys waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -124,7 +124,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill phys waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -136,7 +136,7 @@
 		{% if dict.skill.chem %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill chem waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -166,7 +166,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill chem waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -178,7 +178,7 @@
 		{% if dict.skill.life %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill life waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -208,7 +208,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill life waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -220,7 +220,7 @@
 		{% if dict.skill.prog %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill prog waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -250,7 +250,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill prog waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}
@@ -258,12 +258,12 @@
 	</div>
 
 	<h3>보스 스킬</h3>
-	<div class="row" id="prog">
+	<div class="row" id="boss">
 		{% for dict in allSkillsWithBoolean %}
 		{% if dict.skill.boss %}
 		{% if dict.is_owned %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
+			<button class="skill boss waves-effect waves-light btn modal-trigger" href="#{{dict.skill.id}}">{{ dict.skill.name }}</button>
 
 			<div id="{{dict.skill.id}}" class="modal modal-fixed-footer">
 				<div class="modal-content">
@@ -288,7 +288,7 @@
 		</div>
 		{% else %}
 		<div class="col s12 m6 l4 xl3">
-			<button class="skill waves-effect waves-light btn">?????</button>
+			<button class="skill boss waves-effect waves-light btn">?????</button>
 		</div>
 		{% endif %}
 		{% endif %}

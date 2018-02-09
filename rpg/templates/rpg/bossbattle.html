@@ -60,30 +60,30 @@ var ally_health = {{bossbattle.ally_health}};
 			<div class="row">
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill1 %}
-					<button skill="skill1" health="{{character.skill1.health}}" type="{{character.skill1.type}}" class="skill waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>
+					<button skill="skill1" health="{{character.skill1.health}}" type="{{character.skill1.type}}" class="skill {{ character.skill1.type}} waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill1.name }} ({{ character.skill1.health }},{{ character.skill1.damage }})</button>
 					{% else %}
-					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					<button skill="skill0" class="skill normal waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
 					{% endif %}
 				</div>
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill2 %}
-					<button skill="skill2" health="{{character.skill2.health}}" type="{{character.skill2.type}}" class="skill waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill2.name }} ({{ character.skill2.health }},{{ character.skill2.damage }})</button>
+					<button skill="skill2" health="{{character.skill2.health}}" type="{{character.skill2.type}}" class="skill {{ character.skill2.type }} waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill2.name }} ({{ character.skill2.health }},{{ character.skill2.damage }})</button>
 					{% else %}
-					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					<button skill="skill0" class="skill normal waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
 					{% endif %}
 				</div>
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill3 %}
-					<button skill="skill3" health="{{character.skill3.health}}" type="{{character.skill3.type}}" class="skill waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill3.name }} ({{ character.skill3.health }},{{ character.skill3.damage }})</button>
+					<button skill="skill3" health="{{character.skill3.health}}" type="{{character.skill3.type}}" class="skill {{character.skill3.type }} waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill3.name }} ({{ character.skill3.health }},{{ character.skill3.damage }})</button>
 					{% else %}
-					<button skill="skill0" health="{{character.skill4.heatlh}} "class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					<button skill="skill0" class="skill normal waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
 					{% endif %}
 				</div>
 				<div class="col s12 m12 l6 center-align">
 					{% if character.skill4 %}
-					<button skill="skill4" health="{{character.skill4.health}}" type="{{character.skill4.type}}" class="skill waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill4.name }} ({{ character.skill4.health }},{{ character.skill4.damage }})</button>
+					<button skill="skill4" health="{{character.skill4.health}}" type="{{character.skill4.type}}" class="skill {{ character.skill4.type }} waves-effect waves-light btn {% if character.skill1.type == bossbattlemanager.banned_type %}disabled{% endif %}">{{ character.skill4.name }} ({{ character.skill4.health }},{{ character.skill4.damage }})</button>
 					{% else %}
-					<button skill="skill0" class="skill waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
+					<button skill="skill0" class="skill normal waves-effect waves-light btn disabled">발버둥치기 (5,5)</button>
 					{% endif %}
 				</div>
 			</div>
