@@ -18,6 +18,107 @@ from django.db.models import Q
 
 # Create your views here.
 
+def server_check(original_function):
+	@wraps(original_function)
+	def wrapper(*args, **kwargs):
+		try:
+			server = Server.objects.all().order_by('id')[0]
+		except:
+			return HttpResponse("Please check the server instance of DB")
+
+		if not server.is_open:
+			return render(args[0], 'rpg/close.html')
+		else:
+			return original_function(*args, **kwargs)
+	return wrapper
+
+def final_boss_check(original_function):
+	@wraps(original_function)
+	def wrapper(*args, **kwargs):
+		try:
+			server = Server.objects.all().order_by('id')[1]
+		except:
+			return HttpResponse("Please check the server instance of DB")
+
+		if server.is_open:
+			return redirect('finalbossbattle')
+		else:
+			return original_function(*args, **kwargs)
+	return wrapper
+
+@server_check
+@login_required
+@final_boss_check
+def code(request):
+	character = Character.objects.get(user=request.user.id)
+	if request.method == 'GET':
+		return render(request, 'rpg/code.html')
+	elif request.method == 'POST':
+		codetext = request.POST.get('code', False)
+
+		try:
+			code = Code.objects.get(code=codetext)
+		except:
+			return JsonResponse({'type': 'doesNotExist'})
+
+		if code.hair:
+			hairhave, created = Hairhave.objects.get_or_create(group=character.group, hair=code.hair)
+			if created:
+				return JsonResponse({'type': 'success', 'name': code.hair.name, 'img': code.hair.img.url})
+			else:
+				return JsonResponse({'type': 'alreadyHave', 'name': code.hair.name, 'img': code.hair.img.url})
+
+		if code.eye:
+			eyehave, created = Eyehave.objects.get_or_create(group=character.group, eye=code.eye)
+			if created:
+				return JsonResponse({'type': 'success', 'name': code.eye.name, 'img': code.eye.img.url})
+			else:
+				return JsonResponse({'type': 'alreadyHave', 'name': code.eye.name, 'img': code.eye.img.url})
+		
+		if code.clothes:
+			clotheshave, created = Clotheshave.objects.get_or_create(group=character.group, clothes=code.clothes)
+			if created:
+				return JsonResponse({'type': 'success', 'name': code.clothes.name, 'img': code.clothes.img.url})
+			else:
+				return JsonResponse({'type': 'alreadyHave', 'name': code.clothes.name, 'img': code.clothes.img.url})
+
+@server_check
+@login_required
+@final_boss_check
+def custom(request):
+	character = Character.objects.get(user=request.user.id)
+	hairhaves = Hairhave.objects.filter(group=character.group)
+	eyehaves = Eyehave.objects.filter(group=character.group)
+	clotheshaves = Clotheshave.objects.filter(group=character.group)
+
+	if request.method == 'GET':
+		return render(request, 'rpg/custom.html', {'character': character, 'hairhaves': hairhaves, 'eyehaves': eyehaves, 'clotheshaves': clotheshaves})
+	elif request.method == 'POST':
+		hairhaveid = request.POST.get("hairhaveid", False)
+		eyehaveid = request.POST.get("eyehaveid", False)
+		clotheshaveid = request.POST.get("clotheshaveid", False)
+
+		try:
+			hairhave = Hairhave.objects.get(group=character.group, id=hairhaveid)
+			character.hair = hairhave.hair
+		except:
+			pass
+
+		try:
+			eyehave = Eyehave.objects.get(group=character.group, id=eyehaveid)
+			character.eye = eyehave.eye
+		except:
+			pass
+
+		try:
+			clotheshave = Clotheshave.objects.get(group=character.group, id=clotheshaveid)
+			character.clothes = clotheshave.clothes
+		except:
+			pass
+
+		character.save()
+		return JsonResponse({'type': 'customSuccess'})
+
 def ending(request):
 	if request.method == 'GET':
 		return HttpResponse(u"엔딩 크레딧 아직 구현하지 못했습니다 호호호호호호");
@@ -238,34 +339,6 @@ def boss_attack(bossbattlemanager, bossbattles):
 
 	return bossskill
 
-def server_check(original_function):
-	@wraps(original_function)
-	def wrapper(*args, **kwargs):
-		try:
-			server = Server.objects.all().order_by('id')[0]
-		except:
-			return HttpResponse("Please check the server instance of DB")
-
-		if not server.is_open:
-			return render(args[0], 'rpg/close.html')
-		else:
-			return original_function(*args, **kwargs)
-	return wrapper
-
-def final_boss_check(original_function):
-	@wraps(original_function)
-	def wrapper(*args, **kwargs):
-		try:
-			server = Server.objects.all().order_by('id')[1]
-		except:
-			return HttpResponse("Please check the server instance of DB")
-
-		if server.is_open:
-			return redirect('finalbossbattle')
-		else:
-			return original_function(*args, **kwargs)
-	return wrapper
-
 @login_required
 def finalbossbattle(request):
 	character = Character.objects.get(user=request.user.id)
@@ -470,9 +543,12 @@ def signup(request):
 			user.last_name = code.last_name
 			user.save()
 
-			hair = Hair.objects.all()[0]
-			eye = Eye.objects.all()[0]
-			clothes = Clothes.objects.all()[0]
+			hairhaves = Hairhave.objects.filter(group=code.group).order_by('?')
+			eyehaves = Eyehave.objects.filter(group=code.group).order_by('?')
+			clotheshaves = Clotheshave.objects.filter(group=code.group).order_by('?')
+			hair = hairhaves[0].hair
+			eye = eyehaves[0].eye
+			clothes = clotheshaves[0].clothes
 
 			character = Character(user=user, group=code.group, hair=hair, eye=eye, clothes=clothes)
 			skills = Skill.objects.all()

@@ -1,0 +1,16 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container center-align">
+	<h2>의상 받기</h2>
+	<div class="row">
+		<div class="col s12 m6 offset-m3">
+			<img class="responsive-img" id="box" src="{% static 'rpg/image/notyet.png' %}">
+			<input type="text" placeholder="코드를 입력하세요">
+			<button id="submit" class="btn waves-effect waves-default">의상 받기</button>
+		</div>
+	</div>
+</div>
+<script src="{% static 'rpg/js/code.js' %}"></script>
+{% endblock %}

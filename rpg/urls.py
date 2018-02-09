@@ -17,4 +17,6 @@ urlpatterns = [
 	url(r'^finalbossbattle/$', finalbossbattle, name='finalbossbattle'),
 	url(r'^ending/$', ending, name='ending'),
 	url(r'^reward/$', reward, name='reward'),
+	url(r'^custom/$', custom, name='custom'),
+	url(r'^code/$', code, name='code'),
 ]

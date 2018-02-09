@@ -39,7 +39,8 @@ class RegistrationCode(models.Model):
 class Hair(models.Model):
 	name = models.CharField(max_length=20)
 	img = models.ImageField(upload_to='images/hair/', default='images/hair/default.png')
-
+	is_event = models.BooleanField(default=False)
+	
 	def __str__(self):
 		return self.name
 
@@ -47,6 +48,7 @@ class Hair(models.Model):
 class Eye(models.Model):
 	name = models.CharField(max_length=20)
 	img = models.ImageField(upload_to='images/eye/', default='images/eye/default.png')
+	is_event = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.name
@@ -55,9 +57,44 @@ class Eye(models.Model):
 class Clothes(models.Model):
 	name = models.CharField(max_length=20)
 	img = models.ImageField(upload_to='images/clothes/', default='images/clothes/default.png')
+	is_event = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.name
+
+@python_2_unicode_compatible
+class Code(models.Model):
+	code = models.CharField(max_length=30)
+	hair = models.ForeignKey(Hair, blank=True, null=True)
+	eye = models.ForeignKey(Eye, blank=True, null=True)
+	clothes = models.ForeignKey(Clothes, blank=True, null=True)
+
+	def __str__(self):
+		return self.code
+
+@python_2_unicode_compatible
+class Hairhave(models.Model):
+	group = models.ForeignKey(Group)
+	hair = models.ForeignKey(Hair)
+
+	def __str__(self):
+		return self.group.group_name + u" has " + self.hair.name
+
+@python_2_unicode_compatible
+class Eyehave(models.Model):
+	group = models.ForeignKey(Group)
+	eye = models.ForeignKey(Eye)
+
+	def __str__(self):
+		return self.group.group_name + u" has " + self.eye.name
+
+@python_2_unicode_compatible
+class Clotheshave(models.Model):
+	group = models.ForeignKey(Group)
+	clothes = models.ForeignKey(Clothes)
+
+	def __str__(self):
+		return self.group.group_name + u" has " + self.clothes.name
 
 @python_2_unicode_compatible
 class Grade(models.Model):
