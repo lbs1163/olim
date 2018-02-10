@@ -16,7 +16,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -58,7 +58,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -100,7 +100,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -142,7 +142,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -184,7 +184,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -226,7 +226,7 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					{% if dict.skill.limit == 0 %}
 					<p class="center-align">스탯 제한 : 없음</p>
 					{% else %}
@@ -269,16 +269,16 @@
 				<div class="modal-content">
 					<h4 class="center-align">{{dict.skill.name}}</h4>
 					{% if dict.skill.name == '임기응변하기' %}
-					<p class="center-align"> 설명 : 상대방의 속성에 맞게 스킬의 속성이 변한다.</p>
+					<p class="center-align"> 설명 : 상대방의 속성에 맞게 스킬의 속성이 변한다. 첫번째 보스를 물리쳐 포닉스로부터 받았다.</p>
 					{% elif dict.skill.name == '꿀잠 자기' %}
-					<p class="center-align"> 설명 : 스킬 '핫식스 마시기'의 업그레이드 버전. 많은 힐이 가능하다.</p>
+					<p class="center-align"> 설명 : 스킬 '핫식스 마시기'의 업그레이드 버전. 많은 힐이 가능하다. Maxe Lanif I(이)가 이상하게 새내기들을 공격하여 이를 대비하기 위해 포닉스가 준 스킬이다.</p>
 					{% elif dict.skill.name == '구글링 하기' %}
-					<p class="center-align"> 설명 : 따로 속성이 없는 일반 스킬의 업그레이드 버전. 속성 무효화를 무시하고 많은 딜이 가능하다.</p>
+					<p class="center-align"> 설명 : 따로 속성이 없는 일반 스킬의 업그레이드 버전. 속성 무효화를 무시하고 많은 딜이 가능하다. Maxe Mret Dim II(이)가 새내기들의 스킬을 봉인하여 이에 대한 대비책으로 포닉스가 준 스킬이다.</p>
 					{% elif dict.skill.name == '듀 이펙트 받기' %}
-					<p class="center-align"> 설명 : 스킬 '꿀잠 자기'의 업그레이드 버전. 더 많은 힐이 가능하다.</p>
+					<p class="center-align"> 설명 : 스킬 '꿀잠 자기'의 업그레이드 버전. 더 많은 힐이 가능하다. Maxe Lanif II(이)가 새내기들을 무차별적으로 공격하여 이를 대비하기 위해 포닉스가 준 스킬이다.</p>
 					{% endif %}
 					<p class="center-align">소모 체력 : {{ dict.skill.health }}</p>
-					<p class="center-align">스킬데미지 : {{ dict.skill.damage }}</p>
+					<p class="center-align">스킬 평균 데미지 : {{ dict.skill.damage }}</p>
 					<p class="center-align">스탯 제한 : 없음</p>
 				</div>
 				<div class="modal-footer">

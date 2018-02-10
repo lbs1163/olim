@@ -637,6 +637,9 @@ def battle(request):
 			make_skillbook(character, skill)
 			make_monsterbook(battle)
 
+			character.group.kill += 1
+			character.group.save()
+
 			if skill != None:
 				givenskill = skill.name
 			else:
