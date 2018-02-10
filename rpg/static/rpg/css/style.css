@@ -8,6 +8,10 @@ span#dialog2 {
 	font-size: 25px;
 }
 
+#dialog.big {
+	font-size: 25px;
+}
+
 #finalbossbattle {
 	color: white;
 }

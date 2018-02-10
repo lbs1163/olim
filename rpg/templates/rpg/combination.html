@@ -5,7 +5,11 @@
 
 <div class="container center-align">
 	<h1>스킬 조합</h1>
-
+	<p>다른 속성의 스킬은 조합되지 않습니다.</p>
+	<p>일반 스킬끼리 조합할 수 있습니다.</p>
+	<p>같은 속성의 스킬끼리 조합할 수 있습니다.</p>
+	<p>일반 스킬과 속성 스킬을 조합할 수 있습니다.</p>
+	<p>분반에서 한 번이라도 시도했던 조합은 결과가 미리 보여집니다.</p>
 	<div class="row">
 		<div id="skill-left" class="col s12 m6 offset-m3 l4 xl3 offset-xl2">
 			<button class="skill btn">스킬을 넣어주세요</button>
@@ -25,70 +29,76 @@
 	<button id="submit" class="btn waves-effect waves-light">조합하기</button>
 
 	<div id="select">
-		<h3>일반 스킬</h3>
-		<div class="row" id="normal">
-			{% for have in haves %}
-			{% if not have.skill.math and not have.skill.phys and not have.skill.chem and not have.skill.life and not have.skill.prog %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill normal btn" type="normal" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs">
+					<li class="tab col s2"><a href="#normal">일반</a></li>
+					<li class="tab col s2"><a href="#math">수학</a></li>
+					<li class="tab col s2"><a href="#phys">물리</a></li>
+					<li class="tab col s2"><a href="#chem">화학</a></li>
+					<li class="tab col s2"><a href="#life">생물</a></li>
+					<li class="tab col s2"><a href="#prog">프밍</a></li>
+				</ul>
 			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
+			<div class="col s12" id="normal">
+				{% for have in haves %}
+				{% if not have.skill.math and not have.skill.phys and not have.skill.chem and not have.skill.life and not have.skill.prog %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill normal btn" type="normal" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
 
-		<h3>수학 스킬</h3>
-		<div class="row" id="math">
-			{% for have in haves %}
-			{% if have.skill.math %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill math btn" type="math" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+			<div class="col s12" id="math">
+				{% for have in haves %}
+				{% if have.skill.math %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill math btn" type="math" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
 
-		<h3>물리 스킬</h3>
-		<div class="row" id="phys">
-			{% for have in haves %}
-			{% if have.skill.phys %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill phys btn" type="phys" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+			<div class="col s12" id="phys">
+				{% for have in haves %}
+				{% if have.skill.phys %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill phys btn" type="phys" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
 
-		<h3>화학 스킬</h3>
-		<div class="row" id="chem">
-			{% for have in haves %}
-			{% if have.skill.chem %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill chem btn" type="chem" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+			<div class="col s12" id="chem">
+				{% for have in haves %}
+				{% if have.skill.chem %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill chem btn" type="chem" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
 
-		<h3>생물 스킬</h3>
-		<div class="row" id="life">
-			{% for have in haves %}
-			{% if have.skill.life %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill life btn" type="life" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+			<div class="col s12" id="life">
+				{% for have in haves %}
+				{% if have.skill.life %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill life btn" type="life" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
 
-		<h3>프밍 스킬</h3>
-		<div class="row" id="prog">
-			{% for have in haves %}
-			{% if have.skill.prog %}
-			<div class="col s12 m6 l4 xl3">
-				<button class="skill prog btn" type="prog" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+			<div class="col s12" id="prog">
+				{% for have in haves %}
+				{% if have.skill.prog %}
+				<div class="col s12 m6 l4 xl3">
+					<button class="skill prog btn" type="prog" skillid="{{have.skill.id}}">{{have.skill.name}} <span class="number">{{have.number}}</span>개</button>
+				</div>
+				{% endif %}
+				{% endfor %}
 			</div>
-			{% endif %}
-			{% endfor %}
 		</div>
 	</div>
 </div>

@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container center-align">
     <h1 class="center-align">{{ group }} 몬스터 도감</h1>
     <p class="center-align">발견된 몬스터를 눌러 정보를 확인하세요!</p>
+	<p>해당 몬스터의 학점이 높을수록 많은 정보가 공개됩니다.</p>
+	<p>표시되는 드랍률은 스킬이 주어진다고 결정된 상황에서 일반 스킬과 과목 스킬을 결정할 때에 과목 스킬이 당첨될 확률입니다.</p>
+	<p>스킬이 주어지는 확률은 50%입니다.</p>
     <div class="row">
         <h4 class="center-align">수학</h4>
         <div class="col s1 hide-on-med-and-down">
@@ -37,16 +40,16 @@
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
                             <h5 class="center-align">몬스터 정보</h5>
-                            {% if monsterbook.grade <= 'D' %}
+                            {% if monsterbook.grade.name <= 'D' %}
                             <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'C' %}
+                            {% if monsterbook.grade.name <= 'C' %}
                             <p>처치 시 획득 스탯 : 수학 {{monsterbook.monster.math_exp}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'B' %}
+                            {% if monsterbook.grade.name <= 'B' %}
                             <p>처치 시 드랍되는 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
                             {% endif %}
-                            {% if monsterbook.grade == 'A' %}
+                            {% if monsterbook.grade.name == 'A' %}
                             <p>대사</p>
                             1. {{monsterbook.monster.dialog1}}<br>
                             2. {{monsterbook.monster.dialog2}}<br>
@@ -105,16 +108,16 @@
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
                             <h5 class="center-align">몬스터 정보</h5>
-                            {% if monsterbook.grade <= 'D' %}
+                            {% if monsterbook.grade.name <= 'D' %}
                             <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'C' %}
+                            {% if monsterbook.grade.name <= 'C' %}
                             <p>처치 시 획득 스탯 : 물리 {{monsterbook.monster.phys_exp}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'B' %}
+                            {% if monsterbook.grade.name <= 'B' %}
                             <p>처치 시 드랍되는 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
                             {% endif %}
-                            {% if monsterbook.grade == 'A' %}
+                            {% if monsterbook.grade.name == 'A' %}
                             <p>대사</p>
                             1. {{monsterbook.monster.dialog1}}<br>
                             2. {{monsterbook.monster.dialog2}}<br>
@@ -173,16 +176,16 @@
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
                             <h5 class="center-align">몬스터 정보</h5>
-                            {% if monsterbook.grade <= 'D' %}
+                            {% if monsterbook.grade.name <= 'D' %}
                             <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'C' %}
+                            {% if monsterbook.grade.name <= 'C' %}
                             <p>처치 시 획득 스탯 : 화학 {{monsterbook.monster.chem_exp}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'B' %}
+                            {% if monsterbook.grade.name <= 'B' %}
                             <p>처치 시 드랍되는 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
                             {% endif %}
-                            {% if monsterbook.grade == 'A' %}
+                            {% if monsterbook.grade.name == 'A' %}
                             <p>대사</p>
                             1. {{monsterbook.monster.dialog1}}<br>
                             2. {{monsterbook.monster.dialog2}}<br>
@@ -241,16 +244,16 @@
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
                             <h5 class="center-align">몬스터 정보</h5>
-                            {% if monsterbook.grade <= 'D' %}
+                            {% if monsterbook.grade.name <= 'D' %}
                             <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'C' %}
+                            {% if monsterbook.grade.name <= 'C' %}
                             <p>처치 시 획득 스탯 : 생명 {{monsterbook.monster.life_exp}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'B' %}
+                            {% if monsterbook.grade.name <= 'B' %}
                             <p>처치 시 드랍되는 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
                             {% endif %}
-                            {% if monsterbook.grade == 'A' %}
+                            {% if monsterbook.grade.name == 'A' %}
                             <p>대사</p>
                             1. {{monsterbook.monster.dialog1}}<br>
                             2. {{monsterbook.monster.dialog2}}<br>
@@ -309,16 +312,16 @@
                             <p>최초 발견자 : {{ monsterbook.finder }}</p>
                             <p>최고 학점자 : {{ monsterbook.champion }}</p>
                             <h5 class="center-align">몬스터 정보</h5>
-                            {% if monsterbook.grade <= 'D' %}
+                            {% if monsterbook.grade.name <= 'D' %}
                             <p>몬스터 체력 : {{monsterbook.monster.health}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'C' %}
+                            {% if monsterbook.grade.name <= 'C' %}
                             <p>처치 시 획득 스탯 : 프밍 {{monsterbook.monster.prog_exp}}</p>
                             {% endif %}
-                            {% if monsterbook.grade <= 'B' %}
+                            {% if monsterbook.grade.name <= 'B' %}
                             <p>처치 시 드랍되는 스킬(드랍률): {{monsterbook.monster.skill.name}}({{monsterbook.monster.drop_rate}} %)</p>
                             {% endif %}
-                            {% if monsterbook.grade == 'A' %}
+                            {% if monsterbook.grade.name == 'A' %}
                             <p>대사</p>
                             1. {{monsterbook.monster.dialog1}}<br>
                             2. {{monsterbook.monster.dialog2}}<br>
@@ -347,6 +350,7 @@
 
     <div class="row">
         <h4 class="center-align">보스</h4>
+		<p>보스 몬스터의 체력은 인당 체력이며, 실제 전투에서는 도감의 체력에 분반 인원수를 곱한 값이 됩니다.</p>
         <div class="col s0 m0 l1">
             <img class="responsive-img" src="{% static 'rpg/image/none.png' %}">
         </div>
@@ -369,18 +373,17 @@
                                 <div class="col s12 l8">
                                     <p>최고 학점 : {{ monsterbook.grade.name }}</p>
                                     <h5 class="center-align">몬스터 정보</h5>
-                                    {% if monsterbook.grade <= 'D' %}
+                                    {% if monsterbook.grade.name <= 'D' %}
                                     <p>몬스터 체력 : {{monsterbook.bossmonster.health}}</p>
                                     {% endif %}
-                                    {% if monsterbook.grade <= 'C' %}
+                                    {% if monsterbook.grade.name <= 'C' %}
                                     <p>몬스터가 사용하는 스킬 : </p>
                                     {% endif %}
-                                    {% if monsterbook.grade <= 'B' %}
+                                    {% if monsterbook.grade.name <= 'B' %}
                                     <p>처치 시 획득 스킬 :  </p>
                                     {% endif %}
-                                    {% if monsterbook.grade == 'A' %}
-                                    <p>대사</p>
-                                    <p>놀랍게도 아직 없습니다! 패치를 기다려주세요:)</p>
+                                    {% if monsterbook.grade.name == 'A' %}
+                                    <p>축하합니다! 보스 몬스터를 A학점으로 잡았습니다.</p>
                                     {% endif %}
                                 </div>
                             </div>
