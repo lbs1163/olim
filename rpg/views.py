@@ -790,8 +790,8 @@ def bossbattle(request):
 				return JsonResponse({
 					"type": bossbattlemanager.state,
 					"givenskill": bossbattlemanager.bossmonster.skill.name,
-					"normalskill1": bossbattlemanager.skill1,
-					"normalskill2": bossbattlemanager.skill2,
+					"normalskill1": bossbattlemanager.skill1.name,
+					"normalskill2": bossbattlemanager.skill2.name,
 					"monster": bossbattlemanager.bossmonster.name,
 					"turn": bossbattlemanager.turn,
 					"enemy_health": bossbattlemanager.enemy_health})
@@ -1079,13 +1079,12 @@ def selectskill(request):
 
 		return JsonResponse({'type': 'selectSuccess'})
 
-@server_check
 @login_required
 def reward(request):
+	if not request.user.is_staff:
+		return redirect('index')
+
 	grouplist = Group.objects.all()
-#	bossmonsterbooks = Bossmonsterbook.objects.all()
-#	monsterbooks = Monsterbooks.objects.all()
-#	failedCombinations = FailedCombination.objects.all()
 	bossbattlemanagers = Bossbattlemanager.objects.all()
 	characters = Character.objects.all()
 	skillbooks = Skillbook.objects.all()
@@ -1111,8 +1110,6 @@ def reward(request):
 		bossbattlemanagers = Bossbattlemanager.objects.filter(Q(group = group)&(Q(state = 'win') | Q(state = 'lose')))
 		groupbossbattles += [[group.group_name, len(bossbattlemanagers)]]
 
-	#groupmonstergrades = sorted(groupmonstergrades, key=operator.itemgetter(1))
-
 	characterstats = {}
 	monsterfinders = []
 	monsterchampions = []
@@ -1124,12 +1121,7 @@ def reward(request):
 		monsterfinders += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Monsterbook.objects.filter(finder=character))]]
 		monsterchampions += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Monsterbook.objects.filter(champion=character))]]
 		skillfinders += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Skillbook.objects.filter(finder=character))]]
-	#	if idx == 4:
-	#		break
 
 	characterstats = sorted(characterstats.items(), key=lambda t : t[1], reverse=True)
 
-	if request.user.is_staff:
-		return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})
-	else:
-		return redirect('index')
+	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})

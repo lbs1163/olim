@@ -30,7 +30,7 @@ $.ajaxSetup({
 
 var display = function(data) {
 	if (data.numOfGroup == data.numOfReady && data.numOfGoup >= 5) {
-		location.reload();
+		window.location.reload();
 	}
 	$("span#numOfGroup").html(data.numOfGroup);
 	$("span#numOfReady").html(data.numOfReady);
