@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	{% include 'rpg/head.html' %}
+	<body>
+		<script
+			src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+     		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			crossorigin="anonymous"></script>
+		<div class="container">
+			<div class="row">
+				<div id="phoenix" class="col s6 offset-s3">
+					<img class="responsive-img non-pixel" src="/static/rpg/image/normal_phoenix.png">
+				</div>
+				<div id="dialogsection" class="col s12">
+					<div class="center-align card-panel teal">
+						<span id="dialog" class="white-text big">.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	</script>
+	<script src="{% static 'rpg/js/phoenixtalk.js' %}"></script>
+</html>

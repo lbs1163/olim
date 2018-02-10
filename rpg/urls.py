@@ -19,4 +19,5 @@ urlpatterns = [
 	url(r'^reward/$', reward, name='reward'),
 	url(r'^custom/$', custom, name='custom'),
 	url(r'^code/$', code, name='code'),
+	url(r'^day1/$', day1, name='day1'),
 ]

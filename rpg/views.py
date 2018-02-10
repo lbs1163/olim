@@ -46,6 +46,13 @@ def final_boss_check(original_function):
 			return original_function(*args, **kwargs)
 	return wrapper
 
+@login_required
+def day1(request):
+	if request.user.is_staff:
+		return render(request, 'rpg/day1.html')
+	else:
+		return redirect('index')
+
 @server_check
 @login_required
 @final_boss_check
