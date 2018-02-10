@@ -200,6 +200,7 @@ class Character(models.Model):
 	skill2 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill2')
 	skill3 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill3')
 	skill4 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill4')
+	battletime = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
 	def __str__(self):
 		return self.user.last_name + self.user.first_name 

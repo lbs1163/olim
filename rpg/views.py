@@ -53,6 +53,27 @@ def day1(request):
 	else:
 		return redirect('index')
 
+@login_required
+def day2(request):
+	if request.user.is_staff:
+		return render(request, 'rpg/day2.html')
+	else:
+		return redirect('index')
+
+@login_required
+def day3(request):
+	if request.user.is_staff:
+		return render(request, 'rpg/day3.html')
+	else:
+		return redirect('index')
+
+@login_required
+def day4(request):
+	if request.user.is_staff:
+		return render(request, 'rpg/day4.html')
+	else:
+		return redirect('index')
+
 @server_check
 @login_required
 @final_boss_check
@@ -585,15 +606,20 @@ def battle(request):
 	try:
 		battle = Battle.objects.get(character=character)
 	except ObjectDoesNotExist:
-		map_id = request.GET.get('id', 1)
-		map = Map.objects.get(id=map_id)
-		
-		if not map.is_open:
-			map = Map.objects.filter(is_open=True)[0]
-
-		monster = random.choice(Monster.objects.filter(map=map))
-		battle = Battle(character=character, monster=monster, enemy_health = monster.health)
-		battle.save()
+		if character.battletime == None or character.battletime < (timezone.now() - datetime.timedelta(seconds=10)):
+			map_id = request.GET.get('id', 1)
+			map = Map.objects.get(id=map_id)
+			
+			if not map.is_open:
+				map = Map.objects.filter(is_open=True)[0]
+	
+			monster = random.choice(Monster.objects.filter(map=map))
+			character.battletime = timezone.now()
+			character.save()
+			battle = Battle(character=character, monster=monster, enemy_health = monster.health)
+			battle.save()
+		else:
+			return render(request, 'rpg/wait10seconds.html');
 
 	if request.method == 'GET':
 		percentage = battle.enemy_health * 100.0 / battle.monster.health

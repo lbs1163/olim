@@ -20,4 +20,7 @@ urlpatterns = [
 	url(r'^custom/$', custom, name='custom'),
 	url(r'^code/$', code, name='code'),
 	url(r'^day1/$', day1, name='day1'),
+	url(r'^day2/$', day2, name='day2'),
+	url(r'^day3/$', day3, name='day3'),
+	url(r'^day4/$', day4, name='day4'),
 ]
