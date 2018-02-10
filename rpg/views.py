@@ -1122,6 +1122,10 @@ def reward(request):
 		monsterchampions += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Monsterbook.objects.filter(champion=character))]]
 		skillfinders += [[character.user.last_name+character.user.first_name+'('+character.group.group_name+')', len(Skillbook.objects.filter(finder=character))]]
 
+	monsterfinders.sort(key=lambda x: -x[1])
+	monsterchampions.sort(key=lambda x: -x[1])
+	skillfinders.sort(key=lambda x: -x[1])
+
 	characterstats = sorted(characterstats.items(), key=lambda t : t[1], reverse=True)
 
 	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})
