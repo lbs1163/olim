@@ -323,10 +323,7 @@ def boss_attack(bossbattlemanager, bossbattles):
 			bossbattle.save()
 
 	elif bossskill == 2:
-		while True:
-			type = random.choice(["math", "phys", "chem", "life", "prog"])
-			if type != bossbattlemanager.banned_type:
-				break
+		type = bossbattlemanager.boss_type
 		bossbattlemanager.banned_type = type
 		bossbattlemanager.save()
 
@@ -593,7 +590,8 @@ def battle(request):
 
 	if request.method == 'GET':
 		percentage = battle.enemy_health * 100.0 / battle.monster.health
-		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character, 'percentage': percentage })
+		message = Message.objects.all().order_by('?')[0]
+		return render(request, 'rpg/battle.html', { 'battle': battle, 'character': character, 'percentage': percentage, 'message': message.text })
 
 	elif request.method == 'POST':
 
@@ -697,12 +695,14 @@ def bossbattle(request):
 			codes = RegistrationCode.objects.filter(group=character.group)
 			characters = Character.objects.filter(group=character.group)
 			percentage = bossbattlemanager.enemy_health * len(codes) * 100 / bossbattlemanager.bossmonster.health
+			message = Message.objects.all().order_by('?')[0]
 			return render(request, 'rpg/bossbattle.html',
 					{'bossbattlemanager': bossbattlemanager,
 						'bossbattle': mybossbattle,
 						'character': character,
 						'characters': characters,
-						'percentage': percentage})
+						'percentage': percentage,
+						'message': message.text})
 
 		elif bossbattlemanager.state == "waiting":
 			return render(request, 'rpg/getready.html',
@@ -745,7 +745,7 @@ def bossbattle(request):
 			mybossbattle.ready_time = timezone.now()
 			mybossbattle.save()
 			
-			if len(bossbattles) == len(bossbattles.filter(ready=True)) and len(bossbattles) != 0:
+			if len(bossbattles) == len(bossbattles.filter(ready=True)) and len(bossbattles) != 0 and (len(bossbattles) >= 5 or request.user.is_staff):
 				bossbattlemanager.state = "ready"
 				bossbattlemanager.boss_type = random.choice(["math", "phys", "chem", "life", "prog"])
 				bossbattlemanager.start_time = timezone.now()
@@ -780,6 +780,8 @@ def bossbattle(request):
 				return JsonResponse({
 					"type": bossbattlemanager.state,
 					"givenskill": bossbattlemanager.bossmonster.skill.name,
+					"normalskill1": bossbattlemanager.skill1,
+					"normalskill2": bossbattlemanager.skill2,
 					"monster": bossbattlemanager.bossmonster.name,
 					"turn": bossbattlemanager.turn,
 					"enemy_health": bossbattlemanager.enemy_health})
@@ -789,6 +791,9 @@ def bossbattle(request):
 					bossbattlemanager.start_time = timezone.now()
 					bossbattlemanager.save()
 
+					dialognum = random.randrange(0, 10)
+					bossbattlemanager.dialognum = dialognum
+
 					characters = Character.objects.filter(group=character.group)
 					bossbattles = Bossbattle.objects.filter(character__in=characters)
 
@@ -797,11 +802,29 @@ def bossbattle(request):
 					if bossbattlemanager.enemy_health <= 0:
 
 						give_boss_skills(character.group, bossbattlemanager.bossmonster.skill)
+
+						normalskills = Skill.objects.filter(math=False, phys=False, chem=False, life=False, prog=False, boss=False)
+						combinations = Combination.objects.all()
+						skillsWithComb = set([combination.new_skill for combination in combinations])
+						normSkillsWithoutComb = list(set(normalskills) - skillsWithComb)
+
+						skill1 = random.choice(normSkillsWithoutComb)
+						skill2 = random.choice(normSkillsWithoutComb)
+
+						give_boss_skills(character.group, skill1)
+						give_boss_skills(character.group, skill2)
+
+						bossbattlemanager.skill1 = skill1
+						bossbattlemanager.skill2 = skill2
+						bossbattlemanager.save()
+
 						make_bossmonsterbook(bossbattlemanager)
 						delete_bossbattles(bossbattlemanager, bossbattles, "win")
 
 						return JsonResponse({
 							"type": "win",
+							"normalskill1": skill1.name,
+							"normalskill2": skill2.name,
 							"givenskill": bossbattlemanager.bossmonster.skill.name,
 							"monster": bossbattlemanager.bossmonster.name,
 							"turn": bossbattlemanager.turn,
@@ -829,6 +852,10 @@ def bossbattle(request):
 
 			mybossbattle = Bossbattle.objects.get(character=character)
 
+			bossmonster = bossbattlemanager.bossmonster
+			dialogs = [bossmonster.dialog1, bossmonster.dialog2, bossmonster.dialog3, bossmonster.dialog4, bossmonster.dialog5, bossmonster.dialog6, bossmonster.dialog7, bossmonster.dialog8, bossmonster.dialog9, bossmonster.dialog10]
+			dialog = dialogs[bossbattlemanager.dialognum]
+
 			return JsonResponse({
 				"type": "everyonesecond",
 				"bossskill": bossbattlemanager.bossskill,
@@ -839,7 +866,8 @@ def bossbattle(request):
 				"turn": bossbattlemanager.turn,
 				"ally_health": mybossbattle.ally_health,
 				"enemy_health": bossbattlemanager.enemy_health,
-				"monsterhealth": monsterhealth})
+				"monsterhealth": monsterhealth,
+				"dialog": dialog})
 
 @server_check
 @login_required
@@ -1091,4 +1119,7 @@ def reward(request):
 
 	characterstats = sorted(characterstats.items(), key=lambda t : t[1], reverse=True)
 
-	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})
+	if request.user.is_staff:
+		return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})
+	else:
+		return redirect('index')

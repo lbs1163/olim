@@ -25,6 +25,13 @@ class Group(models.Model):
 		return self.group_name
 
 @python_2_unicode_compatible
+class Message(models.Model):
+	text = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.text
+
+@python_2_unicode_compatible
 class RegistrationCode(models.Model):
 	code = models.CharField(max_length=20, default=random_string)
 	first_name = models.CharField(max_length=20)
@@ -306,6 +313,16 @@ class Bossmonster(models.Model):
 	damage = models.IntegerField(default=10)
 	map = models.ForeignKey(Map)
 	skill = models.ForeignKey(Skill, null=True, blank=True)
+	dialog1 = models.CharField(max_length=50, default=u"dialog1")
+	dialog2 = models.CharField(max_length=50, default=u"dialog2")
+	dialog3 = models.CharField(max_length=50, default=u"dialog3")
+	dialog4 = models.CharField(max_length=50, default=u"dialog4")
+	dialog5 = models.CharField(max_length=50, default=u"dialog5")
+	dialog6 = models.CharField(max_length=50, default=u"dialog6")
+	dialog7 = models.CharField(max_length=50, default=u"dialog7")
+	dialog8 = models.CharField(max_length=50, default=u"dialog8")
+	dialog9 = models.CharField(max_length=50, default=u"dialog9")
+	dialog10 = models.CharField(max_length=50, default=u"dialog10")
 
 	def __str__(self):
 		return u"[" + self.map.name + u"] " + self.name + u"(" + unicode(self.health) + u")"
@@ -330,6 +347,9 @@ class Bossbattlemanager(models.Model):
 	group = models.ForeignKey(Group, on_delete=models.CASCADE)
 	start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 	bossskill = models.IntegerField(default=0, null=True, blank=True)
+	dialognum = models.IntegerField(default=1)
+	skill1 = models.ForeignKey(Skill, null=True, blank=True, related_name='skill0001')
+	skill2 = models.ForeignKey(Skill, null=True, blank=True, related_name='skill0002')
 
 	def __str__(self):
 		return self.group.group_name + u": " + self.bossmonster.name

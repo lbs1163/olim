@@ -188,10 +188,20 @@ var everyonesecond = function() {
 						battle.pause();
 						win.play();
 						dialog(data.monster + "을(를) 물리쳤다!", 1, function() {
-							dialog(data.givenskill + " 스킬을 획득했다!", 1, function() {
-								setTimeout(function() {
-									window.location.replace("/map/");
-								}, 2000);
+							dialog(data.normalskill1 + " 스킬을 획득했다!", 1, function() {
+								var str;
+								if (data.normalskill1 == data.normalskill2) {
+									str = data.normalskill2 + " 스킬을 또 획득했다!";
+								} else {
+									str = data.normalskill2 + " 스킬을 획득했다!";
+								}
+								dialog(str, 1, function() {
+									dialog(data.givenskill + " 스킬을 획득했다!", 1, function() {
+										setTimeout(function() {
+											window.location.replace("/map/");
+										}, 2000);
+									});
+								});
 							});
 						});
 					});
@@ -207,68 +217,70 @@ var everyonesecond = function() {
 					});
 				} else {
 					dialog(str, 1, function() {
-						if (data.bossskill == 0) {
-							if (data.bosstype == "math")
-								type = "수학";
-							else if (data.bosstype == "phys")
-								type = "물리";
-							else if (data.bosstype == "chem")
-								type = "화학";
-							else if (data.bosstype == "life")
-								type = "생물";
-							else if (data.bosstype == "prog")
-								type = "프밍";
-							$(".battleground").removeClass("math phys chem life prog");
-							$(".battleground").addClass(data.bosstype);
-							dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
-								dialog("다음엔 무엇을 할까?", 1, function() {
-									buttonOn();
-								});
-							});
-						} else if (data.bossskill == 1) {
-							$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
-							dialog(data.monster + "의 공격!", 1, function() {
-								$("#ally_health").css("width", data.ally_health + "%");
-								hit.play();
-								$(".character").effect("shake", {times:4, distance:10}, 500);
-								dialog("모두 " + data.bossdamage + "의 피해를 입었다.", 1, function() {
+						dialog(data.dialog, 1, function() {
+							if (data.bossskill == 0) {
+								if (data.bosstype == "math")
+									type = "수학";
+								else if (data.bosstype == "phys")
+									type = "물리";
+								else if (data.bosstype == "chem")
+									type = "화학";
+								else if (data.bosstype == "life")
+									type = "생물";
+								else if (data.bosstype == "prog")
+									type = "프밍";
+								$(".battleground").removeClass("math phys chem life prog");
+								$(".battleground").addClass(data.bosstype);
+								dialog(data.monster + "(은)는 자신의 속성을 " + type + "(으)로 변경했다!", 1, function() {
 									dialog("다음엔 무엇을 할까?", 1, function() {
 										buttonOn();
 									});
 								});
-							});
-						} else if (data.bossskill == 2) {
-							bannedtype = data.bannedtype;
-							if (data.bannedtype == "math")
-								type = "수학";
-							else if (data.bannedtype == "phys")
-								type = "물리";
-							else if (data.bannedtype == "chem")
-								type = "화학";
-							else if (data.bannedtype == "life")
-								type = "생물";
-							else if (data.bannedtype == "prog")
-								type = "프밍";
-							dialog(data.monster + "(은)는 " + type + " 속성의 스킬을 봉인했다!", 1, function() {
-								dialog("이제 " + type + " 속성의 스킬은 사용할 수 없다!", 1, function() {
-									dialog("다음엔 무엇을 할까?", 1, function() {
-										buttonOn();
+							} else if (data.bossskill == 1) {
+								$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
+								dialog(data.monster + "의 공격!", 1, function() {
+									$("#ally_health").css("width", data.ally_health + "%");
+									hit.play();
+									$(".character").effect("shake", {times:4, distance:10}, 500);
+									dialog("모두 " + data.bossdamage + "의 피해를 입었다.", 1, function() {
+										dialog("다음엔 무엇을 할까?", 1, function() {
+											buttonOn();
+										});
 									});
 								});
-							});
-						} else if (data.bossskill == 3) {
-							$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
-							dialog(data.monster + "의 필살기!", 1, function() {
-								$("#ally_health").css("width", data.ally_health + "%");
-								hit.play();
-								$(".character").effect("shake", {times: 4, distance: 10}, 500);
-								dialog("남은 인원 중 절반의 체력이 0이 되었다!", 1, function() {
-									dialog("다음엔 무엇을 할까?", 1, function() {
-										buttonOn();
+							} else if (data.bossskill == 2) {
+								bannedtype = data.bannedtype;
+								if (data.bannedtype == "math")
+									type = "수학";
+								else if (data.bannedtype == "phys")
+									type = "물리";
+								else if (data.bannedtype == "chem")
+									type = "화학";
+								else if (data.bannedtype == "life")
+									type = "생물";
+								else if (data.bannedtype == "prog")
+									type = "프밍";
+								dialog(data.monster + "(은)는 " + type + " 속성의 스킬을 봉인했다!", 1, function() {
+									dialog("이제 " + type + " 속성의 스킬은 사용할 수 없다!", 1, function() {
+										dialog("다음엔 무엇을 할까?", 1, function() {
+											buttonOn();
+										});
 									});
 								});
-							});
-						}
+							} else if (data.bossskill == 3) {
+								$("#monster").effect("shake", {times:1, distance:5, direction: "right"}, 1000);
+								dialog(data.monster + "의 필살기!", 1, function() {
+									$("#ally_health").css("width", data.ally_health + "%");
+									hit.play();
+									$(".character").effect("shake", {times: 4, distance: 10}, 500);
+									dialog("남은 인원 중 절반의 체력이 0이 되었다!", 1, function() {
+										dialog("다음엔 무엇을 할까?", 1, function() {
+											buttonOn();
+										});
+									});
+								});
+							}
+						});
 					});
 				}
 			});

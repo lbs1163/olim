@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "name": "\uae30\ubcf8 \uc5bc\uad74",
-        "img": "images/eye/simple.png"
+        "img": "images/eye/simple.png",
+        "is_event": false
     }
 },
 {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
         "name": "\ud654\ub09c \uc5bc\uad74",
-        "img": "images/eye/anger_2.png"
+        "img": "images/eye/anger_2.png",
+        "is_event": false
     }
 },
 {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
         "name": "\uc678\uacc4\uc778 \uc5bc\uad74",
-        "img": "images/eye/alienface.png"
+        "img": "images/eye/alienface.png",
+        "is_event": false
     }
 },
 {
@@ -28,7 +31,8 @@
     "pk": 4,
     "fields": {
         "name": "\ub9e4\uc6b0 \ud654\ub09c \uc5bc\uad74",
-        "img": "images/eye/anger.png"
+        "img": "images/eye/anger.png",
+        "is_event": false
     }
 },
 {
@@ -36,7 +40,8 @@
     "pk": 5,
     "fields": {
         "name": "\uc6b0\ub294 \uc5bc\uad74",
-        "img": "images/eye/cryeye.png"
+        "img": "images/eye/cryeye.png",
+        "is_event": false
     }
 },
 {
@@ -44,7 +49,8 @@
     "pk": 6,
     "fields": {
         "name": "\uc548\uacbd \uc5bc\uad74",
-        "img": "images/eye/glasseseye.png"
+        "img": "images/eye/glasseseye.png",
+        "is_event": false
     }
 },
 {
@@ -52,7 +58,8 @@
     "pk": 7,
     "fields": {
         "name": "\uc6c3\ub294 \uc548\uacbd \uc5bc\uad74",
-        "img": "images/eye/glassesmileseye.png"
+        "img": "images/eye/glassesmileseye.png",
+        "is_event": false
     }
 },
 {
@@ -60,7 +67,8 @@
     "pk": 8,
     "fields": {
         "name": "\ud589\ubcf5\ud55c \uc5bc\uad74",
-        "img": "images/eye/happiness.png"
+        "img": "images/eye/happiness.png",
+        "is_event": false
     }
 },
 {
@@ -68,7 +76,8 @@
     "pk": 9,
     "fields": {
         "name": "\uc2ac\ud508 \uc5bc\uad74",
-        "img": "images/eye/sadness.png"
+        "img": "images/eye/sadness.png",
+        "is_event": false
     }
 },
 {
@@ -76,7 +85,224 @@
     "pk": 10,
     "fields": {
         "name": "\ub6b1\ud55c \uc5bc\uad74",
-        "img": "images/eye/soso.png"
+        "img": "images/eye/soso.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 11,
+    "fields": {
+        "name": "\uc544\ubb34\uac83\ub3c4\uc5c6\ub294\uc5bc\uad74",
+        "img": "images/eye/blankeye.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 12,
+    "fields": {
+        "name": "\uc2a4\ud3f0\uc9c0\ubc25\uc5bc\uad74",
+        "img": "images/eye/spongebobeye.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 13,
+    "fields": {
+        "name": "\uc218\uc5fc\uc5bc\uad74",
+        "img": "images/eye/uncleeye.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 14,
+    "fields": {
+        "name": "\uc9c0\uc6b0 \uc5bc\uad74",
+        "img": "images/eye/ash_eye_yrQ9rgk.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 15,
+    "fields": {
+        "name": "\ub9c8\ud06c \uc5bc\uad74",
+        "img": "images/eye/minecrafteye_J8vCIkJ.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 16,
+    "fields": {
+        "name": "\ubbf8\ub2c8\uc5b8\uc5bc\uad74",
+        "img": "images/eye/minion_face.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 17,
+    "fields": {
+        "name": "\uc21c\ud55c\uc5bc\uad74",
+        "img": "images/eye/\uc21c\ud55c\uc5bc\uad74.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 18,
+    "fields": {
+        "name": "\uc0b4\uc9dd\ud654\ub09c\uc5bc\uad74",
+        "img": "images/eye/\uc0b4\uc9dd\ud654\ub09c\uc5bc\uad74.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 19,
+    "fields": {
+        "name": "\ub85c\ucf13\ub2e8 \ub85c\uc774 \uc5bc\uad74",
+        "img": "images/eye/\ub85c\ucf13\ub2e8_\ub85c\uc774_\uc5bc\uad74.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 20,
+    "fields": {
+        "name": "\ub85c\ucf13\ub2e8 \ub85c\uc0ac \uc5bc\uad74",
+        "img": "images/eye/\ub85c\ucf13\ub2e8_\ub85c\uc0ac_\uc5bc\uad74.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 21,
+    "fields": {
+        "name": "\ud50c\ub791\ud06c\ud1a4 \ub208",
+        "img": "images/eye/plankton_eye.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 22,
+    "fields": {
+        "name": "\ud3ec\ub2c9\uc2a4 \ub208",
+        "img": "images/eye/\ud3ec\ub2c9\uc2a4\ub208.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 23,
+    "fields": {
+        "name": "\ub119\uc8fd\uc774 \ub208",
+        "img": "images/eye/\ub119\uc8fd\uc774\ub208.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 24,
+    "fields": {
+        "name": "respect\ud45c\uc815",
+        "img": "images/eye/1-respect-\ud45c\uc815.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 25,
+    "fields": {
+        "name": "\uc720\ub8cc\ud68c\uc6d0\ud45c\uc815",
+        "img": "images/eye/3-\uc720\ub8cc\ud68c\uc6d0-\ud45c\uc815.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 26,
+    "fields": {
+        "name": "\uac04\uc2dd\uc655\uc5bc\uad74",
+        "img": "images/eye/\uac04\uc2dd\uc655\uc5bc\uad74.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 27,
+    "fields": {
+        "name": "\uc0ac\ub791\uafbc\uc5bc\uad74",
+        "img": "images/eye/\uc0ac\ub791\uafbc.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 28,
+    "fields": {
+        "name": "\ud0dc\uc5b4\ub09c\uc9c08000\uc77c\ud45c\uc815",
+        "img": "images/eye/\ud0dc\uc5b4\ub09c\uc9c0_8000\uc77c_\ud45c\uc815.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 29,
+    "fields": {
+        "name": "\uace0\ub3c5\uc744\uc990\uae30\ub294\uc790\uc5bc\uad74",
+        "img": "images/eye/\uace0\ub3c5\uc744_\uc990\uae30\ub294\uc790_\ud45c\uc815.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 30,
+    "fields": {
+        "name": "\uccb4\uad00U\uc5bc\uad74",
+        "img": "images/eye/\uccb4\uad00U_\ud45c\uc815.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 31,
+    "fields": {
+        "name": "\ud30c\ud2f0\ud53c\ud50c\uc5bc\uad74",
+        "img": "images/eye/\ud30c\ud2f0\ud53c\ud50c\uc5bc\uad74.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 32,
+    "fields": {
+        "name": "\ub3cc\uc774\uc5bc\uad74",
+        "img": "images/eye/\ub3cc\uc774\uc5bc\uad74.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 33,
+    "fields": {
+        "name": "\uc544\uc528\uc5bc\uad74",
+        "img": "images/eye/\uc544\uc528\uc5bc\uad74.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.eye",
+    "pk": 34,
+    "fields": {
+        "name": "\ub6b1\uc774\ub208",
+        "img": "images/eye/\ub6b1\uc774\ub208.png",
+        "is_event": false
     }
 }
 ]

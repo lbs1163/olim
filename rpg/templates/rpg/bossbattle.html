@@ -14,7 +14,9 @@ var ally_health = {{bossbattle.ally_health}};
 </script>
 <div id="loading" class="container center-align">
 	<div class="row">
-		<h1>Loading...</h1>
+		<h1>보스 전투가 진행중입니다! 빨리 참전하세요!</h1>
+		<p>이 페이지는 모바일 환경에서 음악을 재생하기 위해 있는 페이지로, 버튼을 누르면 음악 재생과 함께 게임이 시작됩니다. 이미 보스 전투가 진행중이므로 스킬을 장착할 수 없으며, 장착을 원할 경우 보스 전투의 20턴을 소모하여 끝내주시기 바랍니다.</p>
+		<h4>꿀팁: {{ message }}</h4>
 		<button id="gamestart" class="btn waves-effect waves-light">게임 시작</button>
 	</div>
 </div>
@@ -23,7 +25,7 @@ var ally_health = {{bossbattle.ally_health}};
 		<div class="col s6">
 			<div class="row">
 				{% for character in characters %}
-				<div class="col s2">
+				<div class="col s3">
 					<div class="character">
 						<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
 						<img class="responsive-img absolute" src="{{ character.hair.img.url }}">

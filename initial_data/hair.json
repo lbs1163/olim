@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "name": "\ud22c\ube14\ub7ed \uba38\ub9ac",
-        "img": "images/hair/\ud22c\ube14\ub7ed1_\uae30\ubcf8.png"
+        "img": "images/hair/\ud22c\ube14\ub7ed1_\uae30\ubcf8.png",
+        "is_event": false
     }
 },
 {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
         "name": "\ube61\ube61\uc774 \uba38\ub9ac",
-        "img": "images/hair/\ub300\uba38\ub9ac.png"
+        "img": "images/hair/\ub300\uba38\ub9ac.png",
+        "is_event": false
     }
 },
 {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
         "name": "\ubb34\uc9c0\uac1c \uc544\ud504\ub85c \uba38\ub9ac",
-        "img": "images/hair/AfroPerm.png"
+        "img": "images/hair/AfroPerm.png",
+        "is_event": false
     }
 },
 {
@@ -28,7 +31,8 @@
     "pk": 4,
     "fields": {
         "name": "\uc678\uacc4\uc778 \uba38\ub9ac",
-        "img": "images/hair/alienhair.png"
+        "img": "images/hair/alienhair.png",
+        "is_event": false
     }
 },
 {
@@ -36,7 +40,8 @@
     "pk": 5,
     "fields": {
         "name": "\uae34\uba38\ub9ac",
-        "img": "images/hair/basicmiddlehair.png"
+        "img": "images/hair/basicmiddlehair.png",
+        "is_event": false
     }
 },
 {
@@ -44,7 +49,8 @@
     "pk": 6,
     "fields": {
         "name": "\ubfb0\uc871\uba38\ub9ac",
-        "img": "images/hair/conehead.png"
+        "img": "images/hair/conehead.png",
+        "is_event": false
     }
 },
 {
@@ -52,7 +58,8 @@
     "pk": 7,
     "fields": {
         "name": "\uae30\uc601\uc774 \uba38\ub9ac",
-        "img": "images/hair/giyeonghair.png"
+        "img": "images/hair/giyeonghair.png",
+        "is_event": false
     }
 },
 {
@@ -60,7 +67,8 @@
     "pk": 8,
     "fields": {
         "name": "\uc5ec\uc131 \ub2e8\ubc1c \uba38\ub9ac",
-        "img": "images/hair/shorthair.png"
+        "img": "images/hair/shorthair.png",
+        "is_event": false
     }
 },
 {
@@ -68,7 +76,8 @@
     "pk": 9,
     "fields": {
         "name": "\ub9c8\ud2f8\ub2e4 \uba38\ub9ac",
-        "img": "images/hair/\ub9c8\ud2f8\ub2e4\uba38\ub9ac2.png"
+        "img": "images/hair/\ub9c8\ud2f8\ub2e4\uba38\ub9ac2.png",
+        "is_event": false
     }
 },
 {
@@ -76,7 +85,8 @@
     "pk": 10,
     "fields": {
         "name": "\ub9cc\ub450 \uba38\ub9ac",
-        "img": "images/hair/\ub9cc\ub450\uba38\ub9ac2.png"
+        "img": "images/hair/\ub9cc\ub450\uba38\ub9ac2.png",
+        "is_event": false
     }
 },
 {
@@ -84,7 +94,8 @@
     "pk": 11,
     "fields": {
         "name": "\ubbf8\ucfe0 \uba38\ub9ac",
-        "img": "images/hair/\ubbf8\ucfe0\uba38\ub9ac2.png"
+        "img": "images/hair/\ubbf8\ucfe0\uba38\ub9ac2.png",
+        "is_event": false
     }
 },
 {
@@ -92,7 +103,8 @@
     "pk": 12,
     "fields": {
         "name": "\ub8e8\ud53c \uba38\ub9ac",
-        "img": "images/hair/\ubc00\uc9da\ubaa8\uc790.png"
+        "img": "images/hair/\ubc00\uc9da\ubaa8\uc790.png",
+        "is_event": false
     }
 },
 {
@@ -100,7 +112,8 @@
     "pk": 13,
     "fields": {
         "name": "\ubd84\ud64d \uc7a5\ubc1c \uba38\ub9ac",
-        "img": "images/hair/\ubd84\ud64d\uba38\ub9ac2.png"
+        "img": "images/hair/\ubd84\ud64d\uba38\ub9ac2.png",
+        "is_event": false
     }
 },
 {
@@ -108,7 +121,8 @@
     "pk": 14,
     "fields": {
         "name": "\ube44\ub2c8 \uba38\ub9ac",
-        "img": "images/hair/\ube44\ub2c8.png"
+        "img": "images/hair/\ube44\ub2c8.png",
+        "is_event": false
     }
 },
 {
@@ -116,7 +130,8 @@
     "pk": 15,
     "fields": {
         "name": "\ube68\uac04\uba38\ub9ac \uc564 \uba38\ub9ac",
-        "img": "images/hair/\ube68\uac04\uba38\ub9ac\uc5642.png"
+        "img": "images/hair/\ube68\uac04\uba38\ub9ac\uc5642.png",
+        "is_event": false
     }
 },
 {
@@ -124,7 +139,170 @@
     "pk": 16,
     "fields": {
         "name": "\uc6d0\ube14\ub7ed \uba38\ub9ac",
-        "img": "images/hair/\uc6d0\ube14\ub7ed.png"
+        "img": "images/hair/\uc6d0\ube14\ub7ed.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 17,
+    "fields": {
+        "name": "\uba4b\uc9c4\ubaa8\uc790",
+        "img": "images/hair/\uba4b\uc9c4\ubaa8\uc790_p9FdVA7.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 18,
+    "fields": {
+        "name": "\uc5bc\uc74c\uc5bc\uc74c",
+        "img": "images/hair/\uc5bc\uc74c\uc5bc\uc74c.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 19,
+    "fields": {
+        "name": "\uc9c0\uc6b0\uba38\ub9ac",
+        "img": "images/hair/ash_hair.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 20,
+    "fields": {
+        "name": "\uc8fc\ud669\uba38\ub9ac+\ubaa8\uc790",
+        "img": "images/hair/\uc8fc\ud669\uba38\ub9ac\ubaa8\uc790.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 21,
+    "fields": {
+        "name": "\ub9c8\uc778\ud06c\ub798\ud504\ud2b8 \uba38\ub9ac",
+        "img": "images/hair/minecrafthair_Nl1D7W5.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 22,
+    "fields": {
+        "name": "\uc720\ud76c\uba38\ub9ac",
+        "img": "images/hair/\uc720\ud76c\uba38\ub9ac.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 23,
+    "fields": {
+        "name": "\uc5b4\ub460\uc758\uc720\ud76c\uba38\ub9ac",
+        "img": "images/hair/\uc5b4\ub460\uc758\uc720\ud76c\uba38\ub9ac.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 24,
+    "fields": {
+        "name": "\ub85c\ucf13\ub2e8 \ub85c\uc774 \uba38\ub9ac",
+        "img": "images/hair/\ub85c\ucf13\ub2e8_\ub85c\uc774_\uba38\ub9ac.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 25,
+    "fields": {
+        "name": "\ub85c\ucf13\ub2e8 \ub85c\uc0ac \uba38\ub9ac",
+        "img": "images/hair/\ub85c\ucf13\ub2e8_\ub85c\uc0ac_\uba38\ub9ac_djSU9np.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 26,
+    "fields": {
+        "name": "\ub3c4\ubb38\uc0c1\uba38\ub9ac",
+        "img": "images/hair/2-\ub3c4\ubb38\uc0c1-\uba38\ub9ac.png",
+        "is_event": false
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 27,
+    "fields": {
+        "name": "\uc2a4\ud399\uc655\uba38\ub9ac",
+        "img": "images/hair/\uc2a4\ud399\uc655\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 28,
+    "fields": {
+        "name": "\uc6b0\uc218\uba58\ud2f0\uba38\ub9ac",
+        "img": "images/hair/\uc6b0\uc218_\uba58\ud2f0_\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 29,
+    "fields": {
+        "name": "\ud0dc\uc5b4\ub09c\uc9c08000\uc77c\uba38\ub9ac",
+        "img": "images/hair/\ud0dc\uc5b4\ub09c\uc9c0_8000\uc77c_\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 30,
+    "fields": {
+        "name": "\uccb4\uad00U\uba38\ub9ac",
+        "img": "images/hair/\uccb4\uad00U_\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 31,
+    "fields": {
+        "name": "\ub3c4\ub839\uba38\ub9ac",
+        "img": "images/hair/\ub3c4\ub839\uc5bc\uad74.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 32,
+    "fields": {
+        "name": "\uc544\uc528\uba38\ub9ac",
+        "img": "images/hair/\uc544\uc528\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 33,
+    "fields": {
+        "name": "\uc810\ub3cc\uc774\uba38\ub9ac",
+        "img": "images/hair/\uc810\ub3cc\uc774\uba38\ub9ac.png",
+        "is_event": true
+    }
+},
+{
+    "model": "rpg.hair",
+    "pk": 34,
+    "fields": {
+        "name": "\uc810\uc21c\uc774\uba38\ub9ac",
+        "img": "images/hair/\uc810\uc21c\uc774\uba38\ub9ac.png",
+        "is_event": true
     }
 }
 ]
