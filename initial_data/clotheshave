@@ -1,0 +1,130 @@
+[
+{
+    "model": "rpg.clotheshave",
+    "pk": 1,
+    "fields": {
+        "group": 9,
+        "clothes": 25
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 2,
+    "fields": {
+        "group": 10,
+        "clothes": 26
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 3,
+    "fields": {
+        "group": 11,
+        "clothes": 27
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 4,
+    "fields": {
+        "group": 12,
+        "clothes": 28
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 5,
+    "fields": {
+        "group": 13,
+        "clothes": 29
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 6,
+    "fields": {
+        "group": 14,
+        "clothes": 30
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 7,
+    "fields": {
+        "group": 15,
+        "clothes": 31
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 8,
+    "fields": {
+        "group": 16,
+        "clothes": 32
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 9,
+    "fields": {
+        "group": 17,
+        "clothes": 33
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 10,
+    "fields": {
+        "group": 18,
+        "clothes": 34
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 11,
+    "fields": {
+        "group": 19,
+        "clothes": 35
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 12,
+    "fields": {
+        "group": 20,
+        "clothes": 36
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 13,
+    "fields": {
+        "group": 21,
+        "clothes": 37
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 14,
+    "fields": {
+        "group": 22,
+        "clothes": 38
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 15,
+    "fields": {
+        "group": 23,
+        "clothes": 39
+    }
+},
+{
+    "model": "rpg.clotheshave",
+    "pk": 16,
+    "fields": {
+        "group": 1,
+        "clothes": 3
+    }
+}
+]
