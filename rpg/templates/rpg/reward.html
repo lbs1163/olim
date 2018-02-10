@@ -5,15 +5,15 @@
 	<h1>수상 목록 및 결과</h1>
 	<h3>그룹 시상</h3>
 		<h4>보스 학점 평균</h4>
-		group, bossgrades
+		group, bossgrade, bossgrades
 		{% for groupbossgrade in groupbossgrades %}
-		<p>{{groupbossgrade.0}}, [{{groupbossgrade.1.0.0}}: {{groupbossgrade.1.0.1}}], [{{groupbossgrade.1.1.0}}: {{groupbossgrade.1.1.1}}], [{{groupbossgrade.1.2.0}}: {{groupbossgrade.1.2.1}}], [{{groupbossgrade.1.3.0}}: {{groupbossgrade.1.3.1}}]</p>
+		<p>{{groupbossgrade.0}}, {{groupbossgrade.1}}, [{{groupbossgrade.2.0}}, {{groupbossgrade.2.1}}, {{groupbossgrade.2.2}}, {{groupbossgrade.2.3}}}]</p>
 		{% endfor %}
 		
 		<h4>몬스터 도감 평균</h4>
-		group, [A, B, C, D, F]
+		group, normalgrade, [A, B, C, D, F]
 		{% for groupmonstergrade in groupmonstergrades %}
-		<p>{{groupmonstergrade.0}}, {{groupmonstergrade.1}}, {{groupmonstergrade.2}}, {{groupmonstergrade.3}}, {{groupmonstergrade.4}}, {{groupmonstergrade.5}}</p>
+		<p>{{groupmonstergrade.0}}, {{groupmonstergrade.1}}, [{{groupmonstergrade.2}}, {{groupmonstergrade.3}}, {{groupmonstergrade.4}}, {{groupmonstergrade.5}}, {{groupmonstergrade.6}}]</p>
 		{% endfor %}
 		
 		<h4>조합 실패 횟수</h4>
@@ -28,10 +28,17 @@
 		<p>{{groupbossbattle.0}}, {{groupbossbattle.1}}</p>
 		{% endfor %}
 
-		<h4>몬스터 학살자</h4> - 아직 model이 없음
+		<h4>몬스터 학살자</h4>
+		group, groupkill
+		{% for groupkill in groupkills %}
+		<p>{{groupkill.0}}, {{groupkill.1}}</p>
+		{% endfor %}
 
-
-		<h4>패셔니스타</h4> - 아직 custumizing 제작 안됨
+		<h4>패셔니스타</h4>
+		group, custom, [clothes, eye, hair]
+		{% for groupcustom in groupcustoms %}
+		<p>{{groupcustom.0}}, {{groupcustom.1}}, [{{groupcustom.2}}, {{groupcustom.3}}, {{groupcustum.4}}]</p>
+		{% endfor %}
 
 	<h3>개인 시상</h3>
 		<h4>스탯 총합 1위</h4>

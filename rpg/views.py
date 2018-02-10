@@ -1118,11 +1118,27 @@ def reward(request):
 	groupmonstergrades = []
 	groupfailedCombicounts = []
 	groupbossbattles = []
+	groupcustoms = []
 
 	for group in grouplist:
 		bossmonsterbooks = Bossmonsterbook.objects.filter(group = group)
-		bossgrades = [[bossmonsterbook.bossmonster.name, bossmonsterbook.grade.name] for bossmonsterbook in bossmonsterbooks]
-		groupbossgrades += [[group.group_name, bossgrades]]
+		bossgrades = [bossmonsterbook.grade.name for bossmonsterbook in bossmonsterbooks]
+		bossgrade = 0
+		for grade in bossgrades:
+			if grade == 'A':
+				bossgrade += 4
+			elif grade == 'B':
+				bossgrade += 3
+			elif grade == 'C':
+				bossgrade += 2
+			elif grade == 'D':
+				bossgrade += 1
+		if len(bossgrades) != 0:
+			bossgrade /= float(len(bossgrades))
+		else:
+			bossgrade = 0
+
+		groupbossgrades += [[group.group_name, bossgrade,  bossgrades]]
 		monsterbooks = Monsterbook.objects.filter(group = group)
 		monstergrades = [monsterbook.grade.name for monsterbook in monsterbooks]
 		Acount = monstergrades.count('A')
@@ -1130,11 +1146,23 @@ def reward(request):
 		Ccount = monstergrades.count('C')
 		Dcount = monstergrades.count('D')
 		Fcount = monstergrades.count('F')
-		groupmonstergrades += [[group.group_name, Acount, Bcount, Ccount, Dcount, Fcount]]
+		normalgrade = (4 * Acount + 3 * Bcount + 2 * Ccount + 1 * Dcount)/float(Acount + Bcount + Ccount + Dcount + Fcount)
+		groupmonstergrades += [[group.group_name, normalgrade, Acount, Bcount, Ccount, Dcount, Fcount]]
 		failedCombinations = FailedCombination.objects.filter(group = group)
 		groupfailedCombicounts += [[group.group_name, len(failedCombinations)]]
 		bossbattlemanagers = Bossbattlemanager.objects.filter(Q(group = group)&(Q(state = 'win') | Q(state = 'lose')))
 		groupbossbattles += [[group.group_name, len(bossbattlemanagers)]]
+		clothescount = len(Clotheshave.objects.filter(Q(group = group)&Q(clothes__is_event=0)))
+		eyecount = len(Eyehave.objects.filter(Q(group=group)&Q(eye__is_event=0)))
+		haircount = len(Hairhave.objects.filter(Q(group=group)&Q(hair__is_event=0)))
+		groupcustoms += [[group.group_name, clothescount+eyecount+haircount, clothescount, eyecount, haircount]]
+	
+	groupbossgrades.sort(key=lambda x: -x[1])
+	groupmonstergrades.sort(key=lambda x: -x[1])
+	groupbossbattles.sort(key=lambda x: -x[1])	
+	groupfailedCombicounts.sort(key=lambda x: -x[1])
+	groupbossbattles.sort(key=lambda x: -x[1])
+	groupcustoms.sort(key=lambda x: -x[1])
 
 	characterstats = {}
 	monsterfinders = []
@@ -1154,4 +1182,14 @@ def reward(request):
 
 	characterstats = sorted(characterstats.items(), key=lambda t : t[1], reverse=True)
 
-	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders})
+	monsterfinders = monsterfinders[0:10]
+	monsterchampions = monsterchampions[0:10]
+	skillfinders = skillfinders[0:10]
+	characterstats = characterstats[0:10]
+
+	groupkills = [[group.group_name, group.kill] for group in grouplist]
+	groupkills.sort(key=lambda x: -x[1])
+
+	
+	
+	return render(request, 'rpg/reward.html', { 'groupbossgrades': groupbossgrades, 'groupmonstergrades': groupmonstergrades, 'groupfailedCombicounts': groupfailedCombicounts, 'groupbossbattles': groupbossbattles, 'characterstats': characterstats, 'monsterfinders': monsterfinders, 'monsterchampions': monsterchampions, 'skillfinders': skillfinders, 'groupkills': groupkills, 'groupcustoms': groupcustoms, })
