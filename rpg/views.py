@@ -47,6 +47,14 @@ def final_boss_check(original_function):
 	return wrapper
 
 @login_required
+def codemenu(request):
+	if request.user.is_staff:
+		codes = Code.objects.all()
+		return render(request, 'rpg/codemenu.html', {'codes': codes})
+	else:
+		return redirect('index')
+
+@login_required
 def day1(request):
 	if request.user.is_staff:
 		return render(request, 'rpg/day1.html')

@@ -1,0 +1,76 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container center-align">
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s4"><a href="#hair">머리</a></li>
+				<li class="tab col s4"><a href="#clothes">옷</a></li>
+				<li class="tab col s4"><a href="#eye">얼굴</a></li>
+			</ul>
+		</div>
+		<div class="col s12">
+			<div id="hair" class="row">
+				{% for code in codes %}
+				{% if code.hair %}
+				<div class="col s6 m4 l3 xl2">
+					<a class="modal-trigger" href="#code{{code.id}}">
+						<img class="responsive-img" src="{{ code.hair.img.url }}">
+					</a>
+					<p>{{code.hair.name}}</p>
+				</div>
+				<div id="code{{code.id}}" class="modal">
+					<div class="modal-content">
+						<p>{{code.code}}</p>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col s12">
+			<div id="clothes" class="row">
+				{% for code in codes %}
+				{% if code.clothes %}
+				<div class="col s6 m4 l3 xl2">
+					<a class="modal-trigger" href="#code{{code.id}}">
+						<img class="responsive-img" src="{{ code.clothes.img.url }}">
+					</a>
+					<p>{{code.clothes.name}}</p>
+				</div>
+				<div id="code{{code.id}}" class="modal">
+					<div class="modal-content">
+						<p>{{code.code}}</p>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col s12">
+			<div id="eye" class="row">
+				{% for code in codes %}
+				{% if code.eye %}
+				<div class="col s6 m4 l3 xl2">
+					<a class="modal-trigger" href="#code{{code.id}}">
+						<img class="responsive-img" src="{{ code.eye.img.url }}">
+					</a>
+					<p>{{code.eye.name}}</p>
+				</div>
+				<div id="code{{code.id}}" class="modal">
+					<div class="modal-content">
+						<p>{{code.code}}</p>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('.modal').modal();
+</script>
+{% endblock %}
