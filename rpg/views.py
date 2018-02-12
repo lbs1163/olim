@@ -74,7 +74,6 @@ def day4(request):
 	else:
 		return redirect('index')
 
-@server_check
 @login_required
 @final_boss_check
 def code(request):
@@ -1077,7 +1076,7 @@ def selectskill(request):
 			try:
 				skill = Skill.objects.get(id=request.POST.get(skillstring, None))
 				have = Have.objects.get(character=character, skill=skill)
-				if have.number == 0:
+				if have.number == 0 and not have.skill.boss:
 					return None
 				elif skill.math and character.math < skill.limit:
 					return None
@@ -1185,7 +1184,7 @@ def reward(request):
 	monsterfinders = monsterfinders[0:10]
 	monsterchampions = monsterchampions[0:10]
 	skillfinders = skillfinders[0:10]
-	characterstats = characterstats[0:10]
+	characterstats = characterstats
 
 	groupkills = [[group.group_name, group.kill] for group in grouplist]
 	groupkills.sort(key=lambda x: -x[1])
