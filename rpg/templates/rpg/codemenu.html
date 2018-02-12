@@ -14,7 +14,7 @@
 		<div class="col s12">
 			<div id="hair" class="row">
 				{% for code in codes %}
-				{% if code.hair %}
+				{% if code.hair and not code.hair.is_event %}
 				<div class="col s6 m4 l3 xl2">
 					<a class="modal-trigger" href="#code{{code.id}}">
 						<img class="responsive-img" src="{{ code.hair.img.url }}">
@@ -33,7 +33,7 @@
 		<div class="col s12">
 			<div id="clothes" class="row">
 				{% for code in codes %}
-				{% if code.clothes %}
+				{% if code.clothes and not code.clothes.is_event %}
 				<div class="col s6 m4 l3 xl2">
 					<a class="modal-trigger" href="#code{{code.id}}">
 						<img class="responsive-img" src="{{ code.clothes.img.url }}">
@@ -52,7 +52,7 @@
 		<div class="col s12">
 			<div id="eye" class="row">
 				{% for code in codes %}
-				{% if code.eye %}
+				{% if code.eye and not code.eye.is_event %}
 				<div class="col s6 m4 l3 xl2">
 					<a class="modal-trigger" href="#code{{code.id}}">
 						<img class="responsive-img" src="{{ code.eye.img.url }}">
