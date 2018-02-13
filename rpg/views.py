@@ -433,7 +433,7 @@ def finalbossbattle(request):
 			elif request.POST.get('type', False) == "getDamage":
 				enemy_health = finalbossbattlemanager.enemy_health;
 				codes = RegistrationCode.objects.all()
-				monsterhealth = len(codes) * 200000
+				monsterhealth = len(codes) * 1000000
 				return JsonResponse({'state': finalbossbattlemanager.state, 'enemy_health': enemy_health, 'monsterhealth': monsterhealth})
 			elif request.POST.get('type', False) == "calculate":
 				finalbossbattles = Finalbossbattle.objects.all()
@@ -516,7 +516,7 @@ def finalbossbattle(request):
 					return JsonResponse({'type': 'helped'})
 
 			elif request.POST.get('type', False) == "attack":
-				if myfinalbossbattle.ready:
+				if myfinalbossbattle.ready or finalbossbattlemanager.state == "finalattack":
 					if finalbossbattlemanager.state != 'finalattack':
 						myfinalbossbattle.ready = False
 					myfinalbossbattle.save()
