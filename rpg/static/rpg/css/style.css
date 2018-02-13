@@ -18,7 +18,7 @@ span#dialog2 {
 
 #before div#phoenix {
 	margin-top: 10vh;
-	height: 50vh;
+	height: 60vh;
 }
 
 #before div#dialogsection {
@@ -26,14 +26,14 @@ span#dialog2 {
 	height: 20vh;
 }
 
-#after div#phoenix {
+#after div#monster {
 	margin-top: 0;
 	height: 80vh;
 }
 
 #after div#dialogsection {
 	margin-top: 0;
-	height: 10vh;
+	height: 20vh;
 }
 
 body#darkphoenix {

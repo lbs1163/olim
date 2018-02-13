@@ -32,7 +32,7 @@ var battle = new Audio('/static/rpg/sound/finalbossbattle.mp3');
 var hit = new Audio('/static/rpg/sound/hit.mp3');
 var normaltalk = new Audio('/static/rpg/sound/talk.mp3');
 var eviltalk = new Audio('/static/rpg/sound/eviltalk.wav');
-var laugh = new Audio('/static/rpg/sound/laugh.wav');
+var burn = new Audio('/static/rpg/sound/burning.wav');
 var hope = new Audio('/static/rpg/sound/hope.mp3');
 var ending = new Audio('/static/rpg/sound/ending.mp3');
 var talk = normaltalk;
@@ -66,6 +66,15 @@ var beforelines = [
 	"드디어 시상식이 다 끝났어!",
 	"다들 새터는 잘 즐겼길 바라",
 	"자 이제 시상식도 다 끝났으니...",
+];
+
+var changelines = [
+	'"아직... 끝나지 않았다..."',
+	'"강력한 숙주를 구하기 위해 돌아다녔지만..."',
+	'"모두 하나같이 약해 빠졌더군..."',
+	'"몬스터로 안된다면..."',
+	'"이 세계의 관리자..."',
+	'"네 녀석의 몸을 차지하겠다!"',
 ];
 
 var enemy_line_num = 0;
@@ -114,10 +123,12 @@ var finish_lines = [
 
 var ending_lines = [
 	'"도와줘서 고마워!"',
+	'"너희들 덕분에 바이러스를 완전히 물리칠 수 있었어"',
 	'"모두들 이번처럼 서로 도와주기만 한다면"',
 	'"앞으로도 어떤 일이든 해낼 수 있을꺼야"',
 	'"나는 새터가 끝나면 더이상 볼 수 없을지도 모르지만"',
 	'"너희에게 좋은 추억을 만들어줄 수 있어서 기뻤어"',
+	'"다들 나와 함께 모험해줘서 고마워"',
 	'"다들 안녕! 다음에 봐!"',
 ];
 
@@ -151,11 +162,13 @@ var stateUpdate = function() {
 					talk = normaltalk;
 					dialog('무...무슨 일이지!?', 1, function() {
 						talk = eviltalk;
-						dialog('"아직... 끝나지 않았다..."', 1, function() {
+						multiDialog(changelines, 0, function() {
 							$("div#before").addClass("invisible");
 							$("body").addClass("black");
-							laugh.play();
+							$("div#change").removeClass("invisible");
+							burn.play();
 							setTimeout(function(){
+								$("div#change").addClass("invisible");
 								$.ajax({
 									method: "POST",
 									url: "/finalbossbattle/",
@@ -167,22 +180,24 @@ var stateUpdate = function() {
 									talk = normaltalk;
 									dialognow = afterdialog;
 									dialog("포닉스가 몬스터로 변했다!", 1, function() {
-										dialog("우리는 무엇을 할까?", 1, function() {
-											$.ajax({
-												method: "POST",
-												url: "/finalbossbattle/",
-												data: {type: "finalbattle"}
-											}).done(function(data) {
+										dialog("다들 휴대폰을 꺼내자!", 1, function() {
+											dialog("우리는 무엇을 할까?", 1, function() {
 												$.ajax({
 													method: "POST",
 													url: "/finalbossbattle/",
-													data: {type: "ready"}
+													data: {type: "finalbattle"}
 												}).done(function(data) {
-													setTimeout(function(){
-														stateUpdate();
-													}, 5000);
-												});
-											});				
+													$.ajax({
+														method: "POST",
+														url: "/finalbossbattle/",
+														data: {type: "ready"}
+													}).done(function(data) {
+														setTimeout(function(){
+															stateUpdate();
+														}, 5000);
+													});
+												});				
+											});
 										});
 									});
 								});
@@ -245,6 +260,9 @@ var stateUpdate = function() {
 			talk = eviltalk;
 			multiDialog(giveup_lines, 0, function() {
 				talk = normaltalk;
+				$("#monster img").attr("src", "/static/rpg/image/normal_phoenix.png");
+				$("#monster").css("padding-top", "80px");
+				$("#monster img").addClass("non-pixel");
 				multiDialog(dontgiveup_lines, 0, function() {
 					$.ajax({
 						method: "POST",
@@ -255,6 +273,9 @@ var stateUpdate = function() {
 							hope.play();
 							dialog("도와주기 스킬을 얻었다!", 1, function() {
 								dialog("반격할 차례다.", 1, function() {
+									$("#monster").css("padding-top", "0");
+									$("#monster img").attr("src", "/static/rpg/image/phoenix.gif");
+									$("#monster img").removeClass("non-pixel");
 									$.ajax({
 										method: 'POST',
 										url: '/finalbossbattle/',
@@ -325,8 +346,14 @@ var stateUpdate = function() {
 							data: {type: "ready"},
 						}).done(function(data) {
 							setTimeout(function() {
+								$("#monster img").attr("src", "/static/rpg/image/normal_phoenix.png");
+								$("#monster").css("padding-top", "80px");
+								$("#monster img").addClass("non-pixel");
 								dialog("포닉스가 몬스터와 분리되었다!", 1, function() {
 									multiDialog(finish_lines, 0, function() {
+										$("#monster img").attr("src", "/static/rpg/image/phoenix.gif");
+										$("#monster").css("padding-top", "0");
+										$("#monster img").removeClass("non-pixel");
 										$.ajax({
 											method: "POST",
 											url: "/finalbossbattle/",

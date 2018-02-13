@@ -85,6 +85,11 @@ var useSkill = function(skill) {
 		} else if (data.type == "attackFailure") {
 			$("#dialog").html("턴이 끝나기를 기다리는 중...");
 		}
+
+		if (state == "finalattack") {
+			buttonOff();
+			buttonOn();
+		}
 	});
 }
 
@@ -98,34 +103,34 @@ var everyonesecond = function() {
 		console.log("everyonesecond", data);
 		$("#ally_health").css("width", data.ally_health + "%");
 		if (data.state == "before") {
-			id = setInterval(everyonesecond, 1000);
+			id = setInterval(everyonesecond, 3000);
 		} else if (data.state == "finalbattle") {
 			$("#whole").removeClass("invisible");
 			if (data.frusted) {
 				buttonOff();
 				dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {});
 				frusted = true;
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			} else if (data.ready && !data.frusted) {
 				dialog("다음엔 무엇을 할까?", 1, function() {
 					buttonOff();
 					buttonOn();
-					id = setInterval(everyonesecond, 1000);
+					id = setInterval(everyonesecond, 3000);
 				});
 			} else {
 				$("#dialog").html("턴이 끝나기를 기다리는 중...");
 				buttonOff();
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			}
 		} else if (data.state == "allfrusted") {
 			buttonOff();
-			id = setInterval(everyonesecond, 1000);
+			id = setInterval(everyonesecond, 3000);
 		} else if (data.state == "helpeachother") {
 			$("#help").parent().removeClass("invisible");
 			if (data.frusted) {
 				buttonOff();
 				dialog("좌절하고 있어 기술을 쓸 수 없다!", 1, function() {});
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			} else if (data.ready && !data.frusted) {
 				if (frusted) {
 					console.log("sasdfasdf");
@@ -136,7 +141,7 @@ var everyonesecond = function() {
 								buttonOff();
 								buttonOn();
 								$("#skills button").addClass("disabled");
-								id = setInterval(everyonesecond, 1000);
+								id = setInterval(everyonesecond, 3000);
 							});
 						}, 2000);
 					});
@@ -145,30 +150,30 @@ var everyonesecond = function() {
 						buttonOff();
 						buttonOn();
 						$("#skills button").addClass("disabled");
-						id = setInterval(everyonesecond, 1000);
+						id = setInterval(everyonesecond, 3000);
 					});
 				}
 			} else {
 				buttonOff();
 				$("#dialog").html("턴이 끝나기를 기다리는 중...");
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			}
 		} else if (data.state == "helpphoenix") {
 			if (data.ready) {
 				buttonOff();
 				buttonOn();
 				$("#skills button").addClass("disabled");
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			} else {
 				buttonOff();
 				$("#dialog").html("턴이 끝나기를 기다리는 중...");
-				id = setInterval(everyonesecond, 1000);
+				id = setInterval(everyonesecond, 3000);
 			}
 		} else if (data.state == "finalattack") {
+			state = "finalattack";
 			buttonOff();
 			buttonOn();
 			$("#help").addClass("disabled");
-			id = setInterval(everyonesecond, 1000);
 		} else if (data.state == "ending") {
 			$("#whole").addClass("invisible");
 		}
@@ -179,30 +184,26 @@ if (state == "before") {
 } else if (state == "finalbattle") {
 	$("#whole").removeClass("invisible");
 	buttonOff();
-	buttonOn();
 } else if (state == "allfrusted") {
 	$("#whole").removeClass("invisible");
 	buttonOff();
 } else if (state == "helpeachother") {
 	$("#whole").removeClass("invisible");
 	buttonOff();
-	buttonOn();
 	$("#help").parent().removeClass("invisible");
 	$("#skills button").addClass("disabled");
 } else if (state == "helpphoenix") {
 	$("#whole").removeClass("invisible");
 	buttonOff();
-	buttonOn();
 	$("#help").parent().removeClass("invisible");
 	$("#skills button").addClass("disabled");
 } else if (state == "finalattack") {
 	$("#whole").removeClass("invisible");
 	buttonOff();
-	buttonOn();
 	$("#help").parent().removeClass("invisible");
 	$("#help").addClass("disabled");
 } else if (state == "ending") {
 	$("#whole").addClass("invisible");
 }
 
-id = setInterval(everyonesecond, 1000);
+id = setInterval(everyonesecond, 3000);

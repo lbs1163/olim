@@ -4,13 +4,18 @@
 <html>
 	{% include 'rpg/head.html' %}
 	<body>
+<style>
+body {
+	overflow: hidden;
+}
+</style>
 		<script
 			src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   			integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 			crossorigin="anonymous"></script>
 		<div id="before" class="container">
 			<div class="row">
-				<div id="phoenix" class="col s6 offset-s3">
+				<div id="phoenix" class="col s8 offset-s2">
 					<img class="responsive-img non-pixel" src="/static/rpg/image/normal_phoenix.png">
 				</div>
 				<div id="dialogsection" class="col s12">
@@ -20,9 +25,16 @@
 				</div>
 			</div>
 		</div>
+		<div id="change" class="container invisible">
+			<div class="row">
+				<div class="col s12">
+					<img class="responsive-img" src="{% static 'rpg/image/change.gif' %}">
+				</div>
+			</div>
+		</div>
 		<div id="after" class="container invisible">
 			<div class="row">
-				<div id="monster" class="col s10 offset-s1">
+				<div id="monster" class="col s8 offset-s2">
 					<img class="responsive-img" src="/static/rpg/image/phoenix.gif">
 				</div>
 				<div class="progress">
