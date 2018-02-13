@@ -428,7 +428,7 @@ def finalbossbattle(request):
 				codes = RegistrationCode.objects.all()
 				monsterhealth = len(codes) * 200000
 
-				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None, character__user__is_staff=False).order_by('?')
+				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None, character__user__is_staff=False).order_by('-character__math')
 				
 				frustednumber = len(Finalbossbattle.objects.filter(frusted=True, character__user__is_staff=False))
 				if frustednumber == 0 and finalbossbattlemanager.state == "helpeachother":
