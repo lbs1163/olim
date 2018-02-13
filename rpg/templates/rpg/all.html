@@ -1,0 +1,21 @@
+{% extends 'rpg/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container center-align">
+	<div class="row">
+		{% for character in characters %}
+		<div class="col s12 m6 l4 xl3">
+			<h1 class="center-align flow-text">{{ character.user.last_name }}{{character.user.first_name}}</h1>
+			<div class="character">
+				<img class="responsive-img" src="{% static 'rpg/image/base.png' %}">
+				<img class="responsive-img absolute" src="{{ character.hair.img.url }}">
+				<img class="responsive-img absolute" src="{{ character.clothes.img.url }}">
+				<img class="responsive-img absolute" src="{{ character.eye.img.url }}">
+			</div>
+			<br>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
