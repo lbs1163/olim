@@ -381,13 +381,13 @@ def finalbossbattle(request):
 	finalbossbattlemanager, created = Finalbossbattlemanager.objects.get_or_create()
 	if created:
 		codes = RegistrationCode.objects.all()
-		finalbossbattlemanager.enemy_health = len(codes) * 200000
+		finalbossbattlemanager.enemy_health = len(codes) * 1000000
 		finalbossbattlemanager.save()
 	
 	if request.method == 'GET':
 		if request.user.is_staff:
 			codes = RegistrationCode.objects.all()
-			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 200000)
+			percentage = finalbossbattlemanager.enemy_health * 100 / (len(codes) * 1000000)
 			return render(request, 'rpg/finalbossbattle.html', { 'finalbossbattlemanager': finalbossbattlemanager, 'percentage': percentage })
 		else:
 			server = Server.objects.all().order_by('id')[1]
@@ -426,9 +426,9 @@ def finalbossbattle(request):
 					finalbossbattle.ready = False
 					finalbossbattle.save()
 				codes = RegistrationCode.objects.all()
-				monsterhealth = len(codes) * 200000
+				monsterhealth = len(codes) * 1000000
 
-				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None, character__user__is_staff=False).order_by('-character__math')
+				notfrusteds = Finalbossbattle.objects.filter(frusted=False, helper=None, character__user__is_staff=False).order_by('character__math')
 				
 				frustednumber = len(Finalbossbattle.objects.filter(frusted=True, character__user__is_staff=False))
 				if frustednumber == 0 and finalbossbattlemanager.state == "helpeachother":
