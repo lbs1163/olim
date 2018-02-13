@@ -1,0 +1,361 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html style="color: white; background-color: black;">
+	{% include 'rpg/head.html' %}
+	<body class="center-align">
+		<style>
+@charset "UTF-8";
+
+@font-face{
+	font-family:pixelfont;
+	src:local(※),
+		url('/static/rpg/pixelfont.woff') format('woff');
+}
+
+* {
+	font-family: pixelfont;
+}
+
+		</style>
+		<script
+	   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+ crossorigin="anonymous"></script>
+		<div class="container" id="title">
+			<br>
+			<h3>2018 새내기새로배움터 준비위원회</h3>
+			<img class="responsive-img non-pixel" src="{% static 'rpg/image/olim.png' %}">
+		</div>
+		<div class="container" id="video">
+			<h1><br>영상팀</h1>
+			<h3>새터 영상 제작</h3>
+			<div class="row">
+				<div class="col s2 offset-s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/상호.png' %}">
+					<h4>팀장<br>오상호</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/택상.png' %}">
+					<h4>팀원<br>이택상</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/나연.png' %}">
+					<h4>팀원<br>정나연</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/채린.png' %}">
+					<h4>팀원<br>홍채린</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="design">
+			<h1><br>디자인팀</h1>
+			<h3>새터 책자, 78공고, 명찰 제작</h3>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/나현.png' %}">
+					<h4>팀장<br>류나현</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/창연.png' %}">
+					<h4>팀원<br>구창연</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/현기.png' %}">
+					<h4>팀원<br>명현기</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/수경.png' %}">
+					<h4>팀원<br>이수경</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/민수.png' %}">
+					<h4>팀원<br>정민수</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="stage">
+			<h1><br>무대동아리팀</h1>
+			<h3>무대 총괄 및 동아리 공연, 동아리 탐방 진행</h3>
+			<div class="row">
+				<div class="col s2 offset-s3">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/정원.png' %}">
+					<h4>팀장<br>김정원</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/종현.png' %}">
+					<h4>팀원<br>박종현</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/민.png' %}">
+					<h4>팀원<br>조민</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="insol">
+			<h1><br>인솔자팀</h1>
+			<h3>인솔자 선발, 교육 및 지원</h3>
+			<div class="row">
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/지상.png' %}">
+					<h4>팀장<br>이지상</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/동현.png' %}">
+					<h4>팀원<br>김동현</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/준수.png' %}">
+					<h4>팀원<br>김준수</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/현우.png' %}">
+					<h4>팀원<br>김현우</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/종인.png' %}">
+					<h4>팀원<br>조종인</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/원준.png' %}">
+					<h4>팀원<br>최원준</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="specialthanksto">
+			<h2><br>이 분들께 진심으로 감사드립니다</h2>
+			<div class="row">
+				<div class="col s8 offset-s2">
+					<img class="responsive-img" src="{% static 'rpg/image/heart.png' %}">
+				</div>
+			</div>
+		</div>
+		<div class="container" id="insolja1">
+			<h1><br><br>인솔자</h1>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<h3>1분반</h3>
+					<h4>심재윤</h4>
+					<h4>한기정</h4>
+					<h4>김대희</h4>
+					<h4>장아림</h4>
+				</div>
+				<div class="col s2">
+					<h3>2분반</h3>
+					<h4>손형진</h4>
+					<h4>문새미</h4>
+					<h4>장윤하</h4>
+					<h4>임영진</h4>
+				</div>
+				<div class="col s2">
+					<h3>3분반</h3>
+					<h4>강민수</h4>
+					<h4>맹준범</h4>
+					<h4>김성남</h4>
+					<h4>김수민</h4>
+				</div>
+				<div class="col s2">
+					<h3>4분반</h3>
+					<h4>조현태</h4>
+					<h4>박현우</h4>
+					<h4>정준혁</h4>
+					<h4>이예원</h4>
+				</div>
+				<div class="col s2">
+					<h3>5분반</h3>
+					<h4>박건</h4>
+					<h4>강주은</h4>
+					<h4>윤상부</h4>
+					<h4>고희주</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="insolja2">
+			<h1><br><br>인솔자</h1>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<h3>6분반</h3>
+					<h4>김준성</h4>
+					<h4>서재민</h4>
+					<h4>최민석</h4>
+					<h4>김윤수</h4>
+				</div>
+				<div class="col s2">
+					<h3>7분반</h3>
+					<h4>박하윤</h4>
+					<h4>김채림</h4>
+					<h4>고동근</h4>
+					<h4>김재현</h4>
+				</div>
+				<div class="col s2">
+					<h3>8분반</h3>
+					<h4>조형준</h4>
+					<h4>이정민</h4>
+					<h4>박혜선</h4>
+					<h4>박기성</h4>
+				</div>
+				<div class="col s2">
+					<h3>9분반</h3>
+					<h4>이창호</h4>
+					<h4>함현식</h4>
+					<h4>강병민</h4>
+					<h4>오유정</h4>
+				</div>
+				<div class="col s2">
+					<h3>10분반</h3>
+					<h4>조은지</h4>
+					<h4>황인환</h4>
+					<h4>이종목</h4>
+					<h4>신정빈</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="insolja3">
+			<h1><br><br>인솔자</h1>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<h3>11분반</h3>
+					<h4>이지수</h4>
+					<h4>김현재</h4>
+					<h4>나서현</h4>
+					<h4>김영윤</h4>
+				</div>
+				<div class="col s2">
+					<h3>12분반</h3>
+					<h4>공도현</h4>
+					<h4>손예림</h4>
+					<h4>김승일</h4>
+					<h4>이지해</h4>
+				</div>
+				<div class="col s2">
+					<h3>13분반</h3>
+					<h4>이석호</h4>
+					<h4>장호중</h4>
+					<h4>김태리</h4>
+					<h4>최준혁</h4>
+				</div>
+				<div class="col s2">
+					<h3>14분반</h3>
+					<h4>정총영</h4>
+					<h4>이효인</h4>
+					<h4>한기웅</h4>
+					<h4>이형석</h4>
+				</div>
+				<div class="col s2">
+					<h3>15분반</h3>
+					<h4>박정훈</h4>
+					<h4>김우석</h4>
+					<h4>천의정</h4>
+					<h4>양정균</h4>
+				</div>
+			</div>
+		</div>
+		<div class="container" id="new">
+			<h1><br>뉴기획팀</h1>
+			<h3>신 윷놀이 제작 및 진행</h3>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/성진.png' %}">
+					<h4>팀장<br>김성진</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/민준.png' %}">
+					<h4>팀원<br>김민준</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/경미.png' %}">
+					<h4>팀원<br>나경미</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/조재영.png' %}">
+					<h4>팀원<br>조재영</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/정은.png' %}">
+					<h4>팀원<br>하정은</h4>
+				</div>
+			</div>
+
+		</div>
+		<div class="container" id="missiontour">
+			<h1><br>미션투어팀</h1>
+			<h3>신과 함께 제작 및 진행</h3>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/영기.png' %}">
+					<h4>팀장<br>홍영기</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/예민.png' %}">
+					<h4>팀원<br>유예민</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/상아.png' %}">
+					<h4>팀원<br>류상아</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/민지.png' %}">
+					<h4>팀원<br>박민지</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/도윤.png' %}">
+					<h4>팀원<br>장도윤</h4>
+				</div>
+			</div>
+
+		</div>
+		<div class="container" id="theme">
+			<h1><br>테마기획팀</h1>
+			<h3>신 RPG 제작 및 진행</h3>
+			<div class="row">
+				<div class="col s2 offset-s1">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/범수.png' %}">
+					<h4>팀장<br>임범수</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/수민.png' %}">
+					<h4>팀원<br>최수민</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/승원.png' %}">
+					<h4>팀원<br>정승원</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/상민.png' %}">
+					<h4>팀원<br>배상민</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/김재영.png' %}">
+					<h4>팀원<br>김재영</h4>
+				</div>
+			</div>
+
+		</div>
+		<div class="container" id="heads">
+			<h1><br>위원장단</h1>
+			<h3>새내기새로배움터 총괄</h3>
+			<div class="row">
+				<div class="col s2 offset-s3">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/은석.png' %}">
+					<h4>위원장<br>홍은석</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/민정.png' %}">
+					<h4>부위원장<br>오민정</h4>
+				</div>
+				<div class="col s2">
+					<img class="responsive-img" src="{% static 'rpg/image/sjw/윤지.png' %}">
+					<h4>총무<br>이윤지</h4>
+				</div>
+			</div>
+
+		</div>
+		<div class="container" id="end">
+			<h1><br><br><br><br>THE END<br><br><br><br></h1>
+		</div>
+		</div>
+	</body>
+	<script src="{% static 'rpg/js/ending.js' %}">
+	</script>
+</html>

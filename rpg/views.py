@@ -156,7 +156,7 @@ def custom(request):
 
 def ending(request):
 	if request.method == 'GET':
-		return HttpResponse(u"엔딩 크레딧 아직 구현하지 못했습니다 호호호호호호");
+		return render(request, 'rpg/ending.html')
 
 def get_skill(character, skillnum):
 	if skillnum == 'skill1':
