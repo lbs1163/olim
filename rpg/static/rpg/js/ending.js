@@ -15,8 +15,6 @@ $("#theme").hide();
 $("#heads").hide();
 $("#end").hide();
 
-ending.addEventListener('canplaythrough', start);
-
 var start = function() {
 	ending.play();
 	$("#title").show("fade", 2600, function() {
@@ -107,3 +105,5 @@ var buildup = function() {
 		}, 8707);
 	});
 };
+
+ending.addEventListener('canplaythrough', start);
