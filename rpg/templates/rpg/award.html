@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	{% include 'rpg/head.html' %}
+	<body>
+		<script
+			src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+     		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			crossorigin="anonymous"></script>
+		<div class="container" style="padding-top: 100px;">
+			<div class="row">
+				<div id="phoenix" class="col s8 offset-s2">
+					<img class="responsive-img non-pixel" src="/static/rpg/image/normal_phoenix.png">
+				</div>
+				<div id="dialogsection" class="col s12">
+					<div class="center-align card-panel teal">
+						<span id="dialog" class="white-text big">.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	var lines = [
+		"jumping",
+		"안녕 새내기 친구들!",
+		"normal",
+		"드디어 어울림 한마당 시간이야!",
+		"친구들이 新 삼부작에서 얻은 성과를 바탕으로",
+		"jumping",
+		"많은 양의 상품들을 준비했어!",
+		"normal",
+		"이제 시상식을 진행할꺼야",
+		"studying",
+		"신과 함께, 신 윷놀이, 신 RPG 순서로 시상을 할테니까",
+		"jumping",
+		"다른 친구들이 상을 받더라도 큰 박수 부탁해!",
+		"normal",
+		"자 그러면 진짜로 시작해보자!",
+		"jumping",
+		"미션투어팀장 홍영기를 큰 박수로 맞아줘!"
+		];
+	</script>
+	<script src="{% static 'rpg/js/phoenixtalk.js' %}"></script>
+</html>

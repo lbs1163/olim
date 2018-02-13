@@ -91,6 +91,13 @@ def day4(request):
 		return redirect('index')
 
 @login_required
+def award(request):
+	if request.user.is_staff:
+		return render(request, 'rpg/award.html')
+	else:
+		return redirect('index')
+
+@login_required
 @final_boss_check
 def code(request):
 	character = Character.objects.get(user=request.user.id)

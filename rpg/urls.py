@@ -24,5 +24,6 @@ urlpatterns = [
 	url(r'^day2/$', day2, name='day2'),
 	url(r'^day3/$', day3, name='day3'),
 	url(r'^day4/$', day4, name='day4'),
+	url(r'^award/$', award, name='award'),
 	url(r'^all/$', all, name='all'),
 ]
