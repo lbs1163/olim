@@ -46,11 +46,11 @@ def final_boss_check(original_function):
 			return original_function(*args, **kwargs)
 	return wrapper
 
-@login_required
 def all(request):
 	if request.user.is_staff:
 		characters = Character.objects.all()
-		return render(request, 'rpg/all.html', {'characters': characters})
+		groups = Group.objects.filter(group_name__endswith=u"분반").order_by('id')
+		return render(request, 'rpg/all.html', {'characters': characters, 'groups': groups})
 	else:
 		return redirect('index')
 

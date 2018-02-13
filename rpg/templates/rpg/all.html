@@ -3,8 +3,11 @@
 
 {% block content %}
 <div class="container center-align">
+	{% for group in groups %}
+	<h1>{{group.group_name}}</h1>
 	<div class="row">
 		{% for character in characters %}
+		{% if character.group == group %}
 		<div class="col s12 m6 l4 xl3">
 			<h1 class="center-align flow-text">{{ character.user.last_name }}{{character.user.first_name}}</h1>
 			<div class="character">
@@ -15,7 +18,9 @@
 			</div>
 			<br>
 		</div>
+		{% endif %}
 		{% endfor %}
 	</div>
+	{% endfor %}
 </div>
 {% endblock %}
