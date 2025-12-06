@@ -6,6 +6,7 @@
 uv sync
 uv run manage.py migrate
 uv run manage.py loaddata initial_data.json
+uv run manage.py runserver
 ```
 
 ID: root, PW: root
