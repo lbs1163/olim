@@ -12,10 +12,10 @@ class Server(models.Model):
 	is_open = models.BooleanField(default=True)
 
 	def __str__(self):
-		return unicode(self.is_open)
+		return str(self.is_open)
 
 def random_string():
-	return unicode(''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10)))
+	return str(''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10)))
 
 @python_2_unicode_compatible
 class Group(models.Model):
@@ -37,11 +37,11 @@ class RegistrationCode(models.Model):
 	code = models.CharField(max_length=20, default=random_string)
 	first_name = models.CharField(max_length=20)
 	last_name = models.CharField(max_length=20)
-	group = models.ForeignKey(Group)
+	group = models.ForeignKey(Group, models.CASCADE)
 	is_used = models.BooleanField(default=False)
 
 	def __str__(self):
-		return unicode(self.group) + u" " + self.last_name + self.first_name + " " + self.code
+		return str(self.group) + u" " + self.last_name + self.first_name + " " + self.code
 
 @python_2_unicode_compatible
 class Hair(models.Model):
@@ -73,33 +73,33 @@ class Clothes(models.Model):
 @python_2_unicode_compatible
 class Code(models.Model):
 	code = models.CharField(max_length=30)
-	hair = models.ForeignKey(Hair, blank=True, null=True)
-	eye = models.ForeignKey(Eye, blank=True, null=True)
-	clothes = models.ForeignKey(Clothes, blank=True, null=True)
+	hair = models.ForeignKey(Hair, models.CASCADE, blank=True, null=True)
+	eye = models.ForeignKey(Eye, models.CASCADE, blank=True, null=True)
+	clothes = models.ForeignKey(Clothes, models.CASCADE, blank=True, null=True)
 
 	def __str__(self):
 		return self.code
 
 @python_2_unicode_compatible
 class Hairhave(models.Model):
-	group = models.ForeignKey(Group)
-	hair = models.ForeignKey(Hair)
+	group = models.ForeignKey(Group, models.CASCADE)
+	hair = models.ForeignKey(Hair, models.CASCADE)
 
 	def __str__(self):
 		return self.group.group_name + u" has " + self.hair.name
 
 @python_2_unicode_compatible
 class Eyehave(models.Model):
-	group = models.ForeignKey(Group)
-	eye = models.ForeignKey(Eye)
+	group = models.ForeignKey(Group, models.CASCADE)
+	eye = models.ForeignKey(Eye, models.CASCADE)
 
 	def __str__(self):
 		return self.group.group_name + u" has " + self.eye.name
 
 @python_2_unicode_compatible
 class Clotheshave(models.Model):
-	group = models.ForeignKey(Group)
-	clothes = models.ForeignKey(Clothes)
+	group = models.ForeignKey(Group, models.CASCADE)
+	clothes = models.ForeignKey(Clothes, models.CASCADE)
 
 	def __str__(self):
 		return self.group.group_name + u" has " + self.clothes.name
@@ -110,7 +110,7 @@ class Grade(models.Model):
 	turn = models.IntegerField(default=1)
 
 	def __str__(self):
-		return self.name + u": " + unicode(self.turn)
+		return self.name + u": " + str(self.turn)
 
 @python_2_unicode_compatible
 class Bossgrade(models.Model):
@@ -118,7 +118,7 @@ class Bossgrade(models.Model):
 	turn = models.IntegerField(default=1)
 
 	def __str__(self):
-		return self.name + u": " + unicode(self.turn)
+		return self.name + u": " + str(self.turn)
 
 @python_2_unicode_compatible
 class Skill(models.Model):
@@ -165,21 +165,21 @@ class Skill(models.Model):
 			category = u"[프밍] "
 		else:
 			category = u"[일반] "
-		return category + self.name + u"(" + unicode(self.health) + u", " + unicode(self.damage) + u", " + unicode(self.limit) + u")"
+		return category + self.name + u"(" + str(self.health) + u", " + str(self.damage) + u", " + str(self.limit) + u")"
 
 @python_2_unicode_compatible
 class FailedCombination(models.Model):
-	group = models.ForeignKey(Group)
-	skill001 = models.ForeignKey(Skill, related_name='skill001')
-	skill002 = models.ForeignKey(Skill, related_name='skill002')
+	group = models.ForeignKey(Group, models.CASCADE)
+	skill001 = models.ForeignKey(Skill, models.CASCADE, related_name='skill001')
+	skill002 = models.ForeignKey(Skill, models.CASCADE, related_name='skill002')
 
 	def __str__(self):
 		return u"[" + self.group.group_name + u"] " + self.skill001.name + u" + " + self.skill002.name
 @python_2_unicode_compatible
 class Combination(models.Model):
-	skill01 = models.ForeignKey(Skill, related_name='skill01')
-	skill02 = models.ForeignKey(Skill, related_name='skill02')
-	new_skill = models.ForeignKey(Skill, related_name='new_skill')
+	skill01 = models.ForeignKey(Skill, models.CASCADE, related_name='skill01')
+	skill02 = models.ForeignKey(Skill, models.CASCADE, related_name='skill02')
+	new_skill = models.ForeignKey(Skill, models.CASCADE, related_name='new_skill')
 	
 	def __str__(self):
 		return self.new_skill.name + u" = " + self.skill01.name + u" + " + self.skill02.name
@@ -187,19 +187,19 @@ class Combination(models.Model):
 @python_2_unicode_compatible
 class Character(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	hair = models.ForeignKey(Hair, blank=True, null=True)
-	eye = models.ForeignKey(Eye, blank=True, null=True)
-	clothes = models.ForeignKey(Clothes, blank=True, null=True)
-	group = models.ForeignKey(Group, blank=True, null=True)
+	hair = models.ForeignKey(Hair, models.CASCADE, blank=True, null=True)
+	eye = models.ForeignKey(Eye, models.CASCADE, blank=True, null=True)
+	clothes = models.ForeignKey(Clothes, models.CASCADE, blank=True, null=True)
+	group = models.ForeignKey(Group, models.CASCADE, blank=True, null=True)
 	math = models.IntegerField(default=0)
 	phys = models.IntegerField(default=0)
 	chem = models.IntegerField(default=0)
 	life = models.IntegerField(default=0)
 	prog = models.IntegerField(default=0)
-	skill1 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill1')
-	skill2 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill2')
-	skill3 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill3')
-	skill4 = models.ForeignKey(Skill, blank=True, null=True, related_name='skill4')
+	skill1 = models.ForeignKey(Skill, models.CASCADE, blank=True, null=True, related_name='skill1')
+	skill2 = models.ForeignKey(Skill, models.CASCADE, blank=True, null=True, related_name='skill2')
+	skill3 = models.ForeignKey(Skill, models.CASCADE, blank=True, null=True, related_name='skill3')
+	skill4 = models.ForeignKey(Skill, models.CASCADE, blank=True, null=True, related_name='skill4')
 	battletime = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
 	def __str__(self):
@@ -207,12 +207,12 @@ class Character(models.Model):
 
 @python_2_unicode_compatible
 class Have(models.Model):
-	character = models.ForeignKey(Character)
-	skill = models.ForeignKey(Skill)
+	character = models.ForeignKey(Character, models.CASCADE)
+	skill = models.ForeignKey(Skill, models.CASCADE)
 	number = models.IntegerField(default=0)
 
 	def __str__(self):
-		return unicode(self.character) + u" has " + unicode(self.number) + u" " + unicode(self.skill)
+		return str(self.character) + u" has " + str(self.number) + u" " + str(self.skill)
 
 @python_2_unicode_compatible
 class Map(models.Model):
@@ -232,8 +232,8 @@ class Monster(models.Model):
 	life_exp = models.IntegerField(default=0)
 	prog_exp = models.IntegerField(default=0)
 	health = models.IntegerField(default=0)
-	map = models.ForeignKey(Map, null=True)
-	skill = models.ForeignKey(Skill)
+	map = models.ForeignKey(Map, models.CASCADE, null=True)
+	skill = models.ForeignKey(Skill, models.CASCADE)
 	drop_rate = models.IntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
 	dialog1 = models.CharField(max_length=50, default=u"dialog1")
 	dialog2 = models.CharField(max_length=50, default=u"dialog2")
@@ -274,38 +274,38 @@ class Monster(models.Model):
 			category = u"[????] "
 			exp = 0
 		
-		return u"[" + self.map.name + u"]" + category + self.name + " (" + unicode(exp) + u", " + unicode(self.health) + u", " + unicode(self.skill.name) + u", " + unicode(self.drop_rate) + u"%)"
+		return u"[" + self.map.name + u"]" + category + self.name + " (" + str(exp) + u", " + str(self.health) + u", " + str(self.skill.name) + u", " + str(self.drop_rate) + u"%)"
 
 @python_2_unicode_compatible
 class Battle(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE)
-	monster = models.ForeignKey(Monster)
+	monster = models.ForeignKey(Monster, models.CASCADE)
 	ally_health = models.IntegerField(default=100)
 	enemy_health = models.IntegerField(default=0)
 	turn = models.IntegerField(default=0)
 
 	def __str__(self):
-		return unicode(self.character)
+		return str(self.character)
 
 @python_2_unicode_compatible
 class Skillbook(models.Model):
-	group = models.ForeignKey(Group)
-	skill = models.ForeignKey(Skill)
+	group = models.ForeignKey(Group, models.CASCADE)
+	skill = models.ForeignKey(Skill, models.CASCADE)
 	finder = models.ForeignKey(Character, null=True, blank=True, on_delete=models.CASCADE)
 
 	def __str__(self):
-		return u"[" + unicode(self.group) + "] " + unicode(self.skill)
+		return u"[" + str(self.group) + "] " + str(self.skill)
 
 @python_2_unicode_compatible
 class Monsterbook(models.Model):
-	group = models.ForeignKey(Group)
-	grade = models.ForeignKey(Grade, default=1)
-	monster = models.ForeignKey(Monster)
+	group = models.ForeignKey(Group, models.CASCADE)
+	grade = models.ForeignKey(Grade, models.CASCADE, default=1)
+	monster = models.ForeignKey(Monster, models.CASCADE)
 	finder = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='finder')
 	champion = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='champion')
 
 	def __str__(self):
-		return u"[" + unicode(self.group) + "] " + unicode(self.monster)
+		return u"[" + str(self.group) + "] " + str(self.monster)
 
 @python_2_unicode_compatible
 class Bossmonster(models.Model):
@@ -313,8 +313,8 @@ class Bossmonster(models.Model):
 	img = models.ImageField(upload_to='images/monster/', default='images/monster/default.png')
 	health = models.IntegerField(default=100000)
 	damage = models.IntegerField(default=10)
-	map = models.ForeignKey(Map)
-	skill = models.ForeignKey(Skill, null=True, blank=True)
+	map = models.ForeignKey(Map, models.CASCADE)
+	skill = models.ForeignKey(Skill, models.CASCADE, null=True, blank=True)
 	dialog1 = models.CharField(max_length=50, default=u"dialog1")
 	dialog2 = models.CharField(max_length=50, default=u"dialog2")
 	dialog3 = models.CharField(max_length=50, default=u"dialog3")
@@ -327,16 +327,16 @@ class Bossmonster(models.Model):
 	dialog10 = models.CharField(max_length=50, default=u"dialog10")
 
 	def __str__(self):
-		return u"[" + self.map.name + u"] " + self.name + u"(" + unicode(self.health) + u")"
+		return u"[" + self.map.name + u"] " + self.name + u"(" + str(self.health) + u")"
 
 @python_2_unicode_compatible
 class Bossmonsterbook(models.Model):
-	group = models.ForeignKey(Group)
-	grade = models.ForeignKey(Bossgrade, default=1)
-	bossmonster = models.ForeignKey(Bossmonster)
+	group = models.ForeignKey(Group, models.CASCADE)
+	grade = models.ForeignKey(Bossgrade, models.CASCADE, default=1)
+	bossmonster = models.ForeignKey(Bossmonster, models.CASCADE)
 	
 	def __str__(self):
-		return u"[" + unicode(self.group) + "] " + unicode(self.bossmonster)
+		return u"[" + str(self.group) + "] " + str(self.bossmonster)
 		
 @python_2_unicode_compatible
 class Bossbattlemanager(models.Model):
@@ -350,8 +350,8 @@ class Bossbattlemanager(models.Model):
 	start_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 	bossskill = models.IntegerField(default=0, null=True, blank=True)
 	dialognum = models.IntegerField(default=1)
-	skill1 = models.ForeignKey(Skill, null=True, blank=True, related_name='skill0001')
-	skill2 = models.ForeignKey(Skill, null=True, blank=True, related_name='skill0002')
+	skill1 = models.ForeignKey(Skill, models.CASCADE, null=True, blank=True, related_name='skill0001')
+	skill2 = models.ForeignKey(Skill, models.CASCADE, null=True, blank=True, related_name='skill0002')
 
 	def __str__(self):
 		return self.group.group_name + u": " + self.bossmonster.name
@@ -360,13 +360,13 @@ class Bossbattlemanager(models.Model):
 class Bossbattle(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE)
 	ally_health = models.IntegerField(default=100)
-	skill = models.ForeignKey(Skill, null=True, blank=True)
+	skill = models.ForeignKey(Skill, models.CASCADE, null=True, blank=True)
 	ready = models.BooleanField(default=False)
 	turn = models.IntegerField(default=0)
 	ready_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
 
 	def __str__(self):
-		return unicode(self.character)
+		return str(self.character)
 
 @python_2_unicode_compatible
 class Finalbossbattlemanager(models.Model):
@@ -381,8 +381,8 @@ class Finalbossbattle(models.Model):
 	character = models.OneToOneField(Character, on_delete=models.CASCADE, related_name='character')
 	ally_health = models.IntegerField(default=100)
 	frusted = models.BooleanField(default=False)
-	helper = models.ForeignKey(Character, null=True, blank=True, related_name='helper')
+	helper = models.ForeignKey(Character, models.CASCADE, null=True, blank=True, related_name='helper')
 	ready = models.BooleanField(default=False)
 
 	def __str__(self):
-		return unicode(self.character)
+		return str(self.character)
